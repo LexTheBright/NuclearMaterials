@@ -109,7 +109,7 @@
             this.txtCode.Location = new System.Drawing.Point(97, 169);
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(150, 22);
-            this.txtCode.TabIndex = 7;
+            this.txtCode.TabIndex = 9;
             this.txtCode.TextChanged += new System.EventHandler(this.txtCode_TextChanged);
             // 
             // btnAdd
@@ -118,7 +118,7 @@
             this.btnAdd.Location = new System.Drawing.Point(13, 5);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(89, 34);
-            this.btnAdd.TabIndex = 8;
+            this.btnAdd.TabIndex = 10;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -129,7 +129,7 @@
             this.btnCancel.Location = new System.Drawing.Point(239, 5);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(89, 34);
-            this.btnCancel.TabIndex = 9;
+            this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -139,7 +139,7 @@
             this.txtINN.Location = new System.Drawing.Point(187, 116);
             this.txtINN.Name = "txtINN";
             this.txtINN.Size = new System.Drawing.Size(140, 22);
-            this.txtINN.TabIndex = 11;
+            this.txtINN.TabIndex = 7;
             this.txtINN.TextChanged += new System.EventHandler(this.txtINN_TextChanged);
             // 
             // label2

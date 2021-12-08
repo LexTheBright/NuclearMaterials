@@ -38,22 +38,21 @@
             this.btnAddAgent = new System.Windows.Forms.Button();
             this.btnEditAgent = new System.Windows.Forms.Button();
             this.btnDeleteAgent = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.lblEnt = new System.Windows.Forms.Label();
-            this.txtEnt = new System.Windows.Forms.TextBox();
             this.lblEmp = new System.Windows.Forms.Label();
             this.txtEmp = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelOrg = new System.Windows.Forms.Label();
+            this.txtEnt = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.clmSecondName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmFatherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmPhoneNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmEnterpriseCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmEnterpriseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmINN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmSecondName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmFatherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmPhoneNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPartners)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAgents)).BeginInit();
             this.panel1.SuspendLayout();
@@ -66,9 +65,9 @@
             this.lblPartners.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblPartners.Location = new System.Drawing.Point(12, 9);
             this.lblPartners.Name = "lblPartners";
-            this.lblPartners.Size = new System.Drawing.Size(152, 16);
+            this.lblPartners.Size = new System.Drawing.Size(146, 16);
             this.lblPartners.TabIndex = 0;
-            this.lblPartners.Text = "Предприятия-партнеры:";
+            this.lblPartners.Text = "Организации-партнеры";
             // 
             // dgvPartners
             // 
@@ -131,9 +130,9 @@
             this.lblAgents.AutoSize = true;
             this.lblAgents.Location = new System.Drawing.Point(12, 271);
             this.lblAgents.Name = "lblAgents";
-            this.lblAgents.Size = new System.Drawing.Size(178, 14);
+            this.lblAgents.Size = new System.Drawing.Size(169, 14);
             this.lblAgents.TabIndex = 7;
-            this.lblAgents.Text = "Представители предприятий:";
+            this.lblAgents.Text = "Представители организации";
             // 
             // dgvAgents
             // 
@@ -190,54 +189,27 @@
             this.btnDeleteAgent.UseVisualStyleBackColor = false;
             this.btnDeleteAgent.Click += new System.EventHandler(this.btnDeleteAgent_Click);
             // 
-            // btnExit
-            // 
-            this.btnExit.Location = new System.Drawing.Point(522, 508);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(75, 25);
-            this.btnExit.TabIndex = 14;
-            this.btnExit.Text = "Выход";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // lblEnt
-            // 
-            this.lblEnt.AutoSize = true;
-            this.lblEnt.Location = new System.Drawing.Point(3, 15);
-            this.lblEnt.Name = "lblEnt";
-            this.lblEnt.Size = new System.Drawing.Size(41, 14);
-            this.lblEnt.TabIndex = 2;
-            this.lblEnt.Text = "Поиск";
-            // 
-            // txtEnt
-            // 
-            this.txtEnt.Location = new System.Drawing.Point(50, 12);
-            this.txtEnt.Name = "txtEnt";
-            this.txtEnt.Size = new System.Drawing.Size(189, 22);
-            this.txtEnt.TabIndex = 3;
-            this.txtEnt.TextChanged += new System.EventHandler(this.txtEnt_TextChanged);
-            // 
             // lblEmp
             // 
             this.lblEmp.AutoSize = true;
             this.lblEmp.Location = new System.Drawing.Point(3, 15);
             this.lblEmp.Name = "lblEmp";
-            this.lblEmp.Size = new System.Drawing.Size(41, 14);
+            this.lblEmp.Size = new System.Drawing.Size(93, 14);
             this.lblEmp.TabIndex = 9;
-            this.lblEmp.Text = "Поиск";
+            this.lblEmp.Text = "Представитель";
             // 
             // txtEmp
             // 
-            this.txtEmp.Location = new System.Drawing.Point(50, 12);
+            this.txtEmp.Location = new System.Drawing.Point(102, 12);
             this.txtEmp.Name = "txtEmp";
-            this.txtEmp.Size = new System.Drawing.Size(189, 22);
+            this.txtEmp.ReadOnly = true;
+            this.txtEmp.Size = new System.Drawing.Size(137, 22);
             this.txtEmp.TabIndex = 10;
-            this.txtEmp.TextChanged += new System.EventHandler(this.txtEmp_TextChanged);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel1.Controls.Add(this.lblEnt);
+            this.panel1.Controls.Add(this.labelOrg);
             this.panel1.Controls.Add(this.btnAddPartner);
             this.panel1.Controls.Add(this.btnEditPartner);
             this.panel1.Controls.Add(this.txtEnt);
@@ -246,6 +218,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(582, 43);
             this.panel1.TabIndex = 15;
+            // 
+            // labelOrg
+            // 
+            this.labelOrg.AutoSize = true;
+            this.labelOrg.Location = new System.Drawing.Point(3, 15);
+            this.labelOrg.Name = "labelOrg";
+            this.labelOrg.Size = new System.Drawing.Size(80, 14);
+            this.labelOrg.TabIndex = 2;
+            this.labelOrg.Text = "Организация";
+            // 
+            // txtEnt
+            // 
+            this.txtEnt.Location = new System.Drawing.Point(89, 12);
+            this.txtEnt.Name = "txtEnt";
+            this.txtEnt.ReadOnly = true;
+            this.txtEnt.Size = new System.Drawing.Size(150, 22);
+            this.txtEnt.TabIndex = 3;
             // 
             // panel2
             // 
@@ -260,47 +249,14 @@
             this.panel2.Size = new System.Drawing.Size(582, 43);
             this.panel2.TabIndex = 16;
             // 
-            // clmSecondName
-            // 
-            this.clmSecondName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clmSecondName.HeaderText = "Фамилия";
-            this.clmSecondName.Name = "clmSecondName";
-            this.clmSecondName.ReadOnly = true;
-            this.clmSecondName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // clmFirstName
-            // 
-            this.clmFirstName.HeaderText = "Имя";
-            this.clmFirstName.Name = "clmFirstName";
-            this.clmFirstName.ReadOnly = true;
-            this.clmFirstName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmFirstName.Width = 125;
-            // 
-            // clmFatherName
-            // 
-            this.clmFatherName.HeaderText = "Отчество";
-            this.clmFatherName.Name = "clmFatherName";
-            this.clmFatherName.ReadOnly = true;
-            this.clmFatherName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmFatherName.Width = 145;
-            // 
-            // clmPhoneNum
-            // 
-            this.clmPhoneNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.clmPhoneNum.HeaderText = "Паспорт";
-            this.clmPhoneNum.Name = "clmPhoneNum";
-            this.clmPhoneNum.ReadOnly = true;
-            this.clmPhoneNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPhoneNum.Width = 60;
-            // 
             // clmEnterpriseCode
             // 
             this.clmEnterpriseCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.clmEnterpriseCode.HeaderText = "№";
+            this.clmEnterpriseCode.HeaderText = "Код";
             this.clmEnterpriseCode.Name = "clmEnterpriseCode";
             this.clmEnterpriseCode.ReadOnly = true;
             this.clmEnterpriseCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmEnterpriseCode.Width = 27;
+            this.clmEnterpriseCode.Width = 34;
             // 
             // clmEnterpriseName
             // 
@@ -333,14 +289,50 @@
             this.clmINN.HeaderText = "ИНН";
             this.clmINN.Name = "clmINN";
             this.clmINN.ReadOnly = true;
-            this.clmINN.Width = 56;
+            this.clmINN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmINN.Width = 37;
+            // 
+            // clmSecondName
+            // 
+            this.clmSecondName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmSecondName.HeaderText = "Фамилия";
+            this.clmSecondName.MinimumWidth = 160;
+            this.clmSecondName.Name = "clmSecondName";
+            this.clmSecondName.ReadOnly = true;
+            this.clmSecondName.Width = 160;
+            // 
+            // clmFirstName
+            // 
+            this.clmFirstName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmFirstName.HeaderText = "Имя";
+            this.clmFirstName.MinimumWidth = 160;
+            this.clmFirstName.Name = "clmFirstName";
+            this.clmFirstName.ReadOnly = true;
+            this.clmFirstName.Width = 160;
+            // 
+            // clmFatherName
+            // 
+            this.clmFatherName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmFatherName.HeaderText = "Отчество";
+            this.clmFatherName.MinimumWidth = 155;
+            this.clmFatherName.Name = "clmFatherName";
+            this.clmFatherName.ReadOnly = true;
+            this.clmFatherName.Width = 155;
+            // 
+            // clmPhoneNum
+            // 
+            this.clmPhoneNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmPhoneNum.HeaderText = "Паспорт";
+            this.clmPhoneNum.MinimumWidth = 100;
+            this.clmPhoneNum.Name = "clmPhoneNum";
+            this.clmPhoneNum.ReadOnly = true;
+            this.clmPhoneNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // PartnersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 545);
-            this.Controls.Add(this.btnExit);
+            this.ClientSize = new System.Drawing.Size(609, 517);
             this.Controls.Add(this.dgvAgents);
             this.Controls.Add(this.lblAgents);
             this.Controls.Add(this.dgvPartners);
@@ -379,21 +371,20 @@
         private System.Windows.Forms.Button btnAddAgent;
         private System.Windows.Forms.Button btnEditAgent;
         private System.Windows.Forms.Button btnDeleteAgent;
-        private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label lblEnt;
-        private System.Windows.Forms.TextBox txtEnt;
         private System.Windows.Forms.Label lblEmp;
         private System.Windows.Forms.TextBox txtEmp;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmSecondName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmFirstName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmFatherName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmPhoneNum;
+        private System.Windows.Forms.Label labelOrg;
+        private System.Windows.Forms.TextBox txtEnt;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmEnterpriseCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmEnterpriseName;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmINN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmSecondName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmFirstName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmFatherName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmPhoneNum;
     }
 }

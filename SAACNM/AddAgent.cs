@@ -15,26 +15,29 @@ namespace SAACNM {
         private String secondName;
         private String firstName;
         private String fatherName;
-        private String agentPhone;
+        private String agentPass;
         private String agentID;
+        private String agentNewID;
         private String entCode;
         private bool isEdit = false;
-        MySqlConnection SqlConn;
-        public AddAgent(MySqlConnection conn, String code, String agentid = null, String second = null, 
-                                               String first = null, String father = null, String phone = null) {
+        public AddAgent(String code, String agentid = null, String second = null, 
+                                               String first = null, String father = null, String pass = null) {
             InitializeComponent();
-            SqlConn = conn;
-            if (second != null || first != null || father != null || phone != null) {
+            textPartID.ReadOnly = false;
+            if (second != null || first != null || father != null || pass != null) {
                 txtSecondName.Text = second;
                 txtFirstName.Text = first;
                 txtFatherName.Text = father;
-                txtPhone.Text = phone;
+                txtPass.Text = pass;
                 agentID = agentid;
                 isEdit = true;
                 this.Text = "Редактировать представителя";
                 this.btnAdd.Text = "Изменить";
+                textPartID.ReadOnly = true;
+                textPartID.Text = agentID;
             }
             entCode = code;
+            txtCode.Text = entCode;
         }
 
         private void txtSecondName_TextChanged(object sender, EventArgs e) {
@@ -42,7 +45,7 @@ namespace SAACNM {
         }
 
         private void txtPhone_TextChanged(object sender, EventArgs e) {
-            agentPhone = txtPhone.Text.ToString();
+            agentPass = txtPass.Text.ToString();
         }
 
         private void txtFirstName_TextChanged(object sender, EventArgs e) {
@@ -54,27 +57,50 @@ namespace SAACNM {
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-            if (secondName == null || firstName == null || fatherName == null || agentPhone == null) {
+            if (secondName == null || firstName == null || fatherName == null || agentPass == null) {
                 MessageBox.Show(this, "Заполните все поля.", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            DBRedactor dbr = new DBRedactor();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+
+            string error_message = Program.IsValidValue("VAR40", secondName);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Фамилия");
+                return;
+            }
+            else properties.Add("Фамилия", secondName);
+
+            error_message = Program.IsValidValue("VAR40", firstName);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Имя");
+                return;
+            }
+            else properties.Add("Имя", firstName);
+
+            error_message = Program.IsValidValue("VAR40", fatherName);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Отчество");
+                return;
+            }
+            else properties.Add("Отчество", fatherName);
+
+            error_message = Program.IsValidValue("PASS", agentPass);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Паспорт");
+                return;
+            }
+            else properties.Add("Паспорт", agentPass);
+
+
             if (isEdit) {
-                try { 
-                    // пытаемся вызвать процедуру
-                    // Фукнция: editAgent
-                    // Параметры: agentID, secondName, firstName, fatherName, phone
-                    //
-                    // создаем объект Command для вызова функции
-             /*       OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editAgent", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@agentID", OracleDbType.Int32).Value = agentID;
-                    cmdProc.Parameters.Add("@secondName", OracleDbType.Varchar2, 40).Value = secondName;
-                    cmdProc.Parameters.Add("@firstName", OracleDbType.Varchar2, 30).Value = firstName;
-                    cmdProc.Parameters.Add("@fatherName", OracleDbType.Varchar2, 40).Value = fatherName;
-                    cmdProc.Parameters.Add("@phone", OracleDbType.Varchar2, 12).Value = agentPhone;
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
+                try {
+                    dbr.updateByID("представитель", "ИД_представителя", agentID, properties);
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -82,21 +108,16 @@ namespace SAACNM {
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: addAgent
-                    // Параметры: secondName, firstName, fatherName, phone, partCode
-                    //
-                    // создаем объект Command для вызова функции
-             /*       OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addAgent", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@secondName", OracleDbType.Varchar2, 40).Value = secondName;
-                    cmdProc.Parameters.Add("@firstName", OracleDbType.Varchar2, 30).Value = firstName;
-                    cmdProc.Parameters.Add("@fatherName", OracleDbType.Varchar2, 40).Value = fatherName;
-                    cmdProc.Parameters.Add("@phone", OracleDbType.Varchar2, 12).Value = agentPhone;
-                    cmdProc.Parameters.Add("@partCode", OracleDbType.Int32).Value = entCode;
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
+                    properties.Add("ИД_организации", entCode);
+                    error_message = Program.IsValidValue("VAR10", agentNewID);
+                    if (error_message != null)
+                    {
+                        MessageBox.Show(error_message, "ИД_представителя");
+                        return;
+                    }
+                    else properties.Add("ИД_представителя", agentNewID);
+
+                    dbr.createNewKouple("представитель", properties);
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -117,6 +138,11 @@ namespace SAACNM {
             if (e.KeyChar == 13) {
                 btnAdd_Click(sender, null);
             }
+        }
+
+        private void textPartID_TextChanged(object sender, EventArgs e)
+        {
+            agentNewID = textPartID.Text.ToString();
         }
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="ConteinersForm.Designer.cs">
       <DependentUpon>ConteinersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="dbConnection.cs" />
     <Compile Include="DBRedactor.cs" />
     <Compile Include="EmployeeForm.cs">
       <SubType>Form</SubType>

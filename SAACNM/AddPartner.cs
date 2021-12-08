@@ -19,11 +19,9 @@ namespace SAACNM {
         private String partINN;
         private String oldCode;
         private bool isEdit = false;
-        public MySqlConnection SqlConn;
-        public AddPartner(MySqlConnection conn, String name = null, String address = null, 
+        public AddPartner(String name = null, String address = null, 
                                                         String phone = null, String INN = null, String code = null ) {
             InitializeComponent();
-            SqlConn = conn;
             if (name != null || address != null || phone != null || code != null|| INN != null) {
                 txtName.Text = name;
                 txtAddress.Text = address;
@@ -68,7 +66,7 @@ namespace SAACNM {
                 return;
             }
 
-            DBRedactor dbr = new DBRedactor(SqlConn);
+            DBRedactor dbr = new DBRedactor();
             Dictionary<string, string> properties = new Dictionary<string, string>();
 
             string error_message = Program.IsValidValue("DECIMAL100", partCode);

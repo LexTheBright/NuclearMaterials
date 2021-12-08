@@ -10,10 +10,6 @@ namespace SAACNM
 {
     class DBRedactor
     {
-        protected MySqlConnection dbConnect;
-
-        private DBRedactor(DBRedactor dbr) => dbConnect = dbr.dbConnect;
-        public DBRedactor(MySqlConnection myConnect) => dbConnect = myConnect;
         private string getErrorMessage(int ErrorNumber)
         {
             switch (ErrorNumber)
@@ -43,7 +39,7 @@ namespace SAACNM
             querry = $"USE nmlocal; INSERT INTO {table}({addingKeys})" +
                 $" VALUES ({addingValues})";
 
-            MySqlCommand comm = new MySqlCommand(querry, dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
             try
             {
                 comm.ExecuteNonQuery();
@@ -63,7 +59,7 @@ namespace SAACNM
         {
             string querry = "";
             querry = $"USE nmlocal; DELETE FROM {table} WHERE {id_title} = '{id}'";
-            MySqlCommand comm = new MySqlCommand(querry, dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
             try
             {
                 comm.ExecuteNonQuery();
@@ -90,7 +86,7 @@ namespace SAACNM
             querry = $"USE nmlocal; UPDATE {table} SET " + adding +
                 $" WHERE {id_title} = '{id}'";
 
-            MySqlCommand comm = new MySqlCommand(querry, dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
             try
             {
                 comm.ExecuteNonQuery();

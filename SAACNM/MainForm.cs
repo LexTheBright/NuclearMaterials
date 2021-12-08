@@ -12,53 +12,26 @@ using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class MainForm : Form {
-        MySqlConnection myConnection;
-        /*OracleConnection SqlConn;
-        private String userid = "KAV_18";
-        private String password = "KAV_98";*/
         public MainForm() {
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e) {
-            string username = "root";
-            string password = "admin";
-            string dbName = "nmlocal";
-            
-            try
-            {
-                // установка соединения с БД
-                myConnection = new MySqlConnection(@"Server= localhost;Database=" + dbName + ";port=3306;User Id=" + username + ";password=" + password + ";charset=utf8");
-                myConnection.Open();
-                /*
-                SqlConn = new OracleConnection();
-                SqlConn.ConnectionString = "DATA SOURCE=oti.ru:1521/ALFA;PERSIST SECURITY INFO=True;USER ID=" +
-                                                                                    userid + ";PASSWORD=" + password;
-                SqlConn.Open();*/
-            }
-            catch (Exception ex)
-            {
-                myConnection = null;
-                MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
         }
 
         private void tsPartners_Click(object sender, EventArgs e) {
-            PartnersForm partner = new PartnersForm(myConnection);
+            PartnersForm partner = new PartnersForm();
             partner.ShowDialog();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             // отключение соединения с БД
-        //    if (SqlConn != null && SqlConn.State != ConnectionState.Closed) {
-        //        SqlConn.Close();
-        //    }
+            dbConnection.closeConnect();
         }
 
         private void tsMaterialsType_Click(object sender, EventArgs e) {
-        //    MatTypeForm types = new MatTypeForm(SqlConn);
-        //    types.ShowDialog();
+            MatTypeForm types = new MatTypeForm();
+            types.ShowDialog();
         }
 
         private void tsContainers_Click(object sender, EventArgs e) {
