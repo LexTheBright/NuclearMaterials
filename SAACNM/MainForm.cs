@@ -35,13 +35,13 @@ namespace SAACNM {
         }
 
         private void tsContainers_Click(object sender, EventArgs e) {
-        //    ConteinersForm cont = new ConteinersForm(SqlConn);
-        //    cont.ShowDialog();
+            ConteinersForm cont = new ConteinersForm();
+            cont.ShowDialog();
         }
 
         private void tsScales_Click(object sender, EventArgs e) {
-        //    ScalesForm scale = new ScalesForm(SqlConn);
-        //    scale.ShowDialog();
+            ScalesForm scale = new ScalesForm();
+            scale.ShowDialog();
         }
 
         private void tsPosts_Click(object sender, EventArgs e) {

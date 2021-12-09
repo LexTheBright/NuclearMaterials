@@ -117,7 +117,7 @@ namespace SAACNM {
                     }
                     else properties.Add("ИД_представителя", agentNewID);
 
-                    dbr.createNewKouple("представитель", properties);
+                    if (dbr.createNewKouple("представитель", properties) == 1) return;
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

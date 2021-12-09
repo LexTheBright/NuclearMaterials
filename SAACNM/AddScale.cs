@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class AddScale : Form {
@@ -19,11 +19,9 @@ namespace SAACNM {
         private String scaleError;
         private String scaleCalibDate;
         private bool isEdit = false;
-        OracleConnection SqlConn;
-        public AddScale(OracleConnection conn, String num = null, String mark = null, String serial = null, 
+        public AddScale(String num = null, String mark = null, String serial = null, 
                                                String lim = null, String error = null, String date = null) {
             InitializeComponent();
-            SqlConn = conn;
             dtpScaleDate.Value = DateTime.Now;
             if (num != null || mark != null || serial != null || lim != null || error != null || date != null) {
                 txtScaleNum.Text = num;
@@ -44,25 +42,47 @@ namespace SAACNM {
                 MessageBox.Show(this, "Заполните все поля.", "Весы", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            DBRedactor dbr = new DBRedactor();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+
+            string error_message = Program.IsValidValue("DECIMAL104", scaleError);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Погрешность");
+                return;
+            }
+            else properties.Add("Погрешность", scaleError);
+
+            error_message = Program.IsValidValue("DECIMAL104", scaleLimit);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Предел_весов");
+                return;
+            }
+            else properties.Add("Предел_весов", scaleLimit);
+
+            error_message = Program.IsValidValue("VAR20", scaleMark);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Марка");
+                return;
+            }
+            else properties.Add("Марка", scaleMark);
+
+            error_message = Program.IsValidValue("VAR20", scaleSerial);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Серийный_номер");
+                return;
+            }
+            else properties.Add("Серийный_номер", scaleSerial);
+
+            properties.Add("Дата_калибровки", Convert.ToDateTime(scaleCalibDate).ToString("yyyy-MM-dd HH:mm:ss"));
+
             if (isEdit) {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: editScale
-                    // Параметры: scaleNum, oldNum, scaleMark, scaleSerial, scaleLimit, scaleError, scaleCalibDate
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editScale", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@scaleNum", OracleDbType.Varchar2, 10).Value = scaleNum;
-                    cmdProc.Parameters.Add("@oldNum", OracleDbType.Varchar2, 10).Value = oldNum;
-                    cmdProc.Parameters.Add("@scaleMark", OracleDbType.Varchar2, 20).Value = scaleMark;
-                    cmdProc.Parameters.Add("@scaleSerial", OracleDbType.Varchar2, 20).Value = scaleSerial;
-                    cmdProc.Parameters.Add("@scaleLimit", OracleDbType.Double).Value = double.Parse(scaleLimit);
-                    cmdProc.Parameters.Add("@scaleError", OracleDbType.Double).Value = double.Parse(scaleError);
-                    cmdProc.Parameters.Add("@scaleCalibDate", OracleDbType.Date).Value = Convert.ToDateTime(scaleCalibDate);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    dbr.updateByID("весы", "Идентификатор_весов", scaleNum, properties);
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -70,33 +90,27 @@ namespace SAACNM {
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Весы", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: addScale
-                    // Параметры: scaleNum, scaleMark, scaleSerial, scaleLimit, scaleError, scaleCalibDate
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addScale", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@scaleNum", OracleDbType.Varchar2, 10).Value = scaleNum;
-                    cmdProc.Parameters.Add("@scaleMark", OracleDbType.Varchar2, 20).Value = scaleMark;
-                    cmdProc.Parameters.Add("@scaleSerial", OracleDbType.Varchar2, 20).Value = scaleSerial;
-                    cmdProc.Parameters.Add("@scaleLimit", OracleDbType.Double).Value = double.Parse(scaleLimit);
-                    cmdProc.Parameters.Add("@scaleError", OracleDbType.Double).Value = double.Parse(scaleError);
-                    cmdProc.Parameters.Add("@scaleCalibDate", OracleDbType.Date).Value = Convert.ToDateTime(scaleCalibDate);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    error_message = Program.IsValidValue("VAR10", scaleNum);
+                    if (error_message != null)
+                    {
+                        MessageBox.Show(error_message, "Идентификатор_весов");
+                        return;
+                    }
+                    else properties.Add("Идентификатор_весов", scaleNum);
+
+                    if (dbr.createNewKouple("весы", properties) == 1) return;
                 } catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Весы успешно добавлены.", "Весы", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            this.Close();
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void txtScaleNum_TextChanged(object sender, EventArgs e) {
@@ -125,7 +139,7 @@ namespace SAACNM {
 
         private void AddScale_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
-                btnCancel_Click(sender, null);
+                Close();
             }
             if (e.KeyChar == 13) {
                 btnAdd_Click(sender, null);

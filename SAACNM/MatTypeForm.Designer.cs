@@ -68,13 +68,13 @@
             this.lblMatType.AutoSize = true;
             this.lblMatType.Location = new System.Drawing.Point(3, 14);
             this.lblMatType.Name = "lblMatType";
-            this.lblMatType.Size = new System.Drawing.Size(65, 14);
+            this.lblMatType.Size = new System.Drawing.Size(86, 14);
             this.lblMatType.TabIndex = 1;
-            this.lblMatType.Text = "Найти тип";
+            this.lblMatType.Text = "Выделить тип";
             // 
             // txtMatType
             // 
-            this.txtMatType.Location = new System.Drawing.Point(74, 11);
+            this.txtMatType.Location = new System.Drawing.Point(95, 11);
             this.txtMatType.Name = "txtMatType";
             this.txtMatType.Size = new System.Drawing.Size(200, 22);
             this.txtMatType.TabIndex = 2;

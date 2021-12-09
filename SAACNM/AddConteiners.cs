@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
+
 
 namespace SAACNM {
     public partial class AddConteiners : Form {
@@ -15,19 +16,17 @@ namespace SAACNM {
         private String oldNum;
         private String contType;
         private String contMass;
-        private String contLength;
+        private String contMat;
         private String contWidth;
         private String contHeight;
         private bool isEdit = false;
-        OracleConnection SqlConn;
-        public AddConteiners(OracleConnection conn, String num = null, String len = null, String width = null,
+        public AddConteiners(String num = null, String mat = null, String width = null,
                                                     String high = null, String mass = null, String type = null) {
             InitializeComponent();
-            SqlConn = conn;
-            if (num != null || len != null || width != null || high != null || mass != null || type != null) {
+            if (num != null || mat != null || width != null || high != null || mass != null || type != null) {
                 txtContNum.Text = num;
                 oldNum = num;
-                txtLength.Text = len;
+                txtLength.Text = mat;
                 txtWidth.Text = width;
                 txtHeight.Text = high;
                 txtMass.Text = mass;
@@ -39,29 +38,57 @@ namespace SAACNM {
 
         private void btnAdd_Click(object sender, EventArgs e) {
             if (contNum == null || contType == null || contMass == null ||
-                contLength == null || contWidth == null || contHeight == null) {
+                contMat == null || contWidth == null || contHeight == null) {
                 MessageBox.Show(this, "Заполните все поля.", "Контейнер", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            DBRedactor dbr = new DBRedactor();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+
+            string error_message = Program.IsValidValue("DECIMAL100", contMass);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Масса");
+                return;
+            }
+            else properties.Add("Масса", contMass);
+
+            error_message = Program.IsValidValue("DECIMAL100", contHeight);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Высота");
+                return;
+            }
+            else properties.Add("Высота", contHeight);
+
+            error_message = Program.IsValidValue("DECIMAL100", contWidth);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Ширина");
+                return;
+            }
+            else properties.Add("Ширина", contWidth);
+
+            error_message = Program.IsValidValue("VAR16", contMat);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Материал");
+                return;
+            }
+            else properties.Add("Материал", contMat);
+
+            error_message = Program.IsValidValue("VAR10", contType);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Тип_контейнера");
+                return;
+            }
+            else properties.Add("Тип_контейнера", contType);
+
             if (isEdit) {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: editCont
-                    // Параметры: contNum, oldNum, contType, contMass, contLength, contWidth, contHeight
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editCont", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@contNum", OracleDbType.Varchar2, 10).Value = contNum;
-                    cmdProc.Parameters.Add("@oldNum", OracleDbType.Varchar2, 10).Value = contNum;
-                    cmdProc.Parameters.Add("@contType", OracleDbType.Varchar2, 10).Value = contType;
-                    cmdProc.Parameters.Add("@contMass", OracleDbType.Double).Value = double.Parse(contMass);
-                    cmdProc.Parameters.Add("@contLength", OracleDbType.Double).Value = double.Parse(contLength);
-                    cmdProc.Parameters.Add("@contWidth", OracleDbType.Double).Value = double.Parse(contWidth);
-                    cmdProc.Parameters.Add("@contHeight", OracleDbType.Double).Value = double.Parse(contHeight);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    dbr.updateByID("контейнер", "ИД_контейнера", contNum, properties);
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -69,33 +96,27 @@ namespace SAACNM {
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Контейнер", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: addCont
-                    // Параметры: contNum, contType, contMass, contLength, contWidth, contHeight
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addCont", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@contNum", OracleDbType.Varchar2, 10).Value = contNum;
-                    cmdProc.Parameters.Add("@contType", OracleDbType.Varchar2, 10).Value = contType;
-                    cmdProc.Parameters.Add("@contMass", OracleDbType.Double).Value = double.Parse(contMass);
-                    cmdProc.Parameters.Add("@contLength", OracleDbType.Double).Value = double.Parse(contLength);
-                    cmdProc.Parameters.Add("@contWidth", OracleDbType.Double).Value = double.Parse(contWidth);
-                    cmdProc.Parameters.Add("@contHeight", OracleDbType.Double).Value = double.Parse(contHeight);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    error_message = Program.IsValidValue("DECIMAL100", contNum);
+                    if (error_message != null)
+                    {
+                        MessageBox.Show(error_message, "ИД_контейнера");
+                        return;
+                    }
+                    else properties.Add("ИД_контейнера", contNum);
+
+                    if (dbr.createNewKouple("контейнер", properties) == 1) return;
+
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Контейнер успешно добавлен.", "Контейнер", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            this.Close();
+            Close();
         }
 
         private void btnClose_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void txtContNum_TextChanged(object sender, EventArgs e) {
@@ -103,7 +124,7 @@ namespace SAACNM {
         }
 
         private void txtLength_TextChanged(object sender, EventArgs e) {
-            contLength = txtLength.Text.ToString();
+            contMat = txtLength.Text.ToString();
         }
 
         private void txtContType_TextChanged(object sender, EventArgs e) {
@@ -124,7 +145,7 @@ namespace SAACNM {
 
         private void AddConteiners_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
-                btnClose_Click(sender, null);
+                Close();
             }
             if (e.KeyChar == 13) {
                 btnAdd_Click(sender, null);
