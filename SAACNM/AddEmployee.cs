@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class AddEmployee : Form {
@@ -28,12 +28,10 @@ namespace SAACNM {
         private bool isWorking = true;
         private bool isEdit = false;
         private int indexPost;
-        OracleConnection SqlConn;
-        public AddEmployee(OracleConnection conn, String id = null, String sec = null, String fir = null, String fat = null, String birth = null, 
+        public AddEmployee(String id = null, String sec = null, String fir = null, String fat = null, String birth = null, 
                                                   String male = null, String phone = null, String address = null, String post = null,
                                                   String passport = null, String inn = null, String snils = null) {
             InitializeComponent();
-            SqlConn = conn;
             dtpBirthDate.Value = DateTime.Now;
             if (sec != null) {
                 empID = id;
@@ -41,7 +39,7 @@ namespace SAACNM {
                 txtFirName.Text = fir;
                 txtFatName.Text = fat;
                 dtpBirthDate.Value = Convert.ToDateTime(birth);
-                if (male.Equals("м")) {
+                if (male.Equals("муж")) {
                     cbMale.Text = "мужской";
                 } else {
                     cbMale.Text = "женский";
@@ -65,15 +63,90 @@ namespace SAACNM {
                 MessageBox.Show(this, "Заполните все поля!", "Содрудник", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            DBRedactor dbr = new DBRedactor();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+
+            string error_message = Program.IsValidValue("VAR40", empSecName);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Фамилия");
+                return;
+            }
+            else properties.Add("Фамилия", empSecName);
+
+            error_message = Program.IsValidValue("VAR40", empFirName);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Имя");
+                return;
+            }
+            else properties.Add("Имя", empFirName);
+
+            error_message = Program.IsValidValue("VAR40", empFatName);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Отчество");
+                return;
+            }
+            else properties.Add("Отчество", empFatName);
+
+            error_message = Program.IsValidValue("PASS", empPassport);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Паспорт");
+                return;
+            }
+            else properties.Add("Паспорт", empPassport);
+
+            properties.Add("Дата_рождения", Convert.ToDateTime(empBirthDate).ToString("yyyy-MM-dd HH:mm:ss"));
+
+            error_message = Program.IsValidValue("VAR14", empPhone);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Номер_телефона");
+                return;
+            }
+            else properties.Add("Номер_телефона", empPhone);
+
+            error_message = Program.IsValidValue("VAR11", SNILS);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "СНИЛС");
+                return;
+            }
+            else properties.Add("СНИЛС", SNILS);
+
+            error_message = Program.IsValidValue("VAR12", INN);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "ИНН");
+                return;
+            }
+            else properties.Add("ИНН", INN);
+
+            error_message = Program.IsValidValue("VAR30", empAddress);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Адрес");
+                return;
+            }
+            else properties.Add("Адрес", empAddress);
+
+            properties.Add("Пол", male);
+
+            properties.Add("Должность", indexPost.ToString());
+
             if (isEdit) {
-                if (!isWorking) indexPost = -1;
-                try { 
+                //if (!isWorking) indexPost = -1;
+                try {
+                    dbr.updateByID("сотрудники", "ИД_сотрудника", empID, properties);
                     // пытаемся вызвать процедуру
                     // Фукнция: editEmployee
                     // Параметры: empID, empSecName, empFirName, empFatName, indexPost, empAddress, empPhone, empPassport, empBirthDate, INN, SNILS, male
                     //
                     // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editEmployee", SqlConn);
+                    /*OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editEmployee", SqlConn);
                     cmdProc.CommandType = CommandType.StoredProcedure;
                     // добавляем параметры
                     cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
@@ -89,21 +162,32 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@SNILS", OracleDbType.Varchar2, 11).Value = SNILS;
                     cmdProc.Parameters.Add("@male", OracleDbType.Varchar2, 1).Value = male;
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
-                } catch (Exception ex) {
+                    cmdProc.ExecuteNonQuery();*/
+                }
+                catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             MessageBox.Show(this, "Информация успешно отредактирована.", "Сотрудник", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
-                if (!isWorking) indexPost = -1;
+                //if (!isWorking) indexPost = -1;
                 try {
+                    error_message = Program.IsValidValue("DECIMAL100", empID);
+                    if (error_message != null)
+                    {
+                        MessageBox.Show(error_message, "ИД_сотрудника");
+                        return;
+                    }
+                    else properties.Add("ИД_сотрудника", empID);
+
+                    if (dbr.createNewKouple("сотрудники", properties) == 1) return;
                     // пытаемся вызвать процедуру
                     // Фукнция: addEmployee
                     // Параметры: empSecName, empFirName, empFatName, indexPost, empAddress, empPhone, empPassport, empBirthDate, INN, SNILS, male
                     //
                     // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addEmployee", SqlConn);
+                    /*OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addEmployee", SqlConn);
                     cmdProc.CommandType = CommandType.StoredProcedure;
                     // добавляем параметры
                     cmdProc.Parameters.Add("@empSecName", OracleDbType.Varchar2, 40).Value = empSecName;
@@ -118,39 +202,40 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@SNILS", OracleDbType.Varchar2, 11).Value = SNILS;
                     cmdProc.Parameters.Add("@male", OracleDbType.Varchar2, 1).Value = male;
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
-                } catch (Exception ex) {
+                    cmdProc.ExecuteNonQuery();*/
+                }
+                catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Сотрудник успешно добавлен.", "Сотрудник", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            this.Close();
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void AddEmployee_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM ДОЛЖНОСТИ", SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM должности", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        postIDs.Add(Convert.ToString(dbReader["НОМЕР_ДОЛЖНОСТИ"]));
-                        cbPosts.Items.Add(Convert.ToString(dbReader["НАИМЕНОВАНИЕ_ДОЛЖНОСТИ"]));
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            postIDs.Add(Convert.ToString(dbReader["Код_должности"]));
+                            cbPosts.Items.Add(Convert.ToString(dbReader["Название"]));
+                        }
                     }
                 }
                 cbPosts.Text = empPost;
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
         }
 
@@ -172,9 +257,9 @@ namespace SAACNM {
 
         private void cbMale_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbMale.SelectedItem.ToString().Equals("мужской")) {
-                male = "м";
+                male = "муж";
             } else {
-                male = "ж";
+                male = "жен";
             }
         }
 

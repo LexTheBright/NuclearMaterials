@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             this.dgvPosts = new System.Windows.Forms.DataGridView();
-            this.clmPostNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmPostName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmPostPowers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblPostName = new System.Windows.Forms.Label();
             this.txtPostName = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.clmPostNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmPostName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmPostPowers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPosts)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvPosts
@@ -55,40 +56,17 @@
             this.dgvPosts.MultiSelect = false;
             this.dgvPosts.Name = "dgvPosts";
             this.dgvPosts.ReadOnly = true;
+            this.dgvPosts.RowHeadersVisible = false;
             this.dgvPosts.RowHeadersWidth = 20;
             this.dgvPosts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPosts.Size = new System.Drawing.Size(592, 244);
             this.dgvPosts.TabIndex = 0;
             this.dgvPosts.SelectionChanged += new System.EventHandler(this.dgvPosts_SelectionChanged);
             // 
-            // clmPostNum
-            // 
-            this.clmPostNum.HeaderText = "№ должности";
-            this.clmPostNum.Name = "clmPostNum";
-            this.clmPostNum.ReadOnly = true;
-            this.clmPostNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPostNum.Width = 120;
-            // 
-            // clmPostName
-            // 
-            this.clmPostName.HeaderText = "Наименование должности";
-            this.clmPostName.Name = "clmPostName";
-            this.clmPostName.ReadOnly = true;
-            this.clmPostName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPostName.Width = 210;
-            // 
-            // clmPostPowers
-            // 
-            this.clmPostPowers.HeaderText = "Полномочия";
-            this.clmPostPowers.Name = "clmPostPowers";
-            this.clmPostPowers.ReadOnly = true;
-            this.clmPostPowers.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPostPowers.Width = 240;
-            // 
             // lblPostName
             // 
             this.lblPostName.AutoSize = true;
-            this.lblPostName.Location = new System.Drawing.Point(12, 269);
+            this.lblPostName.Location = new System.Drawing.Point(3, 15);
             this.lblPostName.Name = "lblPostName";
             this.lblPostName.Size = new System.Drawing.Size(75, 14);
             this.lblPostName.TabIndex = 1;
@@ -96,7 +74,7 @@
             // 
             // txtPostName
             // 
-            this.txtPostName.Location = new System.Drawing.Point(93, 266);
+            this.txtPostName.Location = new System.Drawing.Point(84, 12);
             this.txtPostName.Name = "txtPostName";
             this.txtPostName.Size = new System.Drawing.Size(150, 22);
             this.txtPostName.TabIndex = 2;
@@ -104,55 +82,81 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(355, 265);
+            this.btnAdd.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnAdd.Location = new System.Drawing.Point(289, 5);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 25);
+            this.btnAdd.Size = new System.Drawing.Size(89, 34);
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "Добавить";
-            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(436, 265);
+            this.btnEdit.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnEdit.Location = new System.Drawing.Point(384, 5);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(99, 25);
+            this.btnEdit.Size = new System.Drawing.Size(110, 34);
             this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "Редактировать";
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(541, 265);
+            this.btnDelete.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnDelete.Location = new System.Drawing.Point(500, 5);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(63, 25);
+            this.btnDelete.Size = new System.Drawing.Size(89, 34);
             this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "Удалить";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // btnExit
+            // panel1
             // 
-            this.btnExit.Location = new System.Drawing.Point(541, 310);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(63, 25);
-            this.btnExit.TabIndex = 6;
-            this.btnExit.Text = "Выход";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.panel1.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.panel1.Controls.Add(this.btnDelete);
+            this.panel1.Controls.Add(this.txtPostName);
+            this.panel1.Controls.Add(this.btnAdd);
+            this.panel1.Controls.Add(this.lblPostName);
+            this.panel1.Controls.Add(this.btnEdit);
+            this.panel1.Location = new System.Drawing.Point(12, 256);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(592, 43);
+            this.panel1.TabIndex = 16;
+            // 
+            // clmPostNum
+            // 
+            this.clmPostNum.HeaderText = "Код должности";
+            this.clmPostNum.Name = "clmPostNum";
+            this.clmPostNum.ReadOnly = true;
+            this.clmPostNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmPostNum.Width = 120;
+            // 
+            // clmPostName
+            // 
+            this.clmPostName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmPostName.HeaderText = "Наименование должности";
+            this.clmPostName.Name = "clmPostName";
+            this.clmPostName.ReadOnly = true;
+            this.clmPostName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmPostName.Width = 148;
+            // 
+            // clmPostPowers
+            // 
+            this.clmPostPowers.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clmPostPowers.HeaderText = "Полномочия";
+            this.clmPostPowers.Name = "clmPostPowers";
+            this.clmPostPowers.ReadOnly = true;
+            this.clmPostPowers.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // PostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(616, 347);
-            this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.txtPostName);
-            this.Controls.Add(this.lblPostName);
+            this.ClientSize = new System.Drawing.Size(616, 313);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgvPosts);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -164,8 +168,9 @@
             this.Load += new System.EventHandler(this.PostForm_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PostForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPosts)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -177,7 +182,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPostNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPostName;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPostPowers;

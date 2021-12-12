@@ -43,7 +43,7 @@ namespace SAACNM {
         }
 
         private void btnChooseEmp_Click(object sender, EventArgs e) {
-            EmployeeForm emp = new EmployeeForm(SqlConn);
+            EmployeeForm emp = new EmployeeForm();
             empID = emp.getIDEmployee();
             OracleDataReader dbReader = null;
             OracleCommand cmdSelect = new OracleCommand("SELECT ФАМИЛИЯ FROM СОТРУДНИК WHERE ID_СОТРУДНИКА = " + empID, SqlConn);

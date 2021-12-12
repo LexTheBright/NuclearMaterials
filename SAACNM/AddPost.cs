@@ -18,57 +18,98 @@ using Oracle.DataAccess.Client;
 // 1 1 1 (7) Перемещение, Отправка, Получение
 namespace SAACNM {
     public partial class AddPost : Form  {
-        private const int POWER_MOVE = 1;
-        private const int POWER_SEND = 2;
-        private const int POWER_GET = 4;
-        private int powers = 0;
         private String postNum;
         private String oldNum;
         private String postName;
+        private String[] oldPowers;
+        private int isPowered = 0;
         private bool isEdit = false;
-        OracleConnection SqlConn;
-        public AddPost(OracleConnection conn, String num = null, String name = null, int power = 0) {
+        public AddPost(String num = null, String name = null, String[] powers = null) {
             InitializeComponent();
-            SqlConn = conn;
-            if (num != null || name != null || power != 0) {
+            if (num != null || name != null || powers != null) {
                 txtPostNum.Text = num;
                 oldNum = num;
                 txtPostName.Text = name;
-                powers = power;
-                if ((powers & POWER_MOVE) == POWER_MOVE) cbMove.CheckState = CheckState.Checked;
-                if ((powers & POWER_SEND) == POWER_SEND) cbSend.CheckState = CheckState.Checked;
-                if ((powers & POWER_GET) == POWER_GET) cbGet.CheckState = CheckState.Checked;
+                oldPowers = powers;
+                if (powers.Contains("Перемещение"))
+                {
+                    cbMove.CheckState = CheckState.Checked;
+                }
+                if (powers.Contains("Отправка"))
+                {
+                    cbSend.CheckState = CheckState.Checked;
+                }
+                if (powers.Contains("Получение"))
+                {
+                    cbGet.CheckState = CheckState.Checked;
+                }
                 isEdit = true;
                 btnAdd.Text = "Изменить";
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-
-            if (postName == null || postNum == null || powers == 0) {
+            if (cbMove.CheckState == CheckState.Checked || cbSend.CheckState == CheckState.Checked || cbGet.CheckState == CheckState.Checked) isPowered = 1;
+            if (postName == null || postNum == null || isPowered == 0) {
                 MessageBox.Show(this, "Заполните все поля!", "Должность", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            DBRedactor dbr = new DBRedactor();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+
+            string error_message = Program.IsValidValue("VAR100", postName);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Название");
+                return;
+            }
+            else properties.Add("Название", postName);
+
             if (isEdit) {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: editPost
-                    // Параметры: postNum, oldNum, postName, postPower
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editPost", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@postNum", OracleDbType.Int32).Value = int.Parse(postNum);
-                    cmdProc.Parameters.Add("@oldNum", OracleDbType.Int32).Value = int.Parse(oldNum);
-                    cmdProc.Parameters.Add("@postName", OracleDbType.Varchar2, 50).Value = postName;
-                    cmdProc.Parameters.Add("@postPower", OracleDbType.Int32).Value = powers;
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    dbr.updateByID("должности", "Код_должности", postNum, properties);
+                    properties.Clear();
+                    //Если есть изменения по полномочиям - отработать
+                    if (cbMove.CheckState == CheckState.Checked && !oldPowers.Contains("Перемещение"))
+                    {
+                        properties.Add("Код_должности", postNum);
+                        properties.Add("Полномочия", "Перемещение");
+                        if (dbr.createNewKouple("полномочия", properties) == 1) return;
+                        properties.Clear();
+                    }
+                    if (cbMove.CheckState == CheckState.Unchecked && oldPowers.Contains("Перемещение"))
+                    {
+                        dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Перемещение");
+                    }
+
+                    if (cbSend.CheckState == CheckState.Checked && !oldPowers.Contains("Отправка"))
+                    {
+                        properties.Add("Код_должности", postNum);
+                        properties.Add("Полномочия", "Отправка");
+                        if (dbr.createNewKouple("полномочия", properties) == 1) return;
+                        properties.Clear();
+                    }
+                    if (cbSend.CheckState == CheckState.Unchecked && oldPowers.Contains("Отправка"))
+                    {
+                        dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Отправка");
+                    }
+
+                    if (cbGet.CheckState == CheckState.Checked && !oldPowers.Contains("Получение"))
+                    {
+                        properties.Add("Код_должности", postNum);
+                        properties.Add("Полномочия", "Получение");
+                        if (dbr.createNewKouple("полномочия", properties) == 1) return;
+                        properties.Clear();
+                    }
+                    if (cbGet.CheckState == CheckState.Unchecked && oldPowers.Contains("Получение"))
+                    {
+                        dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Получение");
+                    }
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -76,26 +117,47 @@ namespace SAACNM {
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Должность", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: addPost
-                    // Параметры: postNum, postName, postPower
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addPost", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@postNum", OracleDbType.Int32).Value = int.Parse(postNum);
-                    cmdProc.Parameters.Add("@postName", OracleDbType.Varchar2, 50).Value = postName;
-                    cmdProc.Parameters.Add("@postPower", OracleDbType.Int32).Value = powers;
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    error_message = Program.IsValidValue("DECIMAL100", postNum);
+                    if (error_message != null)
+                    {
+                        MessageBox.Show(error_message, "Код_должности");
+                        return;
+                    }
+                    else properties.Add("Код_должности", postNum);
+
+                    if (dbr.createNewKouple("должности", properties) == 1) return;
+                    properties.Clear();
+
+                    if (cbMove.CheckState == CheckState.Checked)
+                    {
+                        properties.Add("Код_должности", postNum);
+                        properties.Add("Полномочия", "Перемещение");
+                        if (dbr.createNewKouple("полномочия", properties) == 1) return;
+                        properties.Clear();
+                    }
+
+                    if (cbSend.CheckState == CheckState.Checked)
+                    {
+                        properties.Add("Код_должности", postNum);
+                        properties.Add("Полномочия", "Отправка");
+                        if (dbr.createNewKouple("полномочия", properties) == 1) return;
+                        properties.Clear();
+                    }
+
+                    if (cbGet.CheckState == CheckState.Checked)
+                    {
+                        properties.Add("Код_должности", postNum);
+                        properties.Add("Полномочия", "Получение");
+                        if (dbr.createNewKouple("полномочия", properties) == 1) return;
+                        properties.Clear();
+                    }
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Должность успешно добавлена.", "Должность", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            this.Close();
+            Close();
         }
 
         private void txtPostNum_TextChanged(object sender, EventArgs e) {
@@ -104,30 +166,6 @@ namespace SAACNM {
 
         private void txtPostName_TextChanged(object sender, EventArgs e) {
             postName = txtPostName.Text.ToString();
-        }
-
-        private void cbMove_CheckedChanged(object sender, EventArgs e) {
-            if (cbMove.CheckState == CheckState.Checked) {
-                powers |= POWER_MOVE;
-            } else {
-                powers ^= POWER_MOVE;
-            }
-        }
-
-        private void cbSend_CheckedChanged(object sender, EventArgs e) {
-            if (cbSend.CheckState == CheckState.Checked) {
-                powers |= POWER_SEND;
-            } else {
-                powers ^= POWER_SEND;
-            }
-        }
-
-        private void cbGet_CheckedChanged(object sender, EventArgs e) {
-            if (cbGet.CheckState == CheckState.Checked) {
-                powers |= POWER_GET;
-            } else {
-                powers ^= POWER_GET;
-            }
         }
 
         private void AddPost_KeyPress(object sender, KeyPressEventArgs e) {

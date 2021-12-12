@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class EmployeeForm : Form {
@@ -24,46 +24,43 @@ namespace SAACNM {
         private ArrayList INNs = new ArrayList();
         private ArrayList SNILSs = new ArrayList();
         private ArrayList males = new ArrayList();
-        OracleConnection SqlConn;
         private int index = -1;
-        public EmployeeForm(OracleConnection conn) {
+        public EmployeeForm() {
             InitializeComponent();
             btnChoose.Enabled = false;
-            SqlConn = conn;
         }
 
         private void EmployeeForm_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM СОТРУДНИКИ_Д", SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        empID = Convert.ToString(dbReader["ID_СОТРУДНИКА"]);
-                        empSecName = Convert.ToString(dbReader["ФАМИЛИЯ"]);
-                        empFirName = Convert.ToString(dbReader["ИМЯ"]);
-                        empFatName = Convert.ToString(dbReader["ОТЧЕСТВО"]);
-                        empPost = Convert.ToString(dbReader["ДОЛЖНОСТЬ"]);
-                        empAddress = Convert.ToString(dbReader["АДРЕС"]);
-                        empPhone = Convert.ToString(dbReader["НОМЕР_ТЕЛЕФОНА"]);
-                        empBirthDate = Convert.ToString(Convert.ToDateTime(dbReader["ДАТА_РОЖДЕНИЯ"]).ToShortDateString());
-                        empPassport = Convert.ToString(dbReader["ПАСПОРТ"]);
-                        INNs.Add(Convert.ToString(dbReader["ИНН"]));
-                        SNILSs.Add(Convert.ToString(dbReader["СНИЛС"]));
-                        males.Add(Convert.ToString(dbReader["ПОЛ"]));
-                        dgvEmployee.Rows.Add(empID, empSecName, empFirName, empFatName, empPost, 
-                                             empAddress, empPhone, empBirthDate, empPassport);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            empID = Convert.ToString(dbReader["ИД_сотрудника"]);
+                            empSecName = Convert.ToString(dbReader["Фамилия"]);
+                            empFirName = Convert.ToString(dbReader["Имя"]);
+                            empFatName = Convert.ToString(dbReader["Отчество"]);
+                            empPost = Convert.ToString(dbReader["Должность"]);
+                            empAddress = Convert.ToString(dbReader["Адрес"]);
+                            empPhone = Convert.ToString(dbReader["Номер_телефона"]);
+                            empBirthDate = Convert.ToString(Convert.ToDateTime(dbReader["Дата_рождения"]).ToShortDateString());
+                            empPassport = Convert.ToString(dbReader["Паспорт"]);
+                            INNs.Add(Convert.ToString(dbReader["ИНН"]));
+                            SNILSs.Add(Convert.ToString(dbReader["СНИЛС"]));
+                            males.Add(Convert.ToString(dbReader["Пол"]));
+                            dgvEmployee.Rows.Add(empID, empSecName, empFirName, empFatName, empPost,
+                                                 empAddress, empPhone, empBirthDate, empPassport);
 
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
-            }
+                Close();
+            } 
         }
 
         private void txtSecondName_TextChanged(object sender, EventArgs e) {
@@ -78,7 +75,7 @@ namespace SAACNM {
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-            AddEmployee emp = new AddEmployee(SqlConn);
+            AddEmployee emp = new AddEmployee();
             emp.ShowDialog();
             INNs.Clear();
             SNILSs.Clear();
@@ -101,7 +98,7 @@ namespace SAACNM {
             empPhone = dgvEmployee.Rows[index].Cells[6].Value.ToString();
             empBirthDate = dgvEmployee.Rows[index].Cells[7].Value.ToString();
             empPassport = dgvEmployee.Rows[index].Cells[8].Value.ToString();
-            AddEmployee emp = new AddEmployee(SqlConn, empID, empSecName, empFirName, empFatName, empBirthDate, males[index].ToString(),
+            AddEmployee emp = new AddEmployee(empID, empSecName, empFirName, empFatName, empBirthDate, males[index].ToString(),
                                                         empPhone, empAddress, empPost, empPassport, 
                                                         INNs[index].ToString(), SNILSs[index].ToString());
             emp.ShowDialog();
@@ -118,17 +115,8 @@ namespace SAACNM {
                 return;
             }
             try {
-                // пытаемся вызвать процедуру
-                // Фукнция: deleteEmployee
-                // Параметры: empID
-                //
-                // создаем объект Command для вызова функции
-                OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.deleteEmployee", SqlConn);
-                cmdProc.CommandType = CommandType.StoredProcedure;
-                // добавляем параметры
-                cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(dgvEmployee.Rows[index].Cells[0].Value.ToString());
-                // вызываем функцию
-                cmdProc.ExecuteNonQuery();
+                DBRedactor dbr = new DBRedactor();
+                dbr.deleteByID("сотрудники", "ИД_сотрудника", dgvEmployee.Rows[index].Cells[0].Value.ToString());
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -142,7 +130,7 @@ namespace SAACNM {
         }
 
         private void btnExit_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void dgvEmployee_SelectionChanged(object sender, EventArgs e) {
@@ -159,12 +147,12 @@ namespace SAACNM {
         }
 
         private void btnChoose_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void EmployeeForm_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
-                btnExit_Click(sender, null);
+                Close();
             }
         }
     }

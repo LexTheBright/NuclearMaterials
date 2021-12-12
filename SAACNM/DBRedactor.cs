@@ -55,10 +55,11 @@ namespace SAACNM
             }
         }
 
-        public void deleteByID(string table, string id_title, string id)
+        public void deleteByID(string table, string id_title, string id, string id_title2 = null, string id2 = null)
         {
             string querry = "";
             querry = $"USE nmlocal; DELETE FROM {table} WHERE {id_title} = '{id}'";
+            if (id_title2 != null && id2 != null) querry += $" AND {id_title2} = '{id2}'";
             MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
             try
             {

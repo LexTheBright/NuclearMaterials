@@ -112,7 +112,6 @@
             this.cbMove.TabIndex = 5;
             this.cbMove.Text = "Перемещение";
             this.cbMove.UseVisualStyleBackColor = true;
-            this.cbMove.CheckedChanged += new System.EventHandler(this.cbMove_CheckedChanged);
             // 
             // cbSend
             // 
@@ -123,7 +122,6 @@
             this.cbSend.TabIndex = 6;
             this.cbSend.Text = "Отправка";
             this.cbSend.UseVisualStyleBackColor = true;
-            this.cbSend.CheckedChanged += new System.EventHandler(this.cbSend_CheckedChanged);
             // 
             // cbGet
             // 
@@ -134,7 +132,6 @@
             this.cbGet.TabIndex = 7;
             this.cbGet.Text = "Получение";
             this.cbGet.UseVisualStyleBackColor = true;
-            this.cbGet.CheckedChanged += new System.EventHandler(this.cbGet_CheckedChanged);
             // 
             // AddPost
             // 

@@ -339,7 +339,7 @@ namespace SAACNM {
         }
 
         private void btnChooseResp_Click(object sender, EventArgs e) {
-            EmployeeForm resp = new EmployeeForm(SqlConn);
+            EmployeeForm resp = new EmployeeForm();
             empID = resp.getIDEmployee();
             // проверить полномочия
             try {
@@ -382,7 +382,7 @@ namespace SAACNM {
         }
 
         private void btnChooseSt_Click(object sender, EventArgs e) {
-            EmployeeForm start = new EmployeeForm(SqlConn);
+            EmployeeForm start = new EmployeeForm();
             startID = start.getIDEmployee();
             OracleDataReader dbReader = null;
             OracleCommand cmdSelect = new OracleCommand("SELECT * FROM СОТРУДНИК WHERE ID_СОТРУДНИКА = " + startID, SqlConn);
@@ -405,7 +405,7 @@ namespace SAACNM {
         }
 
         private void btnChooseEnd_Click(object sender, EventArgs e) {
-            EmployeeForm end = new EmployeeForm(SqlConn);
+            EmployeeForm end = new EmployeeForm();
             endID = end.getIDEmployee();
             OracleDataReader dbReader = null;
             OracleCommand cmdSelect = new OracleCommand("SELECT * FROM СОТРУДНИК WHERE ID_СОТРУДНИКА = " + endID, SqlConn);

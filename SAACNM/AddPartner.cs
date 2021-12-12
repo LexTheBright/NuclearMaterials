@@ -69,15 +69,7 @@ namespace SAACNM {
             DBRedactor dbr = new DBRedactor();
             Dictionary<string, string> properties = new Dictionary<string, string>();
 
-            string error_message = Program.IsValidValue("DECIMAL100", partCode);
-            if (error_message != null)
-            {
-                MessageBox.Show(error_message, "Код организации");
-                return;
-            }
-            else properties.Add("ИД_организации", partCode);
-
-            error_message = Program.IsValidValue("VAR50", partName);
+            string error_message = Program.IsValidValue("VAR50", partName);
             if (error_message != null)
             {
                 MessageBox.Show(error_message, "Наименование");
@@ -119,6 +111,14 @@ namespace SAACNM {
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Организации-партнеры", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 try {
+                    error_message = Program.IsValidValue("DECIMAL100", partCode);
+                    if (error_message != null)
+                    {
+                        MessageBox.Show(error_message, "Код организации");
+                        return;
+                    }
+                    else properties.Add("ИД_организации", partCode);
+
                     if (dbr.createNewKouple("организация", properties) == 1) return;
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);

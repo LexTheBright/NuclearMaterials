@@ -45,13 +45,13 @@ namespace SAACNM {
         }
 
         private void tsPosts_Click(object sender, EventArgs e) {
-        //    PostForm posts = new PostForm(SqlConn);
-         //   posts.ShowDialog();
+            PostForm posts = new PostForm();
+            posts.ShowDialog();
         }
 
         private void tsEmployees_Click(object sender, EventArgs e) {
-         //   EmployeeForm emp = new EmployeeForm(SqlConn);
-         //   emp.ShowDialog();
+            EmployeeForm emp = new EmployeeForm();
+            emp.ShowDialog();
         }
 
         private void tsPlaces_Click(object sender, EventArgs e) {

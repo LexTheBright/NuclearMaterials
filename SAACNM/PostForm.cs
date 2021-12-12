@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 // 0 0 1 (1) Перемещение
 // 0 1 0 (2) Отправка
@@ -24,12 +24,12 @@ namespace SAACNM {
         private String postNum;
         private String postName;
         private String postPowerStr;
-        private int postPower;
-        OracleConnection SqlConn;
+        //private int postPower;
+        private String postPower;
+        private String[] postPowers;
         private int index = -1;
-        public PostForm(OracleConnection conn) {
+        public PostForm() {
             InitializeComponent();
-            SqlConn = conn;
             powers.Add(1, "Перемещение");
             powers.Add(2, "Отправка");
             powers.Add(3, "Перемещение, Отправка");
@@ -40,7 +40,7 @@ namespace SAACNM {
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-            AddPost post = new AddPost(SqlConn);
+            AddPost post = new AddPost();
             post.ShowDialog();
             dgvPosts.Rows.Clear();
             postPowerConst.Clear();
@@ -48,14 +48,15 @@ namespace SAACNM {
         }
 
         private void btnEdit_Click(object sender, EventArgs e) {
-            if (index == -1) {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите должность!", "Должность", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             postNum = dgvPosts.Rows[index].Cells[0].Value.ToString();
             postName = dgvPosts.Rows[index].Cells[1].Value.ToString();
-            postPower = int.Parse(postPowerConst[index].ToString());
-            AddPost post = new AddPost(SqlConn, postNum, postName, postPower);
+            postPowers = dgvPosts.Rows[index].Cells[2].Value.ToString().Split(',');
+            AddPost post = new AddPost(postNum, postName, postPowers);
             post.ShowDialog();
             dgvPosts.Rows.Clear();
             postPowerConst.Clear();
@@ -68,17 +69,8 @@ namespace SAACNM {
                 return;
             }
             try {
-                // пытаемся вызвать процедуру
-                // Фукнция: deletePost
-                // Параметры: postNum
-                //
-                // создаем объект Command для вызова функции
-                OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.deletePost", SqlConn);
-                cmdProc.CommandType = CommandType.StoredProcedure;
-                // добавляем параметры
-                cmdProc.Parameters.Add("@postNum", OracleDbType.Int32).Value = int.Parse(dgvPosts.Rows[index].Cells[0].Value.ToString());
-                // вызываем функцию
-                cmdProc.ExecuteNonQuery();
+                DBRedactor dbr = new DBRedactor();
+                dbr.deleteByID("должности", "Код_должности", dgvPosts.Rows[index].Cells[0].Value.ToString());
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -88,32 +80,26 @@ namespace SAACNM {
             postPowerConst.Clear();
             PostForm_Load(sender, e);
         }
-
-        private void btnExit_Click(object sender, EventArgs e) {
-            this.Close();
-        }
-
+        
         private void PostForm_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM ДОЛЖНОСТИ", SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT полномочия.Код_должности, Название, GROUP_CONCAT(Полномочия) as Полно FROM должности JOIN полномочия ON полномочия.Код_должности = должности.Код_должности group by полномочия.Код_должности", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        postNum = Convert.ToString(dbReader["НОМЕР_ДОЛЖНОСТИ"]);
-                        postName = Convert.ToString(dbReader["НАИМЕНОВАНИЕ_ДОЛЖНОСТИ"]);
-                        postPowerStr = powers[int.Parse(dbReader["ПОЛНОМОЧИЯ"].ToString())];
-                        postPowerConst.Add(dbReader["ПОЛНОМОЧИЯ"].ToString());
-                        dgvPosts.Rows.Add(postNum, postName, postPowerStr);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            postNum = Convert.ToString(dbReader["Код_должности"]);
+                            postName = Convert.ToString(dbReader["Название"]);
+                            postPower = Convert.ToString(dbReader["Полно"]);
+                            dgvPosts.Rows.Add(postNum, postName, postPower);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
         }
 
@@ -134,7 +120,7 @@ namespace SAACNM {
 
         private void PostForm_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
-                btnExit_Click(sender, null);
+                Close();
             }
         }
     }
