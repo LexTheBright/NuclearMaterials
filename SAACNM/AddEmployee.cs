@@ -173,14 +173,14 @@ namespace SAACNM {
             } else {
                 //if (!isWorking) indexPost = -1;
                 try {
-                    error_message = Program.IsValidValue("DECIMAL100", empID);
+                    /*error_message = Program.IsValidValue("DECIMAL100", empID);
                     if (error_message != null)
                     {
                         MessageBox.Show(error_message, "ИД_сотрудника");
                         return;
                     }
                     else properties.Add("ИД_сотрудника", empID);
-
+*/
                     if (dbr.createNewKouple("сотрудники", properties) == 1) return;
                     // пытаемся вызвать процедуру
                     // Фукнция: addEmployee
@@ -232,11 +232,12 @@ namespace SAACNM {
                         }
                     }
                 }
-                cbPosts.Text = empPost;
             } catch (Exception ex) {
+                throw;
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
+            cbPosts.SelectedIndex = postIDs.IndexOf(empPost);
         }
 
         private void txtSecName_TextChanged(object sender, EventArgs e) {

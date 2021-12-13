@@ -15,7 +15,7 @@ namespace SAACNM
             switch (ErrorNumber)
             {
                 case 1062:
-                    return "Данный табельный номер уже существует в системе.";
+                    return "Данные о таком человеке уже существуют в системе.";
                 default:
                     return "";
             }

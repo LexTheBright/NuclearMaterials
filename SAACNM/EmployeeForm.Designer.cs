@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             this.dgvEmployee = new System.Windows.Forms.DataGridView();
-            this.lblSecName = new System.Windows.Forms.Label();
-            this.txtSecondName = new System.Windows.Forms.TextBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnChoose = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.clmID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmSecondName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,6 +38,13 @@
             this.clmPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmPassport = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Кодолжности = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblSecName = new System.Windows.Forms.Label();
+            this.txtSecondName = new System.Windows.Forms.TextBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +64,8 @@
             this.clmAddress,
             this.clmPhone,
             this.clmBirthDate,
-            this.clmPassport});
+            this.clmPassport,
+            this.Кодолжности});
             this.dgvEmployee.Location = new System.Drawing.Point(12, 12);
             this.dgvEmployee.MultiSelect = false;
             this.dgvEmployee.Name = "dgvEmployee";
@@ -75,81 +76,6 @@
             this.dgvEmployee.Size = new System.Drawing.Size(943, 331);
             this.dgvEmployee.TabIndex = 0;
             this.dgvEmployee.SelectionChanged += new System.EventHandler(this.dgvEmployee_SelectionChanged);
-            // 
-            // lblSecName
-            // 
-            this.lblSecName.AutoSize = true;
-            this.lblSecName.Location = new System.Drawing.Point(7, 15);
-            this.lblSecName.Name = "lblSecName";
-            this.lblSecName.Size = new System.Drawing.Size(63, 14);
-            this.lblSecName.TabIndex = 1;
-            this.lblSecName.Text = "Фамилия:";
-            // 
-            // txtSecondName
-            // 
-            this.txtSecondName.Location = new System.Drawing.Point(76, 12);
-            this.txtSecondName.Name = "txtSecondName";
-            this.txtSecondName.Size = new System.Drawing.Size(150, 22);
-            this.txtSecondName.TabIndex = 2;
-            this.txtSecondName.TextChanged += new System.EventHandler(this.txtSecondName_TextChanged);
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnAdd.Location = new System.Drawing.Point(545, 5);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(89, 34);
-            this.btnAdd.TabIndex = 3;
-            this.btnAdd.Text = "Добавить";
-            this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnEdit.Location = new System.Drawing.Point(640, 5);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(110, 34);
-            this.btnEdit.TabIndex = 4;
-            this.btnEdit.Text = "Редактировать";
-            this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnDelete.Location = new System.Drawing.Point(756, 5);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(89, 34);
-            this.btnDelete.TabIndex = 5;
-            this.btnDelete.Text = "Удалить";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnChoose
-            // 
-            this.btnChoose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnChoose.Location = new System.Drawing.Point(851, 5);
-            this.btnChoose.Name = "btnChoose";
-            this.btnChoose.Size = new System.Drawing.Size(89, 34);
-            this.btnChoose.TabIndex = 6;
-            this.btnChoose.Text = "Выбрать";
-            this.btnChoose.UseVisualStyleBackColor = false;
-            this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel2.Controls.Add(this.btnChoose);
-            this.panel2.Controls.Add(this.txtSecondName);
-            this.panel2.Controls.Add(this.btnAdd);
-            this.panel2.Controls.Add(this.lblSecName);
-            this.panel2.Controls.Add(this.btnEdit);
-            this.panel2.Controls.Add(this.btnDelete);
-            this.panel2.Location = new System.Drawing.Point(12, 343);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(943, 43);
-            this.panel2.TabIndex = 17;
             // 
             // clmID
             // 
@@ -199,27 +125,99 @@
             // 
             // clmPhone
             // 
+            this.clmPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.clmPhone.HeaderText = "Номер телефона";
             this.clmPhone.Name = "clmPhone";
             this.clmPhone.ReadOnly = true;
             this.clmPhone.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPhone.Width = 130;
             // 
             // clmBirthDate
             // 
+            this.clmBirthDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.clmBirthDate.HeaderText = "Дата рождения";
             this.clmBirthDate.Name = "clmBirthDate";
             this.clmBirthDate.ReadOnly = true;
             this.clmBirthDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmBirthDate.Width = 120;
+            this.clmBirthDate.Width = 92;
             // 
             // clmPassport
             // 
+            this.clmPassport.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.clmPassport.HeaderText = "Паспортные данные";
             this.clmPassport.Name = "clmPassport";
             this.clmPassport.ReadOnly = true;
             this.clmPassport.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPassport.Width = 145;
+            this.clmPassport.Width = 115;
+            // 
+            // Кодолжности
+            // 
+            this.Кодолжности.HeaderText = "PostCode";
+            this.Кодолжности.Name = "Кодолжности";
+            this.Кодолжности.ReadOnly = true;
+            this.Кодолжности.Visible = false;
+            // 
+            // lblSecName
+            // 
+            this.lblSecName.AutoSize = true;
+            this.lblSecName.Location = new System.Drawing.Point(7, 15);
+            this.lblSecName.Name = "lblSecName";
+            this.lblSecName.Size = new System.Drawing.Size(59, 14);
+            this.lblSecName.TabIndex = 1;
+            this.lblSecName.Text = "Фамилия";
+            // 
+            // txtSecondName
+            // 
+            this.txtSecondName.Location = new System.Drawing.Point(76, 12);
+            this.txtSecondName.Name = "txtSecondName";
+            this.txtSecondName.Size = new System.Drawing.Size(150, 22);
+            this.txtSecondName.TabIndex = 2;
+            this.txtSecondName.TextChanged += new System.EventHandler(this.txtSecondName_TextChanged);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnAdd.Location = new System.Drawing.Point(631, 5);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(89, 34);
+            this.btnAdd.TabIndex = 3;
+            this.btnAdd.Text = "Добавить";
+            this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnEdit.Location = new System.Drawing.Point(726, 5);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(110, 34);
+            this.btnEdit.TabIndex = 4;
+            this.btnEdit.Text = "Редактировать";
+            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnDelete.Location = new System.Drawing.Point(842, 5);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(89, 34);
+            this.btnDelete.TabIndex = 5;
+            this.btnDelete.Text = "Удалить";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.panel2.Controls.Add(this.txtSecondName);
+            this.panel2.Controls.Add(this.btnAdd);
+            this.panel2.Controls.Add(this.lblSecName);
+            this.panel2.Controls.Add(this.btnEdit);
+            this.panel2.Controls.Add(this.btnDelete);
+            this.panel2.Location = new System.Drawing.Point(12, 343);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(943, 43);
+            this.panel2.TabIndex = 17;
             // 
             // EmployeeForm
             // 
@@ -252,7 +250,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnChoose;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmID;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmSecondName;
@@ -263,5 +260,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBirthDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPassport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Кодолжности;
     }
 }

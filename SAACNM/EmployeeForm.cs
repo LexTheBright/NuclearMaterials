@@ -24,6 +24,7 @@ namespace SAACNM {
         private ArrayList INNs = new ArrayList();
         private ArrayList SNILSs = new ArrayList();
         private ArrayList males = new ArrayList();
+        private Dictionary<string, string> EPosts = new Dictionary<string, string>();
         private int index = -1;
         public EmployeeForm() {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace SAACNM {
         }
 
         private void EmployeeForm_Load(object sender, EventArgs e) {
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники", dbConnection.dbConnect);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники LEFT JOIN должности on сотрудники.Должность = должности.Код_должности", dbConnection.dbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
@@ -43,7 +44,7 @@ namespace SAACNM {
                             empSecName = Convert.ToString(dbReader["Фамилия"]);
                             empFirName = Convert.ToString(dbReader["Имя"]);
                             empFatName = Convert.ToString(dbReader["Отчество"]);
-                            empPost = Convert.ToString(dbReader["Должность"]);
+                            empPost = Convert.ToString(dbReader["Название"]);
                             empAddress = Convert.ToString(dbReader["Адрес"]);
                             empPhone = Convert.ToString(dbReader["Номер_телефона"]);
                             empBirthDate = Convert.ToString(Convert.ToDateTime(dbReader["Дата_рождения"]).ToShortDateString());
@@ -60,7 +61,26 @@ namespace SAACNM {
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
-            } 
+            }
+            MySqlCommand cmdSelect2 = new MySqlCommand("SELECT * FROM должности", dbConnection.dbConnect);
+            try
+            {
+                using (MySqlDataReader dbReader = cmdSelect2.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            EPosts.Add(Convert.ToString(dbReader["Название"]), Convert.ToString(dbReader["Код_должности"]));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
         }
 
         private void txtSecondName_TextChanged(object sender, EventArgs e) {
@@ -80,6 +100,7 @@ namespace SAACNM {
             INNs.Clear();
             SNILSs.Clear();
             males.Clear();
+            EPosts.Clear();
             dgvEmployee.Rows.Clear();
             EmployeeForm_Load(sender, e);
         }
@@ -93,7 +114,7 @@ namespace SAACNM {
             empSecName = dgvEmployee.Rows[index].Cells[1].Value.ToString();
             empFirName = dgvEmployee.Rows[index].Cells[2].Value.ToString();
             empFatName = dgvEmployee.Rows[index].Cells[3].Value.ToString();
-            empPost = dgvEmployee.Rows[index].Cells[4].Value.ToString();
+            empPost = EPosts[dgvEmployee.Rows[index].Cells[4].Value.ToString()]; // .FirstOrDefault(x => x.Value == "one").Key
             empAddress = dgvEmployee.Rows[index].Cells[5].Value.ToString();
             empPhone = dgvEmployee.Rows[index].Cells[6].Value.ToString();
             empBirthDate = dgvEmployee.Rows[index].Cells[7].Value.ToString();
@@ -105,6 +126,7 @@ namespace SAACNM {
             INNs.Clear();
             SNILSs.Clear();
             males.Clear();
+            EPosts.Clear();
             dgvEmployee.Rows.Clear();
             EmployeeForm_Load(sender, e);
         }
@@ -125,6 +147,7 @@ namespace SAACNM {
             INNs.Clear();
             SNILSs.Clear();
             males.Clear();
+            EPosts.Clear();
             dgvEmployee.Rows.Clear();
             EmployeeForm_Load(sender, e);
         }
@@ -144,10 +167,6 @@ namespace SAACNM {
             btnChoose.Enabled = true;
             this.ShowDialog();
             return dgvEmployee.Rows[index].Cells[0].Value.ToString();
-        }
-
-        private void btnChoose_Click(object sender, EventArgs e) {
-            Close();
         }
 
         private void EmployeeForm_KeyPress(object sender, KeyPressEventArgs e) {
