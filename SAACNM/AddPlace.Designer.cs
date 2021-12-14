@@ -162,7 +162,7 @@
             this.MaximizeBox = false;
             this.Name = "AddPlace";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Местоположение";
+            this.Text = "Помещение";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AddPlace_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();

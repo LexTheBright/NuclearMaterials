@@ -15,7 +15,7 @@ namespace SAACNM
             switch (ErrorNumber)
             {
                 case 1062:
-                    return "Данные о таком человеке уже существуют в системе.";
+                    return "Такая запись уже существуют в системе.";
                 default:
                     return "";
             }
@@ -55,11 +55,12 @@ namespace SAACNM
             }
         }
 
-        public void deleteByID(string table, string id_title, string id, string id_title2 = null, string id2 = null)
+        public void deleteByID(string table, string id_title, string id, string id_title2 = null, string id2 = null, string id_title3 = null, string id3 = null)
         {
             string querry = "";
             querry = $"USE nmlocal; DELETE FROM {table} WHERE {id_title} = '{id}'";
             if (id_title2 != null && id2 != null) querry += $" AND {id_title2} = '{id2}'";
+            if (id_title3 != null && id3 != null) querry += $" AND {id_title3} = '{id3}'";
             MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
             try
             {
@@ -86,6 +87,36 @@ namespace SAACNM
 
             querry = $"USE nmlocal; UPDATE {table} SET " + adding +
                 $" WHERE {id_title} = '{id}'";
+
+            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
+            try
+            {
+                comm.ExecuteNonQuery();
+                //MessageBox.Show("ОБНОВИЛОСЯ!!!!!!");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public void updateByThreeID(string table, string id_title, string id, string id_title2, string id2, string id_title3, string id3, Dictionary<string, string> props)
+        {
+            string querry = "";
+            string adding = "";
+
+            foreach (var prop in props)
+            {
+                adding += $"{prop.Key} = '{prop.Value}', ";
+            }
+
+            adding = adding.Remove(adding.Length - 2);
+
+            querry = $"USE nmlocal; UPDATE {table} SET " + adding +
+                $" WHERE {id_title} = '{id}'";
+            querry += $" AND {id_title2} = '{id2}'";
+            querry += $" AND {id_title3} = '{id3}'";
+
 
             MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
             try

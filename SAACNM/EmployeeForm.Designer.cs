@@ -45,6 +45,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnChoose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -209,6 +210,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.panel2.Controls.Add(this.btnChoose);
             this.panel2.Controls.Add(this.txtSecondName);
             this.panel2.Controls.Add(this.btnAdd);
             this.panel2.Controls.Add(this.lblSecName);
@@ -218,6 +220,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(943, 43);
             this.panel2.TabIndex = 17;
+            // 
+            // btnChoose
+            // 
+            this.btnChoose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnChoose.Location = new System.Drawing.Point(536, 5);
+            this.btnChoose.Name = "btnChoose";
+            this.btnChoose.Size = new System.Drawing.Size(89, 34);
+            this.btnChoose.TabIndex = 18;
+            this.btnChoose.Text = "Выбрать";
+            this.btnChoose.UseVisualStyleBackColor = false;
+            this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
             // 
             // EmployeeForm
             // 
@@ -261,5 +274,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBirthDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPassport;
         private System.Windows.Forms.DataGridViewTextBoxColumn Кодолжности;
+        private System.Windows.Forms.Button btnChoose;
     }
 }

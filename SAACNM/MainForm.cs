@@ -55,8 +55,8 @@ namespace SAACNM {
         }
 
         private void tsPlaces_Click(object sender, EventArgs e) {
-        //    PlacesForm place = new PlacesForm(SqlConn);
-        //    place.ShowDialog();
+            PlacesForm place = new PlacesForm();
+            place.ShowDialog();
         }
 
         private void tsInvoices_Click(object sender, EventArgs e) {
@@ -71,7 +71,7 @@ namespace SAACNM {
 
         private void MainForm_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
-                this.Close();
+                Close();
             }
         }
     }

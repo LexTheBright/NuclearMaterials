@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class PlacesForm : Form {
@@ -25,38 +25,43 @@ namespace SAACNM {
         private int indexLim = -1;
         private ArrayList empIDs = new ArrayList();
         private String empID;
-        OracleConnection SqlConn;
-        public PlacesForm(OracleConnection conn) {
+        public PlacesForm() {
             InitializeComponent();
-            SqlConn = conn;
         }
 
         private void PlacesForm_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM ПОМЕЩЕНИЯ_С", SqlConn);
+            this.dgvPlaces.SelectionChanged -= new System.EventHandler(this.dgvPlaces_SelectionChanged);
+            /*CREATE VIEW `ПОМЕЩЕНИЯ_С` 
+            AS SELECT помещение.Номер_помещения, помещение.Номер_здания, помещение.Номер_ЗБМ, сотрудники.Фамилия, сотрудники.Имя, сотрудники.Отчество, сотрудники.Номер_телефона, сотрудники.ИД_сотрудника
+            FROM помещение 
+            LEFT JOIN здание ON помещение.Номер_здания = здание.Номер_здания
+            LEFT JOIN збм ON здание.Номер_ЗБМ = збм.Номер_ЗБМ
+            LEFT JOIN сотрудники ON сотрудники.ИД_сотрудника = помещение.ИД_ответственного*/ ///неработает
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM помещение LEFT JOIN сотрудники ON помещение.ИД_ответственного = сотрудники.ИД_сотрудника", dbConnection.dbConnect); 
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        numZBM = Convert.ToString(dbReader["НОМЕР_ЗБМ"]);
-                        numBuild = Convert.ToString(dbReader["НОМЕР_ЗДАНИЯ"]);
-                        numRoom = Convert.ToString(dbReader["НОМЕР_ПОМЕЩЕНИЯ"]);
-                        secondName = Convert.ToString(dbReader["ФАМИЛИЯ"]);
-                        firstName = Convert.ToString(dbReader["ИМЯ"]);
-                        fatherName = Convert.ToString(dbReader["ОТЧЕСТВО"]);
-                        phoneNum = Convert.ToString(dbReader["НОМЕР_ТЕЛЕФОНА"]);
-                        empIDs.Add(Convert.ToString(dbReader["ID_СОТРУДНИКА"]));
-                        dgvPlaces.Rows.Add(numZBM, numBuild, numRoom, secondName, firstName, fatherName, phoneNum);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            numZBM = Convert.ToString(dbReader["Номер_ЗБМ"]);
+                            numBuild = Convert.ToString(dbReader["Номер_здания"]);
+                            numRoom = Convert.ToString(dbReader["Номер_помещения"]);
+                            secondName = Convert.ToString(dbReader["Фамилия"]);
+                            firstName = Convert.ToString(dbReader["Имя"]);
+                            fatherName = Convert.ToString(dbReader["Отчество"]);
+                            phoneNum = Convert.ToString(dbReader["Номер_телефона"]);
+                            empIDs.Add(Convert.ToString(dbReader["ИД_сотрудника"]));
+                            dgvPlaces.Rows.Add(numZBM, numBuild, numRoom, secondName, firstName, fatherName, phoneNum);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
+            this.dgvPlaces.SelectionChanged += new System.EventHandler(this.dgvPlaces_SelectionChanged);
         }
 
         private void txtZBMNum_TextChanged(object sender, EventArgs e) {
@@ -96,31 +101,32 @@ namespace SAACNM {
             numZBM = dgvPlaces.Rows[index].Cells[0].Value.ToString();
             numBuild = dgvPlaces.Rows[index].Cells[1].Value.ToString();
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM КРИТИЧЕСКИЙ_ПРЕДЕЛ WHERE НОМЕР_ЗБМ = " + numZBM +
-                                                        " AND НОМЕР_ЗДАНИЯ = " + numBuild +
-                                                        " AND НОМЕР_ПОМЕЩЕНИЯ = " + numRoom, SqlConn);
+
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM критический_предел LEFT JOIN тип_материала ON критический_предел.Код_типа_материала = тип_материала.Код_типа_материала WHERE Номер_ЗБМ = " + numZBM +
+                                                        " AND Номер_здания = " + numBuild +
+                                                        " AND Номер_помещения = " + numRoom, dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        typeName = Convert.ToString(dbReader["НАЗВАНИЕ_ТИПА_МАТЕРИАЛА"]);
-                        limitValue = Convert.ToString(dbReader["ВЕЛИЧИНА_КРИТИЧЕСКОГО_ПРЕДЕЛА"]);
-                        dgvLimits.Rows.Add(typeName, limitValue);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            typeName = Convert.ToString(dbReader["Наименование"]);
+                            limitValue = Convert.ToString(dbReader["Величина_предела"]);
+                            dgvLimits.Rows.Add(typeName, limitValue);
+                        }
                     }
                 }
             } catch (Exception ex) {
+                //
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
             }
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-            AddPlace place = new AddPlace(SqlConn);
+            AddPlace place = new AddPlace();
             place.ShowDialog();
             empIDs.Clear();
             dgvPlaces.Rows.Clear();
@@ -137,7 +143,7 @@ namespace SAACNM {
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
             secondName = dgvPlaces.Rows[index].Cells[3].Value.ToString();
             empID = empIDs[index].ToString();
-            AddPlace place = new AddPlace(SqlConn, numZBM, numBuild, numRoom, secondName, empID);
+            AddPlace place = new AddPlace(numZBM, numBuild, numRoom, secondName, empID);
             place.ShowDialog();
             empIDs.Clear();
             dgvPlaces.Rows.Clear();
@@ -150,39 +156,28 @@ namespace SAACNM {
                 return;
             }
             try {
-                // пытаемся вызвать процедуру
-                // Фукнция: deletePlace
-                // Параметры: zbmNum, buildNum, roomNum
-                //
-                // создаем объект Command для вызова функции
-                OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.deletePlace", SqlConn);
-                cmdProc.CommandType = CommandType.StoredProcedure;
-                // добавляем параметры
-                cmdProc.Parameters.Add("@zbmNum", OracleDbType.Varchar2, 10).Value = dgvPlaces.Rows[index].Cells[0].Value.ToString();
-                cmdProc.Parameters.Add("@buildNum", OracleDbType.Varchar2, 5).Value = dgvPlaces.Rows[index].Cells[1].Value.ToString();
-                cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = dgvPlaces.Rows[index].Cells[2].Value.ToString();
-                // вызываем функцию
-                cmdProc.ExecuteNonQuery();
+                DBRedactor dbr = new DBRedactor();
+                dbr.deleteByID("помещение", "Номер_помещения", dgvPlaces.Rows[index].Cells[2].Value.ToString(), "Номер_здания", dgvPlaces.Rows[index].Cells[1].Value.ToString(), "Номер_ЗБМ", dgvPlaces.Rows[index].Cells[0].Value.ToString());
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            MessageBox.Show(this, "Местоположение удалено.", "Местоположение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "Помещение удалено.", "Помещение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             empIDs.Clear();
             dgvPlaces.Rows.Clear();
             PlacesForm_Load(sender, e);
         }
 
         private void btnExit_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void btnAddLim_Click(object sender, EventArgs e) {
             numZBM = dgvPlaces.Rows[index].Cells[0].Value.ToString();
             numBuild = dgvPlaces.Rows[index].Cells[1].Value.ToString();
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
-            AddLimit lim = new AddLimit(SqlConn, null, null, numZBM, numBuild, numRoom);
-            lim.ShowDialog();
+            //AddLimit lim = new AddLimit(SqlConn, null, null, numZBM, numBuild, numRoom);
+            //lim.ShowDialog();
             dgvLimits.Rows.Clear();
             dgvPlaces_SelectionChanged(sender, e);
         }
@@ -197,8 +192,8 @@ namespace SAACNM {
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
             typeName = dgvLimits.Rows[indexLim].Cells[0].Value.ToString();
             limitValue = dgvLimits.Rows[indexLim].Cells[1].Value.ToString();
-            AddLimit lim = new AddLimit(SqlConn, typeName, limitValue, numZBM, numBuild, numRoom);
-            lim.ShowDialog();
+            //AddLimit lim = new AddLimit(SqlConn, typeName, limitValue, numZBM, numBuild, numRoom);
+            //lim.ShowDialog();
             dgvLimits.Rows.Clear();
             dgvPlaces_SelectionChanged(sender, e);
         }
@@ -213,7 +208,7 @@ namespace SAACNM {
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
             typeName = dgvLimits.Rows[indexLim].Cells[0].Value.ToString();
             try {
-                // пытаемся вызвать процедуру
+                /*// пытаемся вызвать процедуру
                 // Фукнция: deleteLimit
                 // Параметры: zbmNum, buildNum, roomNum, typeName
                 //
@@ -226,7 +221,7 @@ namespace SAACNM {
                 cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = numRoom;
                 cmdProc.Parameters.Add("@typeName", OracleDbType.Varchar2, 20).Value = typeName;
                 // вызываем функцию
-                cmdProc.ExecuteNonQuery();
+                cmdProc.ExecuteNonQuery();*/
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

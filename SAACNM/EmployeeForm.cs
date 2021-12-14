@@ -174,5 +174,10 @@ namespace SAACNM {
                 Close();
             }
         }
+
+        private void btnChoose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

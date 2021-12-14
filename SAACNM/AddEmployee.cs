@@ -138,31 +138,8 @@ namespace SAACNM {
             properties.Add("Должность", indexPost.ToString());
 
             if (isEdit) {
-                //if (!isWorking) indexPost = -1;
                 try {
                     dbr.updateByID("сотрудники", "ИД_сотрудника", empID, properties);
-                    // пытаемся вызвать процедуру
-                    // Фукнция: editEmployee
-                    // Параметры: empID, empSecName, empFirName, empFatName, indexPost, empAddress, empPhone, empPassport, empBirthDate, INN, SNILS, male
-                    //
-                    // создаем объект Command для вызова функции
-                    /*OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editEmployee", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
-                    cmdProc.Parameters.Add("@empSecName", OracleDbType.Varchar2, 40).Value = empSecName;
-                    cmdProc.Parameters.Add("@empFirName", OracleDbType.Varchar2, 30).Value = empFirName;
-                    cmdProc.Parameters.Add("@empFatName", OracleDbType.Varchar2, 40).Value = empFatName;
-                    cmdProc.Parameters.Add("@indexPost", OracleDbType.Int32).Value = indexPost;
-                    cmdProc.Parameters.Add("@empAddress", OracleDbType.Varchar2, 40).Value = empAddress;
-                    cmdProc.Parameters.Add("@empPhone", OracleDbType.Varchar2, 12).Value = empPhone;
-                    cmdProc.Parameters.Add("@empPassport", OracleDbType.Varchar2, 10).Value = empPassport;
-                    cmdProc.Parameters.Add("@empBirthDate", OracleDbType.Date).Value = Convert.ToDateTime(empBirthDate);
-                    cmdProc.Parameters.Add("@INN", OracleDbType.Varchar2, 12).Value = INN;
-                    cmdProc.Parameters.Add("@SNILS", OracleDbType.Varchar2, 11).Value = SNILS;
-                    cmdProc.Parameters.Add("@male", OracleDbType.Varchar2, 1).Value = male;
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
                 }
                 catch (Exception ex) {
                     throw;
@@ -171,38 +148,8 @@ namespace SAACNM {
                 }
             MessageBox.Show(this, "Информация успешно отредактирована.", "Сотрудник", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
-                //if (!isWorking) indexPost = -1;
                 try {
-                    /*error_message = Program.IsValidValue("DECIMAL100", empID);
-                    if (error_message != null)
-                    {
-                        MessageBox.Show(error_message, "ИД_сотрудника");
-                        return;
-                    }
-                    else properties.Add("ИД_сотрудника", empID);
-*/
                     if (dbr.createNewKouple("сотрудники", properties) == 1) return;
-                    // пытаемся вызвать процедуру
-                    // Фукнция: addEmployee
-                    // Параметры: empSecName, empFirName, empFatName, indexPost, empAddress, empPhone, empPassport, empBirthDate, INN, SNILS, male
-                    //
-                    // создаем объект Command для вызова функции
-                    /*OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addEmployee", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@empSecName", OracleDbType.Varchar2, 40).Value = empSecName;
-                    cmdProc.Parameters.Add("@empFirName", OracleDbType.Varchar2, 30).Value = empFirName;
-                    cmdProc.Parameters.Add("@empFatName", OracleDbType.Varchar2, 40).Value = empFatName;
-                    cmdProc.Parameters.Add("@indexPost", OracleDbType.Int32).Value = indexPost;
-                    cmdProc.Parameters.Add("@empAddress", OracleDbType.Varchar2, 40).Value = empAddress;
-                    cmdProc.Parameters.Add("@empPhone", OracleDbType.Varchar2, 12).Value = empPhone;
-                    cmdProc.Parameters.Add("@empPassport", OracleDbType.Varchar2, 10).Value = empPassport;
-                    cmdProc.Parameters.Add("@empBirthDate", OracleDbType.Date).Value = Convert.ToDateTime(empBirthDate);
-                    cmdProc.Parameters.Add("@INN", OracleDbType.Varchar2, 12).Value = INN;
-                    cmdProc.Parameters.Add("@SNILS", OracleDbType.Varchar2, 11).Value = SNILS;
-                    cmdProc.Parameters.Add("@male", OracleDbType.Varchar2, 1).Value = male;
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
                 }
                 catch (Exception ex) {
                     throw;
