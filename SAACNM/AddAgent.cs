@@ -123,11 +123,11 @@ namespace SAACNM {
                 }
                 MessageBox.Show(this, "Представитель успешно добавлен.", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            this.Close();
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void AddAgent_KeyPress(object sender, KeyPressEventArgs e) {

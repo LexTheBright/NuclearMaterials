@@ -20,6 +20,7 @@ namespace SAACNM {
         private String fatherName;
         private String phoneNum;
         private String typeName;
+        private String typeCode;
         private String limitValue;
         private int index = -1;
         private int indexLim = -1;
@@ -114,14 +115,13 @@ namespace SAACNM {
                         {
                             typeName = Convert.ToString(dbReader["Наименование"]);
                             limitValue = Convert.ToString(dbReader["Величина_предела"]);
-                            dgvLimits.Rows.Add(typeName, limitValue);
+                            dgvLimits.Rows.Add(typeName, limitValue, Convert.ToString(dbReader["Код_типа_материала"]));
                         }
                     }
                 }
             } catch (Exception ex) {
-                //
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
+                Close();
             }
         }
 
@@ -173,11 +173,16 @@ namespace SAACNM {
         }
 
         private void btnAddLim_Click(object sender, EventArgs e) {
+            if (index == -1)
+            {
+                MessageBox.Show(this, "Укажите местоположение!", "Пределы", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             numZBM = dgvPlaces.Rows[index].Cells[0].Value.ToString();
             numBuild = dgvPlaces.Rows[index].Cells[1].Value.ToString();
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
-            //AddLimit lim = new AddLimit(SqlConn, null, null, numZBM, numBuild, numRoom);
-            //lim.ShowDialog();
+            AddLimit lim = new AddLimit(null, null, null, numZBM, numBuild, numRoom);
+            lim.ShowDialog();
             dgvLimits.Rows.Clear();
             dgvPlaces_SelectionChanged(sender, e);
         }
@@ -192,8 +197,9 @@ namespace SAACNM {
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
             typeName = dgvLimits.Rows[indexLim].Cells[0].Value.ToString();
             limitValue = dgvLimits.Rows[indexLim].Cells[1].Value.ToString();
-            //AddLimit lim = new AddLimit(SqlConn, typeName, limitValue, numZBM, numBuild, numRoom);
-            //lim.ShowDialog();
+            typeCode = dgvLimits.Rows[indexLim].Cells[2].Value.ToString();
+            AddLimit lim = new AddLimit(typeName, limitValue, typeCode, numZBM, numBuild, numRoom);
+            lim.ShowDialog();
             dgvLimits.Rows.Clear();
             dgvPlaces_SelectionChanged(sender, e);
         }
@@ -207,21 +213,10 @@ namespace SAACNM {
             numBuild = dgvPlaces.Rows[index].Cells[1].Value.ToString();
             numRoom = dgvPlaces.Rows[index].Cells[2].Value.ToString();
             typeName = dgvLimits.Rows[indexLim].Cells[0].Value.ToString();
+            typeCode = dgvLimits.Rows[indexLim].Cells[2].Value.ToString();
             try {
-                /*// пытаемся вызвать процедуру
-                // Фукнция: deleteLimit
-                // Параметры: zbmNum, buildNum, roomNum, typeName
-                //
-                // создаем объект Command для вызова функции
-                OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.deleteLimit", SqlConn);
-                cmdProc.CommandType = CommandType.StoredProcedure;
-                // добавляем параметры
-                cmdProc.Parameters.Add("@zbmNum", OracleDbType.Varchar2, 10).Value = numZBM;
-                cmdProc.Parameters.Add("@buildNum", OracleDbType.Varchar2, 5).Value = numBuild;
-                cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = numRoom;
-                cmdProc.Parameters.Add("@typeName", OracleDbType.Varchar2, 20).Value = typeName;
-                // вызываем функцию
-                cmdProc.ExecuteNonQuery();*/
+                DBRedactor dbr = new DBRedactor();
+                dbr.deleteByID("критический_предел", "Номер_помещения", numRoom, "Номер_здания", numBuild, "Номер_ЗБМ", numZBM, "Код_типа_материала", typeCode);
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

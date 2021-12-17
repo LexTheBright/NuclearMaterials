@@ -8,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class AddInvoice : Form {
         private String invoiceType;
         private String partnerName;
         private String partnerCode;
+        private String partnerCodes;
         private String agentID;
         private String invoiceNum;
         private String invoiceDate;
@@ -28,34 +29,29 @@ namespace SAACNM {
         private ArrayList Codes = new ArrayList();
         private ArrayList IDs = new ArrayList();
         private int partnerIndex = -1;
-        OracleConnection SqlConn;
-        public AddInvoice(OracleConnection conn) {
+        public AddInvoice() {
             InitializeComponent();
-            SqlConn = conn;
         }
 
         private void AddInvoice_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect;
-            if (invoiceType == "Получение" || invoiceType == "Отправка") {
+            if (invoiceType == "Поступление" || invoiceType == "Отправление") {
                 cbPartner.Enabled = true;
-                dbReader = null;
-                cmdSelect = new OracleCommand("SELECT * FROM ПРЕДПРИЯТИЕ_ПАРТНЕР", SqlConn);
+                MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM организация", dbConnection.dbConnect);
                 try {
-                    dbReader = cmdSelect.ExecuteReader();
-                    if (dbReader.HasRows) {
-                        while (dbReader.Read()) {
-                            cbPartner.Items.Add(dbReader["НАЗВАНИЕ_ПРЕДПРИЯТИЯ"]);
-                            Codes.Add(dbReader["КОД_ПРЕДПРИЯТИЯ"]);
+                    using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                    {
+                        if (dbReader.HasRows)
+                        {
+                            while (dbReader.Read())
+                            {
+                                cbPartner.Items.Add(dbReader["Наименование"]);
+                                Codes.Add(dbReader["ИД_организации"]);
+                            }
                         }
                     }
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                } finally {
-                    if (dbReader != null) {
-                        dbReader.Close();
-                    }
+                    Close();
                 }
             } else if (invoiceType == "Перемещение") {
                 cbPartner.Enabled = false;
@@ -81,12 +77,12 @@ namespace SAACNM {
                 return;
             }
             try {
-                // пытаемся вызвать процедуру
+                /*// пытаемся вызвать процедуру
                 // Фукнция: checkInvoice
                 // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
                 //
                 // создаем объект Command для вызова функции
-                OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.checkInvoice", SqlConn);
+                MySqlCommand cmdProc = new MySqlCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.checkInvoice", dbConnection.dbConnect);
                 cmdProc.CommandType = CommandType.StoredProcedure;
                 // добавляем параметры
                 cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
@@ -94,7 +90,7 @@ namespace SAACNM {
                 cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
                 cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
                 // вызываем функцию
-                cmdProc.ExecuteNonQuery();
+                cmdProc.ExecuteNonQuery();*/
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -105,7 +101,7 @@ namespace SAACNM {
                     return;
                 }
                 try {
-                    // пытаемся вызвать процедуру
+                    /*// пытаемся вызвать процедуру
                     // Фукнция: addInvoice
                     // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
                     //
@@ -118,13 +114,13 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
                     cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 try {
-                    // пытаемся вызвать процедуру
+                    /*// пытаемся вызвать процедуру
                     // Фукнция: addGetDocument
                     // Параметры: documentNum, documentDate, agentID
                     //
@@ -136,14 +132,14 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@documentDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
                     cmdProc.Parameters.Add("@agentID", OracleDbType.Int32).Value = int.Parse(agentID);
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                AddAccountUnit acc = new AddAccountUnit(SqlConn, empID, invoiceNum, invoiceDate);
-                acc.ShowDialog();
-                this.Close();
+                //AddAccountUnit acc = new AddAccountUnit(empID, invoiceNum, invoiceDate);
+                //acc.ShowDialog();
+                Close();
             }
             if (cbInvType.SelectedItem.Equals("Перемещение")) {
                 if (startID == null || endID == null) {
@@ -151,7 +147,7 @@ namespace SAACNM {
                     return;
                 }
                 try {
-                    // пытаемся вызвать процедуру
+                    /*// пытаемся вызвать процедуру
                     // Фукнция: addInvoice
                     // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
                     //
@@ -164,13 +160,13 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
                     cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 try {
-                    // пытаемся вызвать процедуру
+                    /*// пытаемся вызвать процедуру
                     // Фукнция: addMoveDocument
                     // Параметры: documentNum, documentDate, startID, endID
                     //
@@ -183,22 +179,22 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@startID", OracleDbType.Int32).Value = int.Parse(startID);
                     cmdProc.Parameters.Add("@endID", OracleDbType.Int32).Value = int.Parse(endID);
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                AccountUnitsForm units = new AccountUnitsForm(SqlConn, invoiceNum, invoiceDate, true, startID, endID);
-                units.ShowDialog();
-                this.Close();
+                //AccountUnitsForm units = new AccountUnitsForm(invoiceNum, invoiceDate, true, startID, endID);
+                //units.ShowDialog();
+                Close();
             }
-            if (cbInvType.SelectedItem.Equals("Отправка")) {
+            if (cbInvType.SelectedItem.Equals("Отправление")) {
                 if (partnerCode == null || agentID == null) {
                     MessageBox.Show(this, "Заполните все поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 try {
-                    // пытаемся вызвать процедуру
+                    /*// пытаемся вызвать процедуру
                     // Фукнция: addInvoice
                     // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
                     //
@@ -211,13 +207,13 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
                     cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 try {
-                    // пытаемся вызвать процедуру
+                    /*// пытаемся вызвать процедуру
                     // Фукнция: addSendDocument
                     // Параметры: documentNum, documentDate, agentID
                     //
@@ -229,19 +225,19 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@documentDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
                     cmdProc.Parameters.Add("@agentID", OracleDbType.Int32).Value = int.Parse(agentID);
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                AccountUnitsForm units = new AccountUnitsForm(SqlConn, invoiceNum, invoiceDate);
-                units.ShowDialog();
-                this.Close();
+                //AccountUnitsForm units = new AccountUnitsForm(invoiceNum, invoiceDate);
+                //units.ShowDialog();
+                Close();
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void cbInvType_SelectedIndexChanged(object sender, EventArgs e) {
@@ -279,26 +275,25 @@ namespace SAACNM {
             cbAgent.Items.Clear();
             partnerIndex = cbPartner.SelectedIndex;
             partnerName = cbPartner.SelectedItem.ToString();
-            partnerCode = Codes[partnerIndex].ToString();
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM ПРЕДСТАВИТЕЛЬ_ПРЕДПРИЯТИЯ_ПАРТ" + 
-                                                        " WHERE КОД_ПРЕДПРИЯТИЯ = " + partnerCode, SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM представитель" +
+                                                        " WHERE ИД_представителя = " + Codes[cbPartner.SelectedIndex], dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        cbAgent.Items.Add(dbReader["ФАМИЛИЯ"] + " " + dbReader["ИМЯ"] + " " + dbReader["ОТЧЕСТВО"]);
-                        IDs.Add(dbReader["ID_СОТРУДНИКА"]);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            cbAgent.Items.Add(dbReader["Фамилия"] + " " + dbReader["Имя"] + " " + dbReader["Отчество"]);
+                            IDs.Add(dbReader["ИД_представителя"]);
+                        }
                     }
                 }
             } catch (Exception ex) {
+                throw;
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
-            }
+                Close();
+            } 
         }
 
         private void cbAgent_SelectedIndexChanged(object sender, EventArgs e) {
@@ -343,7 +338,7 @@ namespace SAACNM {
             empID = resp.getIDEmployee();
             // проверить полномочия
             try {
-                // пытаемся вызвать процедуру
+                /*// пытаемся вызвать процедуру
                 // Фукнция: checkEmpPower
                 // Параметры: empID, needPower
                 //
@@ -354,29 +349,25 @@ namespace SAACNM {
                 cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
                 cmdProc.Parameters.Add("@needPower", OracleDbType.Varchar2).Value = cbInvType.SelectedItem.ToString();
                 // вызываем функцию
-                cmdProc.ExecuteNonQuery();
+                cmdProc.ExecuteNonQuery();*/
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 empID = null;
                 txtRespEmp.Clear();
                 return;
             }
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM СОТРУДНИК WHERE ID_СОТРУДНИКА = " + empID, SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + empID, dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        empFullName = Convert.ToString(dbReader["ФАМИЛИЯ"] + " " + dbReader["ИМЯ"] + " " + dbReader["ОТЧЕСТВО"]);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader()) {
+                    if (dbReader.HasRows) {
+                        while (dbReader.Read()) {
+                            empFullName = Convert.ToString(dbReader["Фамилия"] + " " + dbReader["Имя"] + " " + dbReader["Отчество"]);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
             txtRespEmp.Text = empFullName;
         }
@@ -384,22 +375,21 @@ namespace SAACNM {
         private void btnChooseSt_Click(object sender, EventArgs e) {
             EmployeeForm start = new EmployeeForm();
             startID = start.getIDEmployee();
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM СОТРУДНИК WHERE ID_СОТРУДНИКА = " + startID, SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + startID, dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        startFullName = Convert.ToString(dbReader["ФАМИЛИЯ"] + " " + dbReader["ИМЯ"] + " " + dbReader["ОТЧЕСТВО"]);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            startFullName = Convert.ToString(dbReader["Фамилия"] + " " + dbReader["Имя"] + " " + dbReader["Отчество"]);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
             txtStartEmp.Text = startFullName;
         }
@@ -407,22 +397,21 @@ namespace SAACNM {
         private void btnChooseEnd_Click(object sender, EventArgs e) {
             EmployeeForm end = new EmployeeForm();
             endID = end.getIDEmployee();
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM СОТРУДНИК WHERE ID_СОТРУДНИКА = " + endID, SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + endID, dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        endFullName = Convert.ToString(dbReader["ФАМИЛИЯ"] + " " + dbReader["ИМЯ"] + " " + dbReader["ОТЧЕСТВО"]);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            endFullName = Convert.ToString(dbReader["Фамилия"] + " " + dbReader["Имя"] + " " + dbReader["Отчество"]);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
             }
             txtEndEmp.Text = endFullName;
         }

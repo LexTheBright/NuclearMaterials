@@ -105,7 +105,7 @@ namespace SAACNM {
             if (isEdit) {
                 try {
                     properties.Add("ИД_ответственного", empID);
-                    dbr.updateByThreeID("помещение", "Номер_помещения", txtRoomNum.Text, "Номер_здания", txtBuildNum.Text, "Номер_ЗБМ", txtZBMNum.Text, properties);
+                    dbr.updateByID("помещение", "Номер_помещения", txtRoomNum.Text, "Номер_здания", txtBuildNum.Text, "Номер_ЗБМ", txtZBMNum.Text, properties);
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

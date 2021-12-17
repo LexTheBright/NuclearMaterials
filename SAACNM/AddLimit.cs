@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,25 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class AddLimit : Form {
         private String typeName;
+        private String typeCode;
         private String oldType;
         private String limAmount;
         private String zbmNum;
         private String buildNum;
         private String roomNum;
+        private ArrayList MatTypeID = new ArrayList();
         private bool isEdit = false;
-        OracleConnection SqlConn;
-        public AddLimit(OracleConnection conn, String type = null, String limit = null, String zbm = null, String build = null, String room = null) {
+        public AddLimit(String type = null, String limit = null, String typeC = null, String zbm = null, String build = null, String room = null) {
             InitializeComponent();
-            SqlConn = conn;
             zbmNum = zbm;
             buildNum = build;
             roomNum = room;
-            if (type != null || limit != null) {
+            if (type != null || limit != null || typeC != null) {
+                typeCode = typeC;
                 oldType = type;
                 txtLimValue.Text = limit;
                 this.btnAdd.Text = "Изменить";
@@ -34,28 +36,28 @@ namespace SAACNM {
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void AddLimit_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT НАЗВАНИЕ_ТИПА FROM ТИП_МАТЕРИАЛА", SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT Наименование, Код_типа_материала FROM тип_материала", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        cbMatType.Items.Add(Convert.ToString(dbReader["НАЗВАНИЕ_ТИПА"]));
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            cbMatType.Items.Add(Convert.ToString(dbReader["Наименование"]));
+                            MatTypeID.Add(Convert.ToString(dbReader["Код_типа_материала"]));
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
-            cbMatType.Text = oldType;
+            cbMatType.SelectedItem = oldType;
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
@@ -67,24 +69,21 @@ namespace SAACNM {
                 MessageBox.Show(this, "Ошибка получения информации о местоположении!", "Предел", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            DBRedactor dbr = new DBRedactor();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+
+            string error_message = Program.IsValidValue("DECIMAL104", limAmount);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "Величина_предела");
+                return;
+            }
+            else properties.Add("Величина_предела", limAmount);
+
             if (isEdit) {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: editLimit
-                    // Параметры: zbmNum, buildNum, roomNum, typeName, oldType, limAmount
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.editLimit", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@zbmNum", OracleDbType.Varchar2, 10).Value = zbmNum;
-                    cmdProc.Parameters.Add("@buildNum", OracleDbType.Varchar2, 5).Value = buildNum;
-                    cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = roomNum;
-                    cmdProc.Parameters.Add("@typeName", OracleDbType.Varchar2, 20).Value = typeName;
-                    cmdProc.Parameters.Add("@oldType", OracleDbType.Varchar2, 20).Value = oldType;
-                    cmdProc.Parameters.Add("@limAmount", OracleDbType.Int32).Value = int.Parse(limAmount);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    dbr.updateByID("критический_предел", "Номер_помещения", roomNum, "Номер_здания", buildNum, "Номер_ЗБМ", zbmNum, "Код_типа_материала", typeCode, properties);
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -92,28 +91,18 @@ namespace SAACNM {
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Предел", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: addLimit
-                    // Параметры: zbmNum, buildNum, roomNum, typeName, limAmount
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addLimit", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@zbmNum", OracleDbType.Varchar2, 10).Value = zbmNum;
-                    cmdProc.Parameters.Add("@buildNum", OracleDbType.Varchar2, 5).Value = buildNum;
-                    cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = roomNum;
-                    cmdProc.Parameters.Add("@typeName", OracleDbType.Varchar2, 20).Value = typeName;
-                    cmdProc.Parameters.Add("@limAmount", OracleDbType.Int32).Value = int.Parse(limAmount);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    properties.Add("Номер_помещения", roomNum);
+                    properties.Add("Номер_здания", buildNum);
+                    properties.Add("Номер_ЗБМ", zbmNum);
+                    properties.Add("Код_типа_материала", MatTypeID[cbMatType.SelectedIndex].ToString());
+                    if (dbr.createNewKouple("критический_предел", properties) == 1) return;
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Предел успешно добавлен.", "Предел", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            this.Close();
+            Close();
         }
 
         private void cbMatType_SelectedIndexChanged(object sender, EventArgs e) {

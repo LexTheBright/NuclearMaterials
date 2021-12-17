@@ -60,8 +60,8 @@ namespace SAACNM {
         }
 
         private void tsInvoices_Click(object sender, EventArgs e) {
-         //   InvoicesForm invoice = new InvoicesForm(SqlConn);
-        //    invoice.ShowDialog();
+            InvoicesForm invoice = new InvoicesForm ();
+            invoice.ShowDialog();
         }
 
         private void tsMaterials_Click(object sender, EventArgs e) {

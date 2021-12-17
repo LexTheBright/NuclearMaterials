@@ -63,8 +63,8 @@
             this.cbInvType.FormattingEnabled = true;
             this.cbInvType.Items.AddRange(new object[] {
             "Перемещение",
-            "Отправка",
-            "Получение"});
+            "Отправление",
+            "Поступление"});
             this.cbInvType.Location = new System.Drawing.Point(15, 26);
             this.cbInvType.Name = "cbInvType";
             this.cbInvType.Size = new System.Drawing.Size(130, 22);
