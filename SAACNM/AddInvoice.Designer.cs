@@ -216,19 +216,21 @@
             // lblTime
             // 
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(177, 102);
+            this.lblTime.Location = new System.Drawing.Point(127, 321);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(47, 14);
             this.lblTime.TabIndex = 10;
             this.lblTime.Text = "Время:";
+            this.lblTime.Click += new System.EventHandler(this.lblTime_Click);
             // 
             // txtTime
             // 
-            this.txtTime.Location = new System.Drawing.Point(180, 119);
+            this.txtTime.Location = new System.Drawing.Point(180, 318);
             this.txtTime.Mask = "00:00";
             this.txtTime.Name = "txtTime";
             this.txtTime.Size = new System.Drawing.Size(100, 22);
             this.txtTime.TabIndex = 11;
+            this.txtTime.Visible = false;
             this.txtTime.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.txtTime_MaskInputRejected);
             this.txtTime.TextChanged += new System.EventHandler(this.txtTime_TextChanged);
             // 

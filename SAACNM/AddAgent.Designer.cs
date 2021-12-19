@@ -141,7 +141,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnAdd);
-            this.panel1.Location = new System.Drawing.Point(0, 180);
+            this.panel1.Location = new System.Drawing.Point(0, 179);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(339, 43);
             this.panel1.TabIndex = 13;

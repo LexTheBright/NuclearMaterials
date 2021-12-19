@@ -1,18 +1,14 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
 
-namespace SAACNM {
+namespace SAACNM
+{
     public partial class AddAccountUnit : Form {
         private ArrayList matTypes = new ArrayList();
+        private ArrayList matTypeCodes = new ArrayList();
         private ArrayList scaleNums = new ArrayList();
         private ArrayList contNums = new ArrayList();
         private ArrayList zbmNums = new ArrayList();
@@ -34,100 +30,95 @@ namespace SAACNM {
         private ArrayList needBuild = new ArrayList();
         private ArrayList needRoom = new ArrayList();
         private int check = 0;
-        OracleConnection SqlConn;
-        public AddAccountUnit(OracleConnection conn, String empID, String num, String date) {
+        public AddAccountUnit(String empID, String num, String date) {
             InitializeComponent();
-            SqlConn = conn;
             respEmpID = empID;
             invoiceNum = num;
             invoiceDate = date;
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void AddAccountUnit_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT НАЗВАНИЕ_ТИПА FROM ТИП_МАТЕРИАЛА", SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT Наименование, Код_типа_материала FROM тип_материала", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        clmMatType.Items.Add(dbReader["НАЗВАНИЕ_ТИПА"].ToString());
-                        matTypes.Add(dbReader["НАЗВАНИЕ_ТИПА"].ToString());
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            clmMatType.Items.Add(dbReader["Наименование"].ToString());
+                            matTypes.Add(dbReader["Наименование"].ToString());
+                            matTypeCodes.Add(dbReader["Код_типа_материала"].ToString());
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
-            }
-            dbReader = null;
-            cmdSelect = new OracleCommand("SELECT * FROM ВЕСЫ", SqlConn);
+                Close();
+            } 
+            cmdSelect = new MySqlCommand("SELECT * FROM весы", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        clmScaleNum.Items.Add(dbReader["НОМЕР_ВЕСОВ"].ToString() + 
-                                              " (" +
-                                              dbReader["МАРКА_ВЕСОВ"].ToString() + ")");
-                        scaleNums.Add(dbReader["НОМЕР_ВЕСОВ"]);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            clmScaleNum.Items.Add(dbReader["Идентификатор_весов"].ToString() +
+                                                  " (" +
+                                                  dbReader["Марка"].ToString() + ")");
+                            scaleNums.Add(dbReader["Идентификатор_весов"]);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
-            }
-            dbReader = null;
-            cmdSelect = new OracleCommand("SELECT * FROM КОНТЕЙНЕР", SqlConn);
+                Close();
+            } 
+            cmdSelect = new MySqlCommand("SELECT * FROM контейнер", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        clmContNum.Items.Add(dbReader["НОМЕР_КОНТЕЙНЕРА"].ToString() +
-                                             " (" +
-                                             dbReader["ТИП_КОНТЕЙНЕРА"].ToString() + ")");
-                        contNums.Add(dbReader["НОМЕР_КОНТЕЙНЕРА"]);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            clmContNum.Items.Add(dbReader["ИД_контейнера"].ToString() +
+                                                 " (" +
+                                                 dbReader["Тип_контейнера"].ToString() + ")");
+                            contNums.Add(dbReader["ИД_контейнера"]);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
-            }
-            dbReader = null;
+                Close();
+            } 
             //cmdSelect = new OracleCommand("SELECT * FROM ПОМЕЩЕНИЕ WHERE ID_СОТРУДНИКА = " + respEmpID, SqlConn);
-            cmdSelect = new OracleCommand("SELECT * FROM ПОМЕЩЕНИЕ", SqlConn);
+            cmdSelect = new MySqlCommand("SELECT * FROM помещение", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        zbmNums.Add(dbReader["НОМЕР_ЗБМ"]);
-                        buildNums.Add(dbReader["НОМЕР_ЗДАНИЯ"]);
-                        roomNums.Add(dbReader["НОМЕР_ПОМЕЩЕНИЯ"]);
-                        clmPlace.Items.Add("ЗБМ: " + dbReader["НОМЕР_ЗБМ"].ToString() + ", " +
-                                           "Здание: " + dbReader["НОМЕР_ЗДАНИЯ"].ToString() + ", " +
-                                           "Пом.: " + dbReader["НОМЕР_ПОМЕЩЕНИЯ"].ToString());
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            zbmNums.Add(dbReader["Номер_ЗБМ"]);
+                            buildNums.Add(dbReader["Номер_здания"]);
+                            roomNums.Add(dbReader["Номер_помещения"]);
+                            clmPlace.Items.Add("ЗБМ: " + dbReader["Номер_ЗБМ"].ToString() + ", " +
+                                               "Здание: " + dbReader["Номер_здания"].ToString() + ", " +
+                                               "Пом.: " + dbReader["Номер_помещения"].ToString());
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
         }
 
@@ -177,34 +168,48 @@ namespace SAACNM {
                         needZbm[j].ToString().Equals(zbmN[i].ToString()) &&
                         needBuild[j].ToString().Equals(buildN[i].ToString()) &&
                         needRoom[j].ToString().Equals(roomN[i].ToString())) {
+
+                        string error_message = Program.IsValidValue("DECIMAL104", dgvAccountUnits[clmMass.Index, i].Value.ToString());
+                        if (error_message != null)
+                        {
+                            MessageBox.Show(error_message, "Масса_УЕ в строке " + i);
+                            return;
+                        }
                         unitsMass += double.Parse(dgvAccountUnits[clmMass.Index, i].Value.ToString());
                     }
                 }
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: checkPlaceLimit
-                    // Параметры: unitsMass, matType, zbmNum, buildNum, roomNum
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.checkPlaceLimit", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@unitsMass", OracleDbType.Double).Value = unitsMass;
-                    cmdProc.Parameters.Add("@matType", OracleDbType.Varchar2, 20).Value = needTypes[j].ToString();
-                    cmdProc.Parameters.Add("@zbmNum", OracleDbType.Varchar2, 10).Value = needZbm[j].ToString();
-                    cmdProc.Parameters.Add("@buildNum", OracleDbType.Varchar2, 5).Value = needBuild[j].ToString();
-                    cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = needRoom[j].ToString();
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    MySqlCommand cmdSelect = new MySqlCommand("SELECT Суммарная_масса, Величина_предела FROM хранимая_масса_по_типам WHERE " +
+                        "Номер_ЗБМ = '" + needZbm[j].ToString() + "' AND " +
+                        "Номер_здания = '" + needBuild[j].ToString() + "' AND " +
+                        "Номер_помещения = '" + needRoom[j].ToString() + "' AND " +
+                        "Код_типа_материала = '" + matTypeCodes[matTypes.IndexOf(needTypes[j].ToString())] + "'", dbConnection.dbConnect);
+                    using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                    {
+                        if (dbReader.HasRows)
+                        {
+                            while (dbReader.Read()) //вайлненужен
+                            {
+                                double diff = Double.Parse(dbReader["Суммарная_масса"].ToString()) + unitsMass - Double.Parse(dbReader["Величина_предела"].ToString());
+                                if (Double.Parse(dbReader["Суммарная_масса"].ToString()) + unitsMass > Double.Parse(dbReader["Величина_предела"].ToString()))
+                                {
+                                    MessageBox.Show("Превышен критический пердел в помещении по типу: (ЗБМ, Здание, Помещение, Тип) " + needZbm[j].ToString() + " " +
+                                        needBuild[j].ToString() + " " + needRoom[j].ToString() + " " + needTypes[j].ToString() + " \n\n На " + diff + " единиц!", "Критический предел достигнут!");
+                                    return;
+                                }
+                            }
+                        }
+                    }
                     unitsMass = 0;
                 } catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка в типе " + needTypes[j].ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
-            for (int i = 0; i < rowsCount - 1; i++) {
+            /*for (int i = 0; i < rowsCount - 1; i++) {
                 try {
-                    // пытаемся вызвать процедуру
+                    *//*// пытаемся вызвать процедуру
                     // Фукнция: checkAccountUnit
                     // Параметры: serialNum, unitMass, matForm, matType, contNum, scaleNum, zbmNum, buildNum, roomNum
                     //
@@ -222,16 +227,33 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@buildNum", OracleDbType.Varchar2, 5).Value = buildN[i].ToString();
                     cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = roomN[i].ToString();
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*//*
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка в строке " + (i + 1).ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-            }
+            }*/
             //MessageBox.Show(this, "Проверка пройдена", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
             for (int i = 0; i < rowsCount - 1; i++) {
+                DBRedactor dbr = new DBRedactor();
                 try {
-                    // пытаемся вызвать процедуру
+                    Dictionary<string, string> properties = new Dictionary<string, string>();
+
+                    string curMatName = dgvAccountUnits[clmMatType.Index, i].Value.ToString();
+
+                    properties.Add("ИД_УЕ", dgvAccountUnits[clmSerialNum.Index, i].Value.ToString());
+                    properties.Add("Идентификатор_весов", scaleN[i].ToString());
+                    properties.Add("ИД_контейнера", contN[i].ToString());
+                    properties.Add("Серийный_номер_материала", matTypeCodes[matTypes.IndexOf(curMatName)].ToString());
+                    properties.Add("Номер_помещения", roomN[i].ToString());
+                    properties.Add("Номер_здания", buildN[i].ToString());
+                    properties.Add("Номер_ЗБМ", zbmN[i].ToString());
+                    properties.Add("Масса_УЕ", dgvAccountUnits[clmMass.Index, i].Value.ToString());
+                    properties.Add("Форма_УЕ", dgvAccountUnits[clmMatForm.Index, i].Value.ToString());
+
+                    if (dbr.createNewKouple("учетная_единица", properties) == 1) return;
+
+                    /*// пытаемся вызвать процедуру
                     // Фукнция: addAccountUnit
                     // Параметры: serialNum, unitMass, matForm, matType, contNum, scaleNum, zbmNum, buildNum, roomNum
                     //
@@ -249,32 +271,39 @@ namespace SAACNM {
                     cmdProc.Parameters.Add("@buildNum", OracleDbType.Varchar2, 5).Value = buildN[i].ToString();
                     cmdProc.Parameters.Add("@roomNum", OracleDbType.Varchar2, 5).Value = roomN[i].ToString();
                     // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка в строке " + (i + 1).ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 try {
-                    // пытаемся вызвать процедуру
-                    // Фукнция: addUnitList
-                    // Параметры: serialNum, invoiceNum, invoiceDate,
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addUnitList", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@serialNum", OracleDbType.Varchar2, 10).Value = dgvAccountUnits[clmSerialNum.Index, i].Value.ToString();
-                    cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                    cmdProc.Parameters.Add("@invoiceDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();
+                    Dictionary<string, string> properties = new Dictionary<string, string>();
+
+                    properties.Add("ИД_УЕ", dgvAccountUnits[clmSerialNum.Index, i].Value.ToString());
+                    properties.Add("ИД_накладной", invoiceNum);
+
+                    if (dbr.createNewKouple("список_уе", properties) == 1) return;
+                    /* // пытаемся вызвать процедуру
+                     // Фукнция: addUnitList
+                     // Параметры: serialNum, invoiceNum, invoiceDate,
+                     //
+                     // создаем объект Command для вызова функции
+                     OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addUnitList", SqlConn);
+                     cmdProc.CommandType = CommandType.StoredProcedure;
+                     // добавляем параметры
+                     cmdProc.Parameters.Add("@serialNum", OracleDbType.Varchar2, 10).Value = dgvAccountUnits[clmSerialNum.Index, i].Value.ToString();
+                     cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
+                     cmdProc.Parameters.Add("@invoiceDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
+                     // вызываем функцию
+                     cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
             MessageBox.Show(this, "Учетные единицы добавлены", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+            Close();
         }
 
         private void dgvAccountUnits_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
@@ -287,7 +316,7 @@ namespace SAACNM {
                 if (dgvAccountUnits[column, row].Value == null) return;
                 scales = (DataGridViewComboBoxColumn)dgvAccountUnits.Columns[4];
                 int indexScale = scales.Items.IndexOf(dgvAccountUnits[column, row].Value.ToString());
-                if (scaleN.Count < row) {
+                if (scaleN.Count < row || contN.Count < row || zbmN.Count < row) {
                     dgvAccountUnits[column, row].Value = null;
                     dgvAccountUnits.Rows.RemoveAt(dgvAccountUnits.Rows.GetLastRow(DataGridViewElementStates.Selected));
                     MessageBox.Show(this, "Заполните поля выше!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -300,7 +329,8 @@ namespace SAACNM {
                 if (dgvAccountUnits[column, row].Value == null) return;
                 conteiners = (DataGridViewComboBoxColumn)dgvAccountUnits.Columns[5];
                 int indexCont = conteiners.Items.IndexOf(dgvAccountUnits[column, row].Value.ToString());
-                if (contN.Count < row) {
+                //if (contN.Count < row) {
+                if (scaleN.Count < row || contN.Count < row || zbmN.Count < row) { 
                     dgvAccountUnits[column, row].Value = null;
                     dgvAccountUnits.Rows.RemoveAt(dgvAccountUnits.Rows.GetLastRow(DataGridViewElementStates.Selected));
                     MessageBox.Show(this, "Заполните поля выше!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -313,7 +343,8 @@ namespace SAACNM {
                 if (dgvAccountUnits[column, row].Value == null) return;
                 places = (DataGridViewComboBoxColumn)dgvAccountUnits.Columns[6];
                 int indexPlace = places.Items.IndexOf(dgvAccountUnits[column, row].Value.ToString());
-                if (zbmN.Count < row) {
+                //if (zbmN.Count < row) {
+                if (scaleN.Count < row || contN.Count < row || zbmN.Count < row) { 
                     dgvAccountUnits[column, row].Value = null;
                     dgvAccountUnits.Rows.RemoveAt(dgvAccountUnits.Rows.GetLastRow(DataGridViewElementStates.Selected));
                     MessageBox.Show(this, "Заполните поля выше!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -322,7 +353,7 @@ namespace SAACNM {
                 if (zbmN.Count == row) {
                     zbmN.Add(zbmNums[indexPlace]);
                     buildN.Add(buildNums[indexPlace]);
-                    roomN.Add(roomNums[indexPlace]);
+                    roomN.Add(roomNums[indexPlace]); 
                 } else {
                     zbmN[row] = zbmNums[indexPlace];
                     buildN[row] = buildNums[indexPlace];

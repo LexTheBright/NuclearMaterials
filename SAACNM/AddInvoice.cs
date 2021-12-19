@@ -72,73 +72,62 @@ namespace SAACNM {
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-            if (invoiceNum == null || invoiceDate == null || invoiceTime == null || invoiceType == null || empID == null) {
-                MessageBox.Show(this, "Заполните все поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (invoiceNum == null || invoiceDate == null || invoiceType == null || empID == null) {
+                MessageBox.Show(this, "Заполните все доступные поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            DBRedactor dbr = new DBRedactor();
+            String curID = "";
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+
+            string error_message = Program.IsValidValue("VAR20", invoiceNum);
+            if (error_message != null)
+            {
+                MessageBox.Show(error_message, "№ накладной");
+                return;
+            }
+            else properties.Add("№_накладной", invoiceNum);
+            
             try {
-                /*// пытаемся вызвать процедуру
-                // Фукнция: checkInvoice
-                // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
-                //
-                // создаем объект Command для вызова функции
-                MySqlCommand cmdProc = new MySqlCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.checkInvoice", dbConnection.dbConnect);
-                cmdProc.CommandType = CommandType.StoredProcedure;
-                // добавляем параметры
-                cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                cmdProc.Parameters.Add("@invoiceDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
-                cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
-                // вызываем функцию
-                cmdProc.ExecuteNonQuery();*/
+                properties.Add("Дата", Convert.ToDateTime(invoiceDate).ToString("yyyy-MM-dd HH:mm:ss"));
+                properties.Add("ИД_сотрудника", empID);
+                if (dbr.createNewKouple("накладная", properties) == 1) return;
+                properties.Clear();
+
+                MySqlCommand cmdSelectaa1 = new MySqlCommand("SELECT ИД_накладной FROM накладная WHERE №_накладной = '" + invoiceNum + "' AND Дата = '" + Convert.ToDateTime(invoiceDate).ToString("yyyy-MM-dd") + "'", dbConnection.dbConnect);
+                try
+                {
+                    using (MySqlDataReader dbReader = cmdSelectaa1.ExecuteReader())
+                    {
+                        dbReader.Read();
+                        curID = Convert.ToString(dbReader["ИД_накладной"]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (cbInvType.SelectedItem.Equals("Получение")) {
-                if (partnerCode == null || agentID == null) {
+                if (agentID == null) {
                     MessageBox.Show(this, "Заполните все поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 try {
-                    /*// пытаемся вызвать процедуру
-                    // Фукнция: addInvoice
-                    // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addInvoice", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                    cmdProc.Parameters.Add("@invoiceDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                    cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
-                    cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
+                    properties.Add("ИД_накладной", curID);
+                    properties.Add("ИД_представителя", agentID);
+                    if (dbr.createNewKouple("накладная_на_поступление", properties) == 1) return;
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                try {
-                    /*// пытаемся вызвать процедуру
-                    // Фукнция: addGetDocument
-                    // Параметры: documentNum, documentDate, agentID
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addGetDocument", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@documentNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                    cmdProc.Parameters.Add("@documentDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                    cmdProc.Parameters.Add("@agentID", OracleDbType.Int32).Value = int.Parse(agentID);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
-                } catch (Exception ex) {
-                    MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                //AddAccountUnit acc = new AddAccountUnit(empID, invoiceNum, invoiceDate);
-                //acc.ShowDialog();
+                AddAccountUnit acc = new AddAccountUnit(empID, curID, invoiceDate);
+                acc.ShowDialog();
                 Close();
             }
             if (cbInvType.SelectedItem.Equals("Перемещение")) {
@@ -147,85 +136,28 @@ namespace SAACNM {
                     return;
                 }
                 try {
-                    /*// пытаемся вызвать процедуру
-                    // Фукнция: addInvoice
-                    // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addInvoice", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                    cmdProc.Parameters.Add("@invoiceDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                    cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
-                    cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
+                    properties.Add("ИД_накладной", curID);
+                    properties.Add("Хранитель", startID);
+                    properties.Add("ИД_принимающего", endID);
+                    if (dbr.createNewKouple("накладная_на_перемещение", properties) == 1) return;
                 } catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
-                try {
-                    /*// пытаемся вызвать процедуру
-                    // Фукнция: addMoveDocument
-                    // Параметры: documentNum, documentDate, startID, endID
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addMoveDocument", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@documentNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                    cmdProc.Parameters.Add("@documentDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                    cmdProc.Parameters.Add("@startID", OracleDbType.Int32).Value = int.Parse(startID);
-                    cmdProc.Parameters.Add("@endID", OracleDbType.Int32).Value = int.Parse(endID);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
-                } catch (Exception ex) {
-                    MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                //AccountUnitsForm units = new AccountUnitsForm(invoiceNum, invoiceDate, true, startID, endID);
+                }               
+                //AccountUnitsForm units = new AccountUnitsForm(invoiceNum, curID, true, startID, endID);
                 //units.ShowDialog();
                 Close();
             }
             if (cbInvType.SelectedItem.Equals("Отправление")) {
-                if (partnerCode == null || agentID == null) {
+                if (agentID == null) {
                     MessageBox.Show(this, "Заполните все поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 try {
-                    /*// пытаемся вызвать процедуру
-                    // Фукнция: addInvoice
-                    // Параметры: invoiceNum, invoiceDate, invoiceTime, empID
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addInvoice", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                    cmdProc.Parameters.Add("@invoiceDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                    cmdProc.Parameters.Add("@invoiceTime", OracleDbType.Varchar2, 5).Value = invoiceTime;
-                    cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
-                } catch (Exception ex) {
-                    MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                try {
-                    /*// пытаемся вызвать процедуру
-                    // Фукнция: addSendDocument
-                    // Параметры: documentNum, documentDate, agentID
-                    //
-                    // создаем объект Command для вызова функции
-                    OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.addSendDocument", SqlConn);
-                    cmdProc.CommandType = CommandType.StoredProcedure;
-                    // добавляем параметры
-                    cmdProc.Parameters.Add("@documentNum", OracleDbType.Varchar2, 10).Value = invoiceNum;
-                    cmdProc.Parameters.Add("@documentDate", OracleDbType.Date).Value = Convert.ToDateTime(invoiceDate);
-                    cmdProc.Parameters.Add("@agentID", OracleDbType.Int32).Value = int.Parse(agentID);
-                    // вызываем функцию
-                    cmdProc.ExecuteNonQuery();*/
+                    properties.Add("ИД_накладной", curID);
+                    properties.Add("ИД_представителя", agentID);
+                    if (dbr.createNewKouple("накладная_на_отправление", properties) == 1) return;
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -337,8 +269,8 @@ namespace SAACNM {
             EmployeeForm resp = new EmployeeForm();
             empID = resp.getIDEmployee();
             // проверить полномочия
-            try {
-                /*// пытаемся вызвать процедуру
+            /*try {
+                *//*// пытаемся вызвать процедуру
                 // Фукнция: checkEmpPower
                 // Параметры: empID, needPower
                 //
@@ -349,13 +281,13 @@ namespace SAACNM {
                 cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
                 cmdProc.Parameters.Add("@needPower", OracleDbType.Varchar2).Value = cbInvType.SelectedItem.ToString();
                 // вызываем функцию
-                cmdProc.ExecuteNonQuery();*/
+                cmdProc.ExecuteNonQuery();*//*
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 empID = null;
                 txtRespEmp.Clear();
                 return;
-            }
+            }*/
             MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + empID, dbConnection.dbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader()) {
@@ -423,6 +355,17 @@ namespace SAACNM {
             if (e.KeyChar == 13) {
                 btnAdd_Click(sender, null);
             }
+        }
+
+        private void lblTime_Click(object sender, EventArgs e)
+        {
+            /*EmployeeForm resp = new EmployeeForm();
+            empID = resp.getIDEmployee();
+            invoiceNum = "3382";
+            invoiceDate = "2021-12-19";
+
+            AddAccountUnit acc = new AddAccountUnit(empID, invoiceNum, invoiceDate);
+            acc.ShowDialog();*/
         }
     }
 }
