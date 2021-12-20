@@ -33,6 +33,7 @@
             this.clmZBMNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBuildNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmRoomNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmMatCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountUnits)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,8 @@
             this.clmMass,
             this.clmZBMNum,
             this.clmBuildNum,
-            this.clmRoomNum});
+            this.clmRoomNum,
+            this.clmMatCode});
             this.dgvAccountUnits.Location = new System.Drawing.Point(12, 12);
             this.dgvAccountUnits.MultiSelect = false;
             this.dgvAccountUnits.Name = "dgvAccountUnits";
@@ -83,6 +85,7 @@
             this.clmSend.HeaderText = "Отправить?";
             this.clmSend.Name = "clmSend";
             this.clmSend.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.clmSend.TrueValue = "true";
             // 
             // clmSerialNum
             // 
@@ -124,6 +127,12 @@
             this.clmRoomNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.clmRoomNum.Width = 120;
             // 
+            // clmMatCode
+            // 
+            this.clmMatCode.HeaderText = "Код типа материала";
+            this.clmMatCode.Name = "clmMatCode";
+            this.clmMatCode.Visible = false;
+            // 
             // AccountUnitsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -158,5 +167,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmZBMNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBuildNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmRoomNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmMatCode;
     }
 }

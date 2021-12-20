@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class ChooseValidPlace : Form {
@@ -20,39 +20,38 @@ namespace SAACNM {
         private ArrayList buildNums = new ArrayList();
         private ArrayList roomNums = new ArrayList();
         private String[] place = new String[3];
-        OracleConnection SqlConn;
-        public ChooseValidPlace(OracleConnection conn, String end) {
+        public ChooseValidPlace(String end) {
             InitializeComponent();
             endID = end;
-            SqlConn = conn;
         }
 
         private void ChooseValidPlace_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM ПОМЕЩЕНИЯ_С WHERE ID_СОТРУДНИКА = " + endID, SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM помещение WHERE ИД_ответственного = " + endID, dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        zbmNum = Convert.ToString(dbReader["НОМЕР_ЗБМ"]);
-                        zbmNums.Add(Convert.ToString(dbReader["НОМЕР_ЗБМ"]));
-                        buildNum = Convert.ToString(dbReader["НОМЕР_ЗДАНИЯ"]);
-                        buildNums.Add(Convert.ToString(dbReader["НОМЕР_ЗДАНИЯ"]));
-                        roomNum = Convert.ToString(dbReader["НОМЕР_ПОМЕЩЕНИЯ"]);
-                        roomNums.Add(Convert.ToString(dbReader["НОМЕР_ПОМЕЩЕНИЯ"]));
-                        cbValidPlaces.Items.Add("ЗБМ: " + zbmNum + ", Здание: " + buildNum + ", Помещение: " + roomNum);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            zbmNum = Convert.ToString(dbReader["Номер_ЗБМ"]);
+                            zbmNums.Add(Convert.ToString(dbReader["Номер_ЗБМ"]));
+                            buildNum = Convert.ToString(dbReader["Номер_здания"]);
+                            buildNums.Add(Convert.ToString(dbReader["Номер_здания"]));
+                            roomNum = Convert.ToString(dbReader["Номер_помещения"]);
+                            roomNums.Add(Convert.ToString(dbReader["Номер_помещения"]));
+                            cbValidPlaces.Items.Add("ЗБМ: " + zbmNum + ", Здание: " + buildNum + ", Помещение: " + roomNum);
+                        }
                     }
-                } else {
-                    MessageBox.Show(this, "У указанного инициатора нет учетных единиц на хранении.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
+                    else
+                    {
+                        MessageBox.Show(this, "У указанного получателя нет подответственных помещений.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Close();
+                    }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
         }
 
@@ -61,11 +60,11 @@ namespace SAACNM {
                 MessageBox.Show(this, "Укажите местоположение.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            this.Close();
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void cbValidPlaces_SelectedIndexChanged(object sender, EventArgs e) {
@@ -74,7 +73,7 @@ namespace SAACNM {
             place[2] = roomNums[cbValidPlaces.SelectedIndex].ToString();
         }
         public String[] getPlaceToMove() {
-            this.ShowDialog();
+            ShowDialog();
             return place;
         }
 

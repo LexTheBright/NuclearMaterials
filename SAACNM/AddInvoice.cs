@@ -78,7 +78,7 @@ namespace SAACNM {
             }
 
             DBRedactor dbr = new DBRedactor();
-            String curID = "";
+            String curID = ""; //ИД НАКЛАДНОЙ
             Dictionary<string, string> properties = new Dictionary<string, string>();
 
             string error_message = Program.IsValidValue("VAR20", invoiceNum);
@@ -113,9 +113,15 @@ namespace SAACNM {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (cbInvType.SelectedItem.Equals("Получение")) {
+            if (cbInvType.SelectedItem.Equals("Поступление")) {
                 if (agentID == null) {
                     MessageBox.Show(this, "Заполните все поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                AddAccountUnit acc = new AddAccountUnit(empID, curID, invoiceDate);
+                if (acc.ShowDialog() != DialogResult.OK)
+                {
+                    dbr.deleteByID("накладная", "ИД_накладной", curID);
                     return;
                 }
                 try {
@@ -126,14 +132,18 @@ namespace SAACNM {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                AddAccountUnit acc = new AddAccountUnit(empID, curID, invoiceDate);
-                acc.ShowDialog();
                 Close();
             }
             if (cbInvType.SelectedItem.Equals("Перемещение")) {
                 if (startID == null || endID == null) {
                     MessageBox.Show(this, "Заполните все поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
+                }
+                AccountUnitsForm units = new AccountUnitsForm(curID, invoiceDate, true, startID, endID);
+                if (units.ShowDialog() != DialogResult.OK) 
+                {
+                    dbr.deleteByID("накладная", "ИД_накладной", curID);
+                    return; 
                 }
                 try {
                     properties.Add("ИД_накладной", curID);
@@ -145,13 +155,17 @@ namespace SAACNM {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }               
-                //AccountUnitsForm units = new AccountUnitsForm(invoiceNum, curID, true, startID, endID);
-                //units.ShowDialog();
                 Close();
             }
             if (cbInvType.SelectedItem.Equals("Отправление")) {
                 if (agentID == null) {
                     MessageBox.Show(this, "Заполните все поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                AccountUnitsForm units = new AccountUnitsForm(curID, invoiceDate);
+                if (units.ShowDialog() != DialogResult.OK)
+                {
+                    dbr.deleteByID("накладная", "ИД_накладной", curID);
                     return;
                 }
                 try {
@@ -162,8 +176,6 @@ namespace SAACNM {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                //AccountUnitsForm units = new AccountUnitsForm(invoiceNum, invoiceDate);
-                //units.ShowDialog();
                 Close();
             }
         }

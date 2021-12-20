@@ -178,19 +178,8 @@ namespace SAACNM {
                 return;
             }
             try {
-                /*// пытаемся вызвать процедуру
-                // Фукнция: deleteInvoice
-                // Параметры: invoiceNum, invoiceDate, invoiceType
-                //
-                // создаем объект Command для вызова функции
-                OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.deleteInvoice", SqlConn);
-                cmdProc.CommandType = CommandType.StoredProcedure;
-                // добавляем параметры
-                cmdProc.Parameters.Add("@invoiceNum", OracleDbType.Varchar2, 10).Value = dgvInvoices[clmDocNum.Index, indexInvoice].Value.ToString();
-                cmdProc.Parameters.Add("@invoiceDate", OracleDbType.Date).Value = Convert.ToDateTime(dgvInvoices[clmDocDate.Index, indexInvoice].Value.ToString());
-                cmdProc.Parameters.Add("@invoiceType", OracleDbType.Varchar2, 11).Value = dgvInvoices[clmDocType.Index, indexInvoice].Value.ToString();
-                // вызываем функцию
-                cmdProc.ExecuteNonQuery();*/
+                DBRedactor dbr = new DBRedactor();
+                dbr.deleteByID("накладная", "ИД_накладной", dgvInvoices[clmDocNum.Index, indexInvoice].Value.ToString());
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

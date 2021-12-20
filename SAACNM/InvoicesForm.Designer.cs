@@ -35,7 +35,6 @@
             this.lblEmpEnd = new System.Windows.Forms.Label();
             this.txtEmpEnd = new System.Windows.Forms.TextBox();
             this.dgvAccountUnits = new System.Windows.Forms.DataGridView();
-            this.btnExit = new System.Windows.Forms.Button();
             this.clmMatType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmSerialNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmContNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,8 +44,9 @@
             this.clmZBMNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBuildNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmRoomNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnExit = new System.Windows.Forms.Button();
             this.clmDocNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmDocCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmDocDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmDocType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmSecondName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,7 +69,7 @@
             this.dgvInvoices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInvoices.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmDocNum,
-            this.Column1,
+            this.clmDocCode,
             this.clmDocDate,
             this.clmDocType,
             this.clmSecondName,
@@ -205,16 +205,6 @@
             this.dgvAccountUnits.Size = new System.Drawing.Size(786, 225);
             this.dgvAccountUnits.TabIndex = 14;
             // 
-            // btnExit
-            // 
-            this.btnExit.Location = new System.Drawing.Point(723, 615);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(75, 25);
-            this.btnExit.TabIndex = 15;
-            this.btnExit.Text = "Выход";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
             // clmMatType
             // 
             this.clmMatType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -269,7 +259,7 @@
             this.clmScaleNum.Name = "clmScaleNum";
             this.clmScaleNum.ReadOnly = true;
             this.clmScaleNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmScaleNum.Width = 63;
+            this.clmScaleNum.Width = 57;
             // 
             // clmZBMNum
             // 
@@ -278,7 +268,7 @@
             this.clmZBMNum.Name = "clmZBMNum";
             this.clmZBMNum.ReadOnly = true;
             this.clmZBMNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmZBMNum.Width = 53;
+            this.clmZBMNum.Width = 48;
             // 
             // clmBuildNum
             // 
@@ -287,7 +277,7 @@
             this.clmBuildNum.Name = "clmBuildNum";
             this.clmBuildNum.ReadOnly = true;
             this.clmBuildNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmBuildNum.Width = 70;
+            this.clmBuildNum.Width = 63;
             // 
             // clmRoomNum
             // 
@@ -298,6 +288,16 @@
             this.clmRoomNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.clmRoomNum.Width = 87;
             // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(723, 615);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 25);
+            this.btnExit.TabIndex = 15;
+            this.btnExit.Text = "Выход";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // clmDocNum
             // 
             this.clmDocNum.HeaderText = "№ накладной";
@@ -306,12 +306,12 @@
             this.clmDocNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.clmDocNum.Width = 110;
             // 
-            // Column1
+            // clmDocCode
             // 
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column1.HeaderText = "Код накладной";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
+            this.clmDocCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clmDocCode.HeaderText = "Код накладной";
+            this.clmDocCode.Name = "clmDocCode";
+            this.clmDocCode.ReadOnly = true;
             // 
             // clmDocDate
             // 
@@ -449,7 +449,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBuildNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmRoomNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmDocNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmDocCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmDocDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmDocType;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmSecondName;
