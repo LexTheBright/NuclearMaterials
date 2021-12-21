@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.dgvScales = new System.Windows.Forms.DataGridView();
-            this.lblScaleNum = new System.Windows.Forms.Label();
-            this.txtScaleNum = new System.Windows.Forms.TextBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.clmScaleNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmScaleMark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmScaleSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmCalibDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmScaleLim = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmScaleError = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblScaleNum = new System.Windows.Forms.Label();
+            this.txtScaleNum = new System.Windows.Forms.TextBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvScales)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -69,18 +69,65 @@
             this.dgvScales.TabIndex = 0;
             this.dgvScales.SelectionChanged += new System.EventHandler(this.dgvScales_SelectionChanged);
             // 
+            // clmScaleNum
+            // 
+            this.clmScaleNum.HeaderText = "№";
+            this.clmScaleNum.Name = "clmScaleNum";
+            this.clmScaleNum.ReadOnly = true;
+            this.clmScaleNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmScaleNum.Width = 80;
+            // 
+            // clmScaleMark
+            // 
+            this.clmScaleMark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clmScaleMark.HeaderText = "Марка";
+            this.clmScaleMark.Name = "clmScaleMark";
+            this.clmScaleMark.ReadOnly = true;
+            this.clmScaleMark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // clmScaleSerial
+            // 
+            this.clmScaleSerial.HeaderText = "Серийный номер";
+            this.clmScaleSerial.Name = "clmScaleSerial";
+            this.clmScaleSerial.ReadOnly = true;
+            this.clmScaleSerial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmScaleSerial.Width = 135;
+            // 
+            // clmCalibDate
+            // 
+            this.clmCalibDate.HeaderText = "Дата калибровки";
+            this.clmCalibDate.Name = "clmCalibDate";
+            this.clmCalibDate.ReadOnly = true;
+            this.clmCalibDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmCalibDate.Width = 135;
+            // 
+            // clmScaleLim
+            // 
+            this.clmScaleLim.HeaderText = "Предел, кг";
+            this.clmScaleLim.Name = "clmScaleLim";
+            this.clmScaleLim.ReadOnly = true;
+            this.clmScaleLim.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // clmScaleError
+            // 
+            this.clmScaleError.HeaderText = "Погрешность, %";
+            this.clmScaleError.Name = "clmScaleError";
+            this.clmScaleError.ReadOnly = true;
+            this.clmScaleError.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmScaleError.Width = 125;
+            // 
             // lblScaleNum
             // 
             this.lblScaleNum.AutoSize = true;
             this.lblScaleNum.Location = new System.Drawing.Point(7, 15);
             this.lblScaleNum.Name = "lblScaleNum";
-            this.lblScaleNum.Size = new System.Drawing.Size(61, 14);
+            this.lblScaleNum.Size = new System.Drawing.Size(57, 14);
             this.lblScaleNum.TabIndex = 1;
-            this.lblScaleNum.Text = "№ весов:";
+            this.lblScaleNum.Text = "№ весов";
             // 
             // txtScaleNum
             // 
-            this.txtScaleNum.Location = new System.Drawing.Point(74, 12);
+            this.txtScaleNum.Location = new System.Drawing.Point(70, 12);
             this.txtScaleNum.Name = "txtScaleNum";
             this.txtScaleNum.Size = new System.Drawing.Size(150, 22);
             this.txtScaleNum.TabIndex = 2;
@@ -131,53 +178,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(700, 43);
             this.panel1.TabIndex = 16;
-            // 
-            // clmScaleNum
-            // 
-            this.clmScaleNum.HeaderText = "№";
-            this.clmScaleNum.Name = "clmScaleNum";
-            this.clmScaleNum.ReadOnly = true;
-            this.clmScaleNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmScaleNum.Width = 80;
-            // 
-            // clmScaleMark
-            // 
-            this.clmScaleMark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clmScaleMark.HeaderText = "Марка";
-            this.clmScaleMark.Name = "clmScaleMark";
-            this.clmScaleMark.ReadOnly = true;
-            this.clmScaleMark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // clmScaleSerial
-            // 
-            this.clmScaleSerial.HeaderText = "Серийный номер";
-            this.clmScaleSerial.Name = "clmScaleSerial";
-            this.clmScaleSerial.ReadOnly = true;
-            this.clmScaleSerial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmScaleSerial.Width = 135;
-            // 
-            // clmCalibDate
-            // 
-            this.clmCalibDate.HeaderText = "Дата калибровки";
-            this.clmCalibDate.Name = "clmCalibDate";
-            this.clmCalibDate.ReadOnly = true;
-            this.clmCalibDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmCalibDate.Width = 135;
-            // 
-            // clmScaleLim
-            // 
-            this.clmScaleLim.HeaderText = "Предел, кг";
-            this.clmScaleLim.Name = "clmScaleLim";
-            this.clmScaleLim.ReadOnly = true;
-            this.clmScaleLim.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // clmScaleError
-            // 
-            this.clmScaleError.HeaderText = "Погрешность, %";
-            this.clmScaleError.Name = "clmScaleError";
-            this.clmScaleError.ReadOnly = true;
-            this.clmScaleError.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmScaleError.Width = 125;
             // 
             // ScalesForm
             // 

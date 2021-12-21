@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.dgvPosts = new System.Windows.Forms.DataGridView();
+            this.clmPostNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmPostName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmPostPowers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblPostName = new System.Windows.Forms.Label();
             this.txtPostName = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.clmPostNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmPostName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmPostPowers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPosts)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -63,18 +63,43 @@
             this.dgvPosts.TabIndex = 0;
             this.dgvPosts.SelectionChanged += new System.EventHandler(this.dgvPosts_SelectionChanged);
             // 
+            // clmPostNum
+            // 
+            this.clmPostNum.HeaderText = "Код должности";
+            this.clmPostNum.Name = "clmPostNum";
+            this.clmPostNum.ReadOnly = true;
+            this.clmPostNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmPostNum.Width = 120;
+            // 
+            // clmPostName
+            // 
+            this.clmPostName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmPostName.HeaderText = "Наименование должности";
+            this.clmPostName.Name = "clmPostName";
+            this.clmPostName.ReadOnly = true;
+            this.clmPostName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmPostName.Width = 148;
+            // 
+            // clmPostPowers
+            // 
+            this.clmPostPowers.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clmPostPowers.HeaderText = "Полномочия";
+            this.clmPostPowers.Name = "clmPostPowers";
+            this.clmPostPowers.ReadOnly = true;
+            this.clmPostPowers.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // lblPostName
             // 
             this.lblPostName.AutoSize = true;
             this.lblPostName.Location = new System.Drawing.Point(3, 15);
             this.lblPostName.Name = "lblPostName";
-            this.lblPostName.Size = new System.Drawing.Size(75, 14);
+            this.lblPostName.Size = new System.Drawing.Size(71, 14);
             this.lblPostName.TabIndex = 1;
-            this.lblPostName.Text = "Должность:";
+            this.lblPostName.Text = "Должность";
             // 
             // txtPostName
             // 
-            this.txtPostName.Location = new System.Drawing.Point(84, 12);
+            this.txtPostName.Location = new System.Drawing.Point(80, 12);
             this.txtPostName.Name = "txtPostName";
             this.txtPostName.Size = new System.Drawing.Size(150, 22);
             this.txtPostName.TabIndex = 2;
@@ -125,31 +150,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(592, 43);
             this.panel1.TabIndex = 16;
-            // 
-            // clmPostNum
-            // 
-            this.clmPostNum.HeaderText = "Код должности";
-            this.clmPostNum.Name = "clmPostNum";
-            this.clmPostNum.ReadOnly = true;
-            this.clmPostNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPostNum.Width = 120;
-            // 
-            // clmPostName
-            // 
-            this.clmPostName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.clmPostName.HeaderText = "Наименование должности";
-            this.clmPostName.Name = "clmPostName";
-            this.clmPostName.ReadOnly = true;
-            this.clmPostName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPostName.Width = 148;
-            // 
-            // clmPostPowers
-            // 
-            this.clmPostPowers.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clmPostPowers.HeaderText = "Полномочия";
-            this.clmPostPowers.Name = "clmPostPowers";
-            this.clmPostPowers.ReadOnly = true;
-            this.clmPostPowers.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // PostForm
             // 
