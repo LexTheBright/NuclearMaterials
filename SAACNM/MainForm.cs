@@ -65,8 +65,8 @@ namespace SAACNM {
         }
 
         private void tsMaterials_Click(object sender, EventArgs e) {
-         //   ShowAccUnits units = new ShowAccUnits(SqlConn);
-         //   units.ShowDialog();
+            ShowAccUnits units = new ShowAccUnits();
+            units.ShowDialog();
         }
 
         private void MainForm_KeyPress(object sender, KeyPressEventArgs e) {

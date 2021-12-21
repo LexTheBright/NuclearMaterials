@@ -29,6 +29,13 @@
         private void InitializeComponent()
         {
             this.dgvEmployee = new System.Windows.Forms.DataGridView();
+            this.lblSecName = new System.Windows.Forms.Label();
+            this.txtSecondName = new System.Windows.Forms.TextBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnChoose = new System.Windows.Forms.Button();
             this.clmID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmSecondName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,14 +45,7 @@
             this.clmPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmPassport = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Кодолжности = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblSecName = new System.Windows.Forms.Label();
-            this.txtSecondName = new System.Windows.Forms.TextBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnChoose = new System.Windows.Forms.Button();
+            this.clmPowerCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +66,7 @@
             this.clmPhone,
             this.clmBirthDate,
             this.clmPassport,
-            this.Кодолжности});
+            this.clmPowerCode});
             this.dgvEmployee.Location = new System.Drawing.Point(12, 12);
             this.dgvEmployee.MultiSelect = false;
             this.dgvEmployee.Name = "dgvEmployee";
@@ -77,85 +77,6 @@
             this.dgvEmployee.Size = new System.Drawing.Size(943, 331);
             this.dgvEmployee.TabIndex = 0;
             this.dgvEmployee.SelectionChanged += new System.EventHandler(this.dgvEmployee_SelectionChanged);
-            // 
-            // clmID
-            // 
-            this.clmID.HeaderText = "№";
-            this.clmID.Name = "clmID";
-            this.clmID.ReadOnly = true;
-            this.clmID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmID.Width = 40;
-            // 
-            // clmSecondName
-            // 
-            this.clmSecondName.HeaderText = "Фамилия";
-            this.clmSecondName.Name = "clmSecondName";
-            this.clmSecondName.ReadOnly = true;
-            this.clmSecondName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // clmFirstName
-            // 
-            this.clmFirstName.HeaderText = "Имя";
-            this.clmFirstName.Name = "clmFirstName";
-            this.clmFirstName.ReadOnly = true;
-            this.clmFirstName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmFirstName.Width = 80;
-            // 
-            // clmFatherName
-            // 
-            this.clmFatherName.HeaderText = "Отчество";
-            this.clmFatherName.Name = "clmFatherName";
-            this.clmFatherName.ReadOnly = true;
-            this.clmFatherName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // clmPost
-            // 
-            this.clmPost.HeaderText = "Должность";
-            this.clmPost.Name = "clmPost";
-            this.clmPost.ReadOnly = true;
-            this.clmPost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPost.Width = 105;
-            // 
-            // clmAddress
-            // 
-            this.clmAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clmAddress.HeaderText = "Адрес";
-            this.clmAddress.Name = "clmAddress";
-            this.clmAddress.ReadOnly = true;
-            this.clmAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // clmPhone
-            // 
-            this.clmPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.clmPhone.HeaderText = "Номер телефона";
-            this.clmPhone.Name = "clmPhone";
-            this.clmPhone.ReadOnly = true;
-            this.clmPhone.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // clmBirthDate
-            // 
-            this.clmBirthDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.clmBirthDate.HeaderText = "Дата рождения";
-            this.clmBirthDate.Name = "clmBirthDate";
-            this.clmBirthDate.ReadOnly = true;
-            this.clmBirthDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmBirthDate.Width = 92;
-            // 
-            // clmPassport
-            // 
-            this.clmPassport.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.clmPassport.HeaderText = "Паспортные данные";
-            this.clmPassport.Name = "clmPassport";
-            this.clmPassport.ReadOnly = true;
-            this.clmPassport.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmPassport.Width = 115;
-            // 
-            // Кодолжности
-            // 
-            this.Кодолжности.HeaderText = "PostCode";
-            this.Кодолжности.Name = "Кодолжности";
-            this.Кодолжности.ReadOnly = true;
-            this.Кодолжности.Visible = false;
             // 
             // lblSecName
             // 
@@ -232,6 +153,85 @@
             this.btnChoose.UseVisualStyleBackColor = false;
             this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
             // 
+            // clmID
+            // 
+            this.clmID.HeaderText = "№";
+            this.clmID.Name = "clmID";
+            this.clmID.ReadOnly = true;
+            this.clmID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmID.Width = 40;
+            // 
+            // clmSecondName
+            // 
+            this.clmSecondName.HeaderText = "Фамилия";
+            this.clmSecondName.Name = "clmSecondName";
+            this.clmSecondName.ReadOnly = true;
+            this.clmSecondName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // clmFirstName
+            // 
+            this.clmFirstName.HeaderText = "Имя";
+            this.clmFirstName.Name = "clmFirstName";
+            this.clmFirstName.ReadOnly = true;
+            this.clmFirstName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmFirstName.Width = 80;
+            // 
+            // clmFatherName
+            // 
+            this.clmFatherName.HeaderText = "Отчество";
+            this.clmFatherName.Name = "clmFatherName";
+            this.clmFatherName.ReadOnly = true;
+            this.clmFatherName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // clmPost
+            // 
+            this.clmPost.HeaderText = "Должность";
+            this.clmPost.Name = "clmPost";
+            this.clmPost.ReadOnly = true;
+            this.clmPost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmPost.Width = 105;
+            // 
+            // clmAddress
+            // 
+            this.clmAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clmAddress.HeaderText = "Адрес";
+            this.clmAddress.Name = "clmAddress";
+            this.clmAddress.ReadOnly = true;
+            this.clmAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // clmPhone
+            // 
+            this.clmPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmPhone.HeaderText = "Номер телефона";
+            this.clmPhone.Name = "clmPhone";
+            this.clmPhone.ReadOnly = true;
+            this.clmPhone.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // clmBirthDate
+            // 
+            this.clmBirthDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.clmBirthDate.HeaderText = "Дата рождения";
+            this.clmBirthDate.Name = "clmBirthDate";
+            this.clmBirthDate.ReadOnly = true;
+            this.clmBirthDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmBirthDate.Width = 92;
+            // 
+            // clmPassport
+            // 
+            this.clmPassport.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.clmPassport.HeaderText = "Паспортные данные";
+            this.clmPassport.Name = "clmPassport";
+            this.clmPassport.ReadOnly = true;
+            this.clmPassport.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.clmPassport.Width = 115;
+            // 
+            // clmPowerCode
+            // 
+            this.clmPowerCode.HeaderText = "PostCode";
+            this.clmPowerCode.Name = "clmPowerCode";
+            this.clmPowerCode.ReadOnly = true;
+            this.clmPowerCode.Visible = false;
+            // 
             // EmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -264,6 +264,7 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnChoose;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmID;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmSecondName;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmFirstName;
@@ -273,7 +274,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBirthDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmPassport;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Кодолжности;
-        private System.Windows.Forms.Button btnChoose;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmPowerCode;
     }
 }

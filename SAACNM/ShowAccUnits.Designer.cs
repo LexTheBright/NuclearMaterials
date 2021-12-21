@@ -25,15 +25,14 @@
         private void InitializeComponent() {
             this.dgvAccountUnits = new System.Windows.Forms.DataGridView();
             this.clmSerialNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmInvoice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmScales = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmMass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmFormType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmMatType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmZBM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBuild = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmRoom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountUnits)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,9 +44,9 @@
             this.dgvAccountUnits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAccountUnits.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmSerialNum,
-            this.clmInvoice,
             this.clmScales,
             this.clmMass,
+            this.Column1,
             this.clmFormType,
             this.clmMatType,
             this.clmZBM,
@@ -57,6 +56,7 @@
             this.dgvAccountUnits.MultiSelect = false;
             this.dgvAccountUnits.Name = "dgvAccountUnits";
             this.dgvAccountUnits.ReadOnly = true;
+            this.dgvAccountUnits.RowHeadersVisible = false;
             this.dgvAccountUnits.RowHeadersWidth = 20;
             this.dgvAccountUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAccountUnits.Size = new System.Drawing.Size(947, 336);
@@ -64,48 +64,49 @@
             // 
             // clmSerialNum
             // 
-            this.clmSerialNum.HeaderText = "Серийный номер";
+            this.clmSerialNum.HeaderText = "Идентификатор";
             this.clmSerialNum.Name = "clmSerialNum";
             this.clmSerialNum.ReadOnly = true;
             this.clmSerialNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.clmSerialNum.Width = 120;
             // 
-            // clmInvoice
-            // 
-            this.clmInvoice.HeaderText = "№ накладной";
-            this.clmInvoice.Name = "clmInvoice";
-            this.clmInvoice.ReadOnly = true;
-            this.clmInvoice.Width = 110;
-            // 
             // clmScales
             // 
-            this.clmScales.HeaderText = "№ весов";
+            this.clmScales.HeaderText = "ID весов";
             this.clmScales.Name = "clmScales";
             this.clmScales.ReadOnly = true;
             this.clmScales.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // clmMass
             // 
-            this.clmMass.HeaderText = "Вес нетто, кг";
+            this.clmMass.HeaderText = "Масса, кг";
             this.clmMass.Name = "clmMass";
             this.clmMass.ReadOnly = true;
             this.clmMass.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Column1.HeaderText = "ID контейнера";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 105;
+            // 
             // clmFormType
             // 
+            this.clmFormType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.clmFormType.HeaderText = "Форма";
             this.clmFormType.Name = "clmFormType";
             this.clmFormType.ReadOnly = true;
             this.clmFormType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmFormType.Width = 110;
             // 
             // clmMatType
             // 
+            this.clmMatType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.clmMatType.HeaderText = "Тип материала";
             this.clmMatType.Name = "clmMatType";
             this.clmMatType.ReadOnly = true;
             this.clmMatType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmMatType.Width = 130;
             // 
             // clmZBM
             // 
@@ -130,22 +131,11 @@
             this.clmRoom.ReadOnly = true;
             this.clmRoom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // btnExit
-            // 
-            this.btnExit.Location = new System.Drawing.Point(884, 365);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(75, 25);
-            this.btnExit.TabIndex = 1;
-            this.btnExit.Text = "Выход";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
             // ShowAccUnits
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(971, 402);
-            this.Controls.Add(this.btnExit);
+            this.ClientSize = new System.Drawing.Size(971, 359);
             this.Controls.Add(this.dgvAccountUnits);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -164,11 +154,10 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvAccountUnits;
-        private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmSerialNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmInvoice;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmScales;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmMass;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmFormType;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmMatType;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmZBM;

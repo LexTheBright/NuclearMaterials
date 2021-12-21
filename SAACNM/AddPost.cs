@@ -9,13 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 
-// 0 0 1 (1) Перемещение
-// 0 1 0 (2) Отправка
-// 1 0 0 (4) Получение
-// 0 1 1 (3) Перемещение, Отправка
-// 1 0 1 (5) Перемещение, Получение
-// 1 1 0 (6) Отправка, Получение
-// 1 1 1 (7) Перемещение, Отправка, Получение
 namespace SAACNM {
     public partial class AddPost : Form  {
         private String postNum;
@@ -27,6 +20,7 @@ namespace SAACNM {
         public AddPost(String num = null, String name = null, String[] powers = null) {
             InitializeComponent();
             if (num != null || name != null || powers != null) {
+                txtPostNum.Enabled = false;
                 txtPostNum.Text = num;
                 oldNum = num;
                 txtPostName.Text = name;
@@ -35,11 +29,11 @@ namespace SAACNM {
                 {
                     cbMove.CheckState = CheckState.Checked;
                 }
-                if (powers.Contains("Отправка"))
+                if (powers.Contains("Отправление"))
                 {
                     cbSend.CheckState = CheckState.Checked;
                 }
-                if (powers.Contains("Получение"))
+                if (powers.Contains("Поступление"))
                 {
                     cbGet.CheckState = CheckState.Checked;
                 }
@@ -87,28 +81,28 @@ namespace SAACNM {
                         dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Перемещение");
                     }
 
-                    if (cbSend.CheckState == CheckState.Checked && !oldPowers.Contains("Отправка"))
+                    if (cbSend.CheckState == CheckState.Checked && !oldPowers.Contains("Отправление"))
                     {
                         properties.Add("Код_должности", postNum);
-                        properties.Add("Полномочия", "Отправка");
+                        properties.Add("Полномочия", "Отправление");
                         if (dbr.createNewKouple("полномочия", properties) == 1) return;
                         properties.Clear();
                     }
-                    if (cbSend.CheckState == CheckState.Unchecked && oldPowers.Contains("Отправка"))
+                    if (cbSend.CheckState == CheckState.Unchecked && oldPowers.Contains("Отправление"))
                     {
-                        dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Отправка");
+                        dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Отправление");
                     }
 
-                    if (cbGet.CheckState == CheckState.Checked && !oldPowers.Contains("Получение"))
+                    if (cbGet.CheckState == CheckState.Checked && !oldPowers.Contains("Поступление"))
                     {
                         properties.Add("Код_должности", postNum);
-                        properties.Add("Полномочия", "Получение");
+                        properties.Add("Полномочия", "Поступление");
                         if (dbr.createNewKouple("полномочия", properties) == 1) return;
                         properties.Clear();
                     }
-                    if (cbGet.CheckState == CheckState.Unchecked && oldPowers.Contains("Получение"))
+                    if (cbGet.CheckState == CheckState.Unchecked && oldPowers.Contains("Поступление"))
                     {
-                        dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Получение");
+                        dbr.deleteByID("полномочия", "Код_должности", postNum, "Полномочия", "Поступление");
                     }
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -139,7 +133,7 @@ namespace SAACNM {
                     if (cbSend.CheckState == CheckState.Checked)
                     {
                         properties.Add("Код_должности", postNum);
-                        properties.Add("Полномочия", "Отправка");
+                        properties.Add("Полномочия", "Отправление");
                         if (dbr.createNewKouple("полномочия", properties) == 1) return;
                         properties.Clear();
                     }
@@ -147,7 +141,7 @@ namespace SAACNM {
                     if (cbGet.CheckState == CheckState.Checked)
                     {
                         properties.Add("Код_должности", postNum);
-                        properties.Add("Полномочия", "Получение");
+                        properties.Add("Полномочия", "Поступление");
                         if (dbr.createNewKouple("полномочия", properties) == 1) return;
                         properties.Clear();
                     }

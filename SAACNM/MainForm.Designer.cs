@@ -42,12 +42,14 @@
             this.tsEmployees = new System.Windows.Forms.ToolStripMenuItem();
             this.tsDocuments = new System.Windows.Forms.ToolStripMenuItem();
             this.tsInvoices = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsHandbooks,
             this.tsLocation,
@@ -56,7 +58,7 @@
             this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(584, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(486, 29);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "mainStrip";
             // 
@@ -69,43 +71,43 @@
             this.tsContainers,
             this.tsScales,
             this.tsMaterials});
-            this.tsHandbooks.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tsHandbooks.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tsHandbooks.Name = "tsHandbooks";
-            this.tsHandbooks.Size = new System.Drawing.Size(93, 20);
+            this.tsHandbooks.Size = new System.Drawing.Size(119, 25);
             this.tsHandbooks.Text = "Справочники";
             // 
             // tsPartners
             // 
             this.tsPartners.Name = "tsPartners";
-            this.tsPartners.Size = new System.Drawing.Size(175, 22);
+            this.tsPartners.Size = new System.Drawing.Size(180, 22);
             this.tsPartners.Text = "Партнеры";
             this.tsPartners.Click += new System.EventHandler(this.tsPartners_Click);
             // 
             // tsMaterialsType
             // 
             this.tsMaterialsType.Name = "tsMaterialsType";
-            this.tsMaterialsType.Size = new System.Drawing.Size(175, 22);
+            this.tsMaterialsType.Size = new System.Drawing.Size(180, 22);
             this.tsMaterialsType.Text = "Типы материалов";
             this.tsMaterialsType.Click += new System.EventHandler(this.tsMaterialsType_Click);
             // 
             // tsContainers
             // 
             this.tsContainers.Name = "tsContainers";
-            this.tsContainers.Size = new System.Drawing.Size(175, 22);
+            this.tsContainers.Size = new System.Drawing.Size(180, 22);
             this.tsContainers.Text = "Контейнеры";
             this.tsContainers.Click += new System.EventHandler(this.tsContainers_Click);
             // 
             // tsScales
             // 
             this.tsScales.Name = "tsScales";
-            this.tsScales.Size = new System.Drawing.Size(175, 22);
+            this.tsScales.Size = new System.Drawing.Size(180, 22);
             this.tsScales.Text = "Весы";
             this.tsScales.Click += new System.EventHandler(this.tsScales_Click);
             // 
             // tsMaterials
             // 
             this.tsMaterials.Name = "tsMaterials";
-            this.tsMaterials.Size = new System.Drawing.Size(175, 22);
+            this.tsMaterials.Size = new System.Drawing.Size(180, 22);
             this.tsMaterials.Text = "Материалы";
             this.tsMaterials.Click += new System.EventHandler(this.tsMaterials_Click);
             // 
@@ -162,11 +164,23 @@
             this.tsInvoices.Text = "Накладные";
             this.tsInvoices.Click += new System.EventHandler(this.tsInvoices_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::SAACNM.Properties.Resources.pngwing_com;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 29);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(486, 522);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 326);
+            this.ClientSize = new System.Drawing.Size(486, 551);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -181,6 +195,7 @@
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,6 +217,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsEmployees;
         private System.Windows.Forms.ToolStripMenuItem tsDocuments;
         private System.Windows.Forms.ToolStripMenuItem tsInvoices;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

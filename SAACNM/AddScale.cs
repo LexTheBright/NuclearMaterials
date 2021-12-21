@@ -24,6 +24,7 @@ namespace SAACNM {
             InitializeComponent();
             dtpScaleDate.Value = DateTime.Now;
             if (num != null || mark != null || serial != null || lim != null || error != null || date != null) {
+                txtScaleNum.Enabled = false;
                 txtScaleNum.Text = num;
                 oldNum = num;
                 txtScaleMark.Text = mark;

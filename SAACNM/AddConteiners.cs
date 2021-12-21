@@ -24,6 +24,7 @@ namespace SAACNM {
                                                     String high = null, String mass = null, String type = null) {
             InitializeComponent();
             if (num != null || mat != null || width != null || high != null || mass != null || type != null) {
+                txtContNum.Enabled = false;
                 txtContNum.Text = num;
                 oldNum = num;
                 txtLength.Text = mat;

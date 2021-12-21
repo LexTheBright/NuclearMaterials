@@ -278,28 +278,34 @@ namespace SAACNM {
         }
 
         private void btnChooseResp_Click(object sender, EventArgs e) {
+            if (invoiceType == null)
+            {
+                MessageBox.Show("Сначала выберите тип накладной!");
+                return;
+            }
             EmployeeForm resp = new EmployeeForm();
             empID = resp.getIDEmployee();
             // проверить полномочия
-            /*try {
-                *//*// пытаемся вызвать процедуру
-                // Фукнция: checkEmpPower
-                // Параметры: empID, needPower
-                //
-                // создаем объект Command для вызова функции
-                OracleCommand cmdProc = new OracleCommand("СИСТЕМА_УЧЕТА_И_КОНТРОЛЯ.checkEmpPower", SqlConn);
-                cmdProc.CommandType = CommandType.StoredProcedure;
-                // добавляем параметры
-                cmdProc.Parameters.Add("@empID", OracleDbType.Int32).Value = int.Parse(empID);
-                cmdProc.Parameters.Add("@needPower", OracleDbType.Varchar2).Value = cbInvType.SelectedItem.ToString();
-                // вызываем функцию
-                cmdProc.ExecuteNonQuery();*//*
+            string tempCue = "SELECT 1 FROM сотрудники LEFT JOIN должности ON сотрудники.Должность = должности.Код_должности" +
+                    " JOIN полномочия ON полномочия.Код_должности = должности.Код_должности" +
+                                                        " WHERE ИД_сотрудника = " + empID +
+                                                        " AND Полномочия =  '" + cbInvType.SelectedItem.ToString() + "'";
+            MySqlCommand cmdSel = new MySqlCommand(tempCue, dbConnection.dbConnect);
+            try {
+                using (MySqlDataReader dbReader = cmdSel.ExecuteReader())
+                {
+                    if (!dbReader.HasRows)
+                    {
+                        MessageBox.Show("Сотрудник c ID - " + empID + " не имеет права на оформление накладной " + cbInvType.SelectedItem.ToString(), "Выбран не тот сотрудник!");
+                        return;
+                    }
+                }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 empID = null;
                 txtRespEmp.Clear();
                 return;
-            }*/
+            }
             MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + empID, dbConnection.dbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader()) {

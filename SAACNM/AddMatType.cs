@@ -19,6 +19,7 @@ namespace SAACNM {
         public AddMatType(String name = null, String code = null, String mass = null) {
             InitializeComponent();
             if (name != null || code != null || mass != null) {
+                txtCode.Enabled = false;
                 oldName = name;
                 txtTypeName.Text = name;
                 txtCode.Text = code;

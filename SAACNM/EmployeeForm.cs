@@ -169,6 +169,15 @@ namespace SAACNM {
             return dgvEmployee.Rows[index].Cells[0].Value.ToString();
         }
 
+        public String getPostEmployee() {
+            btnAdd.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+            btnChoose.Enabled = true;
+            this.ShowDialog();
+            return dgvEmployee.Rows[index].Cells[9].Value.ToString();
+        }
+
         private void EmployeeForm_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
                 Close();

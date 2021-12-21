@@ -23,6 +23,7 @@ namespace SAACNM {
                                                         String phone = null, String INN = null, String code = null ) {
             InitializeComponent();
             if (name != null || address != null || phone != null || code != null|| INN != null) {
+                txtCode.Enabled = false;
                 txtName.Text = name;
                 txtAddress.Text = address;
                 txtPhone.Text = phone;

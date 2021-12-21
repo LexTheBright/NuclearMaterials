@@ -196,10 +196,6 @@ namespace SAACNM {
             InvoicesForm_Load(sender, e);
         }
 
-        private void btnExit_Click(object sender, EventArgs e) {
-            Close();
-        }
-
         private void dgvInvoices_SelectionChanged(object sender, EventArgs e) {
             indexInvoice = dgvInvoices.CurrentRow.Index;
             dgvAccountUnits.Rows.Clear();

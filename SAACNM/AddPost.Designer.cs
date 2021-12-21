@@ -118,9 +118,9 @@
             this.cbSend.AutoSize = true;
             this.cbSend.Location = new System.Drawing.Point(128, 132);
             this.cbSend.Name = "cbSend";
-            this.cbSend.Size = new System.Drawing.Size(79, 18);
+            this.cbSend.Size = new System.Drawing.Size(102, 18);
             this.cbSend.TabIndex = 6;
-            this.cbSend.Text = "Отправка";
+            this.cbSend.Text = "Отправление";
             this.cbSend.UseVisualStyleBackColor = true;
             // 
             // cbGet
@@ -128,9 +128,9 @@
             this.cbGet.AutoSize = true;
             this.cbGet.Location = new System.Drawing.Point(15, 156);
             this.cbGet.Name = "cbGet";
-            this.cbGet.Size = new System.Drawing.Size(89, 18);
+            this.cbGet.Size = new System.Drawing.Size(101, 18);
             this.cbGet.TabIndex = 7;
-            this.cbGet.Text = "Получение";
+            this.cbGet.Text = "Поступление";
             this.cbGet.UseVisualStyleBackColor = true;
             // 
             // AddPost

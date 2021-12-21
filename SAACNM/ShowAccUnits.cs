@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SAACNM {
     public partial class ShowAccUnits : Form {
         private String serialNum;
-        private String invoiceNum;
+        private String IDcont;
         private String mass;
         private String form;
         private String type;
@@ -20,49 +20,46 @@ namespace SAACNM {
         private String zbmNum;
         private String buildNum;
         private String roomNum;
-
-        OracleConnection SqlConn;
-        public ShowAccUnits(OracleConnection conn) {
+        public ShowAccUnits() {
             InitializeComponent();
-            SqlConn = conn;
         }
 
         private void btnExit_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
 
         private void ShowAccUnits_Load(object sender, EventArgs e) {
-            OracleDataReader dbReader = null;
-            OracleCommand cmdSelect = new OracleCommand("SELECT * FROM УЧЕТНЫЕ_ЕДИНИЦЫ_И_НАКЛАДНЫЕ", SqlConn);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM учетная_единица LEFT JOIN тип_материала ON учетная_единица.Серийный_номер_материала = тип_материала.Код_типа_материала", dbConnection.dbConnect);
             try {
-                dbReader = cmdSelect.ExecuteReader();
-                if (dbReader.HasRows) {
-                    while (dbReader.Read()) {
-                        serialNum = Convert.ToString(dbReader["СЕРИЙНЫЙ_НОМЕР"]);
-                        invoiceNum = Convert.ToString(dbReader["НОМЕР_НАКЛАДНОЙ"]);
-                        scalesNum = Convert.ToString(dbReader["НОМЕР_ВЕСОВ"]);
-                        mass = Convert.ToString(dbReader["ВЕС_НЕТТО"]);
-                        form = Convert.ToString(dbReader["ФОРМА_МАТЕРИАЛА"]);
-                        type = Convert.ToString(dbReader["ТИП_МАТЕРИАЛА"]);
-                        zbmNum = Convert.ToString(dbReader["НОМЕР_ЗБМ"]);
-                        buildNum = Convert.ToString(dbReader["НОМЕР_ЗДАНИЯ"]);
-                        roomNum = Convert.ToString(dbReader["НОМЕР_ПОМЕЩЕНИЯ"]);
-                        dgvAccountUnits.Rows.Add(serialNum, invoiceNum, scalesNum, mass, form, type, zbmNum, buildNum, roomNum);
+                using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
+                {
+                    if (dbReader.HasRows)
+                    {
+                        while (dbReader.Read())
+                        {
+                            serialNum = Convert.ToString(dbReader["ИД_УЕ"]);
+                            scalesNum = Convert.ToString(dbReader["Идентификатор_весов"]);
+                            mass = Convert.ToString(dbReader["Масса_УЕ"]);
+                            IDcont = Convert.ToString(dbReader["ИД_контейнера"]);
+                            form = Convert.ToString(dbReader["Форма_УЕ"]);
+                            type = Convert.ToString(dbReader["Наименование"]);
+                            zbmNum = Convert.ToString(dbReader["Номер_ЗБМ"]);
+                            buildNum = Convert.ToString(dbReader["Номер_здания"]);
+                            roomNum = Convert.ToString(dbReader["Номер_помещения"]);
+                            dgvAccountUnits.Rows.Add(serialNum, scalesNum, mass, IDcont, form, type, zbmNum, buildNum, roomNum);
+                        }
                     }
                 }
             } catch (Exception ex) {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            } finally {
-                if (dbReader != null) {
-                    dbReader.Close();
-                }
+                Close();
             }
+            dgvAccountUnits.ClearSelection();
         }
 
         private void ShowAccUnits_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
-                btnExit_Click(sender, null);
+                Close();
             }
         }
     }
