@@ -47,8 +47,6 @@
             this.lblEmpEnd = new System.Windows.Forms.Label();
             this.txtEmpEnd = new System.Windows.Forms.TextBox();
             this.dgvAccountUnits = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.clmMatType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmSerialNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmContNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +56,9 @@
             this.clmZBMNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBuildNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmRoomNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInvoices)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountUnits)).BeginInit();
             this.panel1.SuspendLayout();
@@ -302,32 +303,6 @@
             this.dgvAccountUnits.Size = new System.Drawing.Size(827, 225);
             this.dgvAccountUnits.TabIndex = 14;
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel1.Controls.Add(this.txtPartner);
-            this.panel1.Controls.Add(this.txtAgent);
-            this.panel1.Controls.Add(this.lblEmpStart);
-            this.panel1.Controls.Add(this.lblAgent);
-            this.panel1.Controls.Add(this.lblPartner);
-            this.panel1.Controls.Add(this.txtEmpStart);
-            this.panel1.Controls.Add(this.lblEmpEnd);
-            this.panel1.Controls.Add(this.txtEmpEnd);
-            this.panel1.Location = new System.Drawing.Point(12, 252);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(609, 115);
-            this.panel1.TabIndex = 16;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.panel2.Controls.Add(this.btnDelete);
-            this.panel2.Controls.Add(this.btnAdd);
-            this.panel2.Location = new System.Drawing.Point(635, 252);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(204, 115);
-            this.panel2.TabIndex = 17;
-            // 
             // clmMatType
             // 
             this.clmMatType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -382,7 +357,7 @@
             this.clmScaleNum.Name = "clmScaleNum";
             this.clmScaleNum.ReadOnly = true;
             this.clmScaleNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmScaleNum.Width = 63;
+            this.clmScaleNum.Width = 57;
             // 
             // clmZBMNum
             // 
@@ -391,7 +366,7 @@
             this.clmZBMNum.Name = "clmZBMNum";
             this.clmZBMNum.ReadOnly = true;
             this.clmZBMNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmZBMNum.Width = 53;
+            this.clmZBMNum.Width = 48;
             // 
             // clmBuildNum
             // 
@@ -400,7 +375,7 @@
             this.clmBuildNum.Name = "clmBuildNum";
             this.clmBuildNum.ReadOnly = true;
             this.clmBuildNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.clmBuildNum.Width = 70;
+            this.clmBuildNum.Width = 63;
             // 
             // clmRoomNum
             // 
@@ -410,6 +385,41 @@
             this.clmRoomNum.ReadOnly = true;
             this.clmRoomNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.clmRoomNum.Width = 87;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.txtPartner);
+            this.panel1.Controls.Add(this.txtAgent);
+            this.panel1.Controls.Add(this.lblEmpStart);
+            this.panel1.Controls.Add(this.lblAgent);
+            this.panel1.Controls.Add(this.lblPartner);
+            this.panel1.Controls.Add(this.txtEmpStart);
+            this.panel1.Controls.Add(this.lblEmpEnd);
+            this.panel1.Controls.Add(this.txtEmpEnd);
+            this.panel1.Location = new System.Drawing.Point(12, 252);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(609, 115);
+            this.panel1.TabIndex = 16;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.panel2.Controls.Add(this.btnDelete);
+            this.panel2.Controls.Add(this.btnAdd);
+            this.panel2.Location = new System.Drawing.Point(635, 252);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(204, 115);
+            this.panel2.TabIndex = 17;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panel3.Location = new System.Drawing.Point(0, 58);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(609, 1);
+            this.panel3.TabIndex = 18;
             // 
             // InvoicesForm
             // 
@@ -475,5 +485,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmZBMNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBuildNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmRoomNum;
+        private System.Windows.Forms.Panel panel3;
     }
 }

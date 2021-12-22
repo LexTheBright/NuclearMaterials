@@ -47,9 +47,9 @@
             this.lblPostNum.AutoSize = true;
             this.lblPostNum.Location = new System.Drawing.Point(12, 9);
             this.lblPostNum.Name = "lblPostNum";
-            this.lblPostNum.Size = new System.Drawing.Size(93, 14);
+            this.lblPostNum.Size = new System.Drawing.Size(96, 14);
             this.lblPostNum.TabIndex = 0;
-            this.lblPostNum.Text = "№ должности:";
+            this.lblPostNum.Text = "Код должности";
             // 
             // txtPostNum
             // 
@@ -64,9 +64,9 @@
             this.lblPostName.AutoSize = true;
             this.lblPostName.Location = new System.Drawing.Point(12, 62);
             this.lblPostName.Name = "lblPostName";
-            this.lblPostName.Size = new System.Drawing.Size(162, 14);
+            this.lblPostName.Size = new System.Drawing.Size(158, 14);
             this.lblPostName.TabIndex = 2;
-            this.lblPostName.Text = "Наименование должности:";
+            this.lblPostName.Text = "Наименование должности";
             // 
             // txtPostName
             // 
@@ -81,9 +81,9 @@
             this.lblPostPower.AutoSize = true;
             this.lblPostPower.Location = new System.Drawing.Point(12, 113);
             this.lblPostPower.Name = "lblPostPower";
-            this.lblPostPower.Size = new System.Drawing.Size(83, 14);
+            this.lblPostPower.Size = new System.Drawing.Size(79, 14);
             this.lblPostPower.TabIndex = 4;
-            this.lblPostPower.Text = "Полномочия:";
+            this.lblPostPower.Text = "Полномочия";
             // 
             // btnAdd
             // 

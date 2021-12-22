@@ -89,7 +89,7 @@
             this.cbPartner.Location = new System.Drawing.Point(15, 137);
             this.cbPartner.Name = "cbPartner";
             this.cbPartner.Size = new System.Drawing.Size(208, 22);
-            this.cbPartner.TabIndex = 5;
+            this.cbPartner.TabIndex = 9;
             this.cbPartner.SelectedIndexChanged += new System.EventHandler(this.cbPartner_SelectedIndexChanged);
             // 
             // lblRespEmp
@@ -107,14 +107,15 @@
             this.txtRespEmp.Name = "txtRespEmp";
             this.txtRespEmp.ReadOnly = true;
             this.txtRespEmp.Size = new System.Drawing.Size(207, 22);
-            this.txtRespEmp.TabIndex = 13;
+            this.txtRespEmp.TabIndex = 7;
+            this.txtRespEmp.TabStop = false;
             // 
             // btnChooseResp
             // 
             this.btnChooseResp.Location = new System.Drawing.Point(468, 69);
             this.btnChooseResp.Name = "btnChooseResp";
             this.btnChooseResp.Size = new System.Drawing.Size(27, 22);
-            this.btnChooseResp.TabIndex = 14;
+            this.btnChooseResp.TabIndex = 7;
             this.btnChooseResp.Text = "...";
             this.btnChooseResp.UseVisualStyleBackColor = true;
             this.btnChooseResp.Click += new System.EventHandler(this.btnChooseResp_Click);
@@ -136,6 +137,7 @@
             this.txtStartEmp.ReadOnly = true;
             this.txtStartEmp.Size = new System.Drawing.Size(207, 22);
             this.txtStartEmp.TabIndex = 16;
+            this.txtStartEmp.TabStop = false;
             // 
             // btnChooseSt
             // 
@@ -143,7 +145,7 @@
             this.btnChooseSt.Location = new System.Drawing.Point(468, 137);
             this.btnChooseSt.Name = "btnChooseSt";
             this.btnChooseSt.Size = new System.Drawing.Size(27, 22);
-            this.btnChooseSt.TabIndex = 17;
+            this.btnChooseSt.TabIndex = 13;
             this.btnChooseSt.Text = "...";
             this.btnChooseSt.UseVisualStyleBackColor = true;
             this.btnChooseSt.Click += new System.EventHandler(this.btnChooseSt_Click);
@@ -165,6 +167,7 @@
             this.txtEndEmp.ReadOnly = true;
             this.txtEndEmp.Size = new System.Drawing.Size(207, 22);
             this.txtEndEmp.TabIndex = 19;
+            this.txtEndEmp.TabStop = false;
             // 
             // btnChooseEnd
             // 
@@ -172,7 +175,7 @@
             this.btnChooseEnd.Location = new System.Drawing.Point(468, 179);
             this.btnChooseEnd.Name = "btnChooseEnd";
             this.btnChooseEnd.Size = new System.Drawing.Size(27, 22);
-            this.btnChooseEnd.TabIndex = 20;
+            this.btnChooseEnd.TabIndex = 15;
             this.btnChooseEnd.Text = "...";
             this.btnChooseEnd.UseVisualStyleBackColor = true;
             this.btnChooseEnd.Click += new System.EventHandler(this.btnChooseEnd_Click);
@@ -193,7 +196,7 @@
             this.cbAgent.Location = new System.Drawing.Point(15, 179);
             this.cbAgent.Name = "cbAgent";
             this.cbAgent.Size = new System.Drawing.Size(208, 22);
-            this.cbAgent.TabIndex = 7;
+            this.cbAgent.TabIndex = 11;
             this.cbAgent.SelectedIndexChanged += new System.EventHandler(this.cbAgent_SelectedIndexChanged);
             // 
             // lblDate
@@ -211,7 +214,7 @@
             this.dtpDate.Location = new System.Drawing.Point(255, 26);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(207, 22);
-            this.dtpDate.TabIndex = 9;
+            this.dtpDate.TabIndex = 5;
             this.dtpDate.Value = new System.DateTime(2019, 6, 23, 17, 58, 51, 0);
             this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
             // 
