@@ -205,6 +205,7 @@
             this.Name = "AddAgent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Добавить представителя";
+            this.Load += new System.EventHandler(this.AddAgent_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AddAgent_KeyPress);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

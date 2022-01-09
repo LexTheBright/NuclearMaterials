@@ -143,5 +143,10 @@ namespace SAACNM {
         {
             agentNewID = textPartID.Text.ToString();
         }
+
+        private void AddAgent_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

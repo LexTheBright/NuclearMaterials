@@ -267,9 +267,9 @@
             this.lblInvNum.AutoSize = true;
             this.lblInvNum.Location = new System.Drawing.Point(12, 52);
             this.lblInvNum.Name = "lblInvNum";
-            this.lblInvNum.Size = new System.Drawing.Size(85, 14);
+            this.lblInvNum.Size = new System.Drawing.Size(92, 14);
             this.lblInvNum.TabIndex = 2;
-            this.lblInvNum.Text = "№ накладной";
+            this.lblInvNum.Text = "Код накладной";
             // 
             // txtInvNum
             // 

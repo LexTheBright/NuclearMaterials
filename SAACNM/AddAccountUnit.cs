@@ -211,7 +211,6 @@ namespace SAACNM
                         }
                     }
                 } catch (Exception ex) {
-                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка в типе " + needTypes[j].ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -251,13 +250,21 @@ namespace SAACNM
                     }
                     catch (Exception ex)
                     {
-                        throw;
                         MessageBox.Show(this, ex.Message, "Ошибка в типе " + needTypes[j].ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
             }
             for (int i = 0; i < rowsCount - 1; i++) {
+                if (clmSerialNum.Index == 0)
+                {
+                    string error_message = Program.IsValidValue("DECIMAL100", dgvAccountUnits[clmSerialNum.Index, i].Value.ToString());
+                    if (error_message != null)
+                    {
+                        MessageBox.Show(error_message, "Идентификатор");
+                        return;
+                    }
+                }
                 try {
                     MySqlCommand cmdSelectaa = new MySqlCommand("SELECT 1 FROM учетная_единица WHERE ИД_УЕ = " + dgvAccountUnits[clmSerialNum.Index, i].Value.ToString(), dbConnection.dbConnect);
                     using (MySqlDataReader dbReader = cmdSelectaa.ExecuteReader())
@@ -269,6 +276,7 @@ namespace SAACNM
                          }
                     }
                 } catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка в строке " + (i + 1).ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -313,6 +321,7 @@ namespace SAACNM
                     // вызываем функцию
                     cmdProc.ExecuteNonQuery();*/
                 } catch (Exception ex) {
+                    throw;
                     MessageBox.Show(this, ex.Message, "Ошибка в строке " + (i + 1).ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
