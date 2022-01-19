@@ -220,7 +220,7 @@ namespace SAACNM {
             partnerIndex = cbPartner.SelectedIndex;
             partnerName = cbPartner.SelectedItem.ToString();
             MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM представитель" +
-                                                        " WHERE ИД_представителя = " + Codes[cbPartner.SelectedIndex], dbConnection.dbConnect);
+                                                        " WHERE ИД_организации = " + Codes[cbPartner.SelectedIndex], dbConnection.dbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
