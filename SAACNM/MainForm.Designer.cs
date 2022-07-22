@@ -79,52 +79,52 @@
             // tsPartners
             // 
             this.tsPartners.Name = "tsPartners";
-            this.tsPartners.Size = new System.Drawing.Size(180, 22);
+            this.tsPartners.Size = new System.Drawing.Size(206, 26);
             this.tsPartners.Text = "Партнеры";
-            this.tsPartners.Click += new System.EventHandler(this.tsPartners_Click);
+            this.tsPartners.Click += new System.EventHandler(this.TsPartners_Click);
             // 
             // tsMaterialsType
             // 
             this.tsMaterialsType.Name = "tsMaterialsType";
-            this.tsMaterialsType.Size = new System.Drawing.Size(180, 22);
+            this.tsMaterialsType.Size = new System.Drawing.Size(206, 26);
             this.tsMaterialsType.Text = "Типы материалов";
-            this.tsMaterialsType.Click += new System.EventHandler(this.tsMaterialsType_Click);
+            this.tsMaterialsType.Click += new System.EventHandler(this.TsMaterialsType_Click);
             // 
             // tsContainers
             // 
             this.tsContainers.Name = "tsContainers";
-            this.tsContainers.Size = new System.Drawing.Size(180, 22);
+            this.tsContainers.Size = new System.Drawing.Size(206, 26);
             this.tsContainers.Text = "Контейнеры";
-            this.tsContainers.Click += new System.EventHandler(this.tsContainers_Click);
+            this.tsContainers.Click += new System.EventHandler(this.TsContainers_Click);
             // 
             // tsScales
             // 
             this.tsScales.Name = "tsScales";
-            this.tsScales.Size = new System.Drawing.Size(180, 22);
+            this.tsScales.Size = new System.Drawing.Size(206, 26);
             this.tsScales.Text = "Весы";
-            this.tsScales.Click += new System.EventHandler(this.tsScales_Click);
+            this.tsScales.Click += new System.EventHandler(this.TsScales_Click);
             // 
             // tsMaterials
             // 
             this.tsMaterials.Name = "tsMaterials";
-            this.tsMaterials.Size = new System.Drawing.Size(180, 22);
+            this.tsMaterials.Size = new System.Drawing.Size(206, 26);
             this.tsMaterials.Text = "Материалы";
-            this.tsMaterials.Click += new System.EventHandler(this.tsMaterials_Click);
+            this.tsMaterials.Click += new System.EventHandler(this.TsMaterials_Click);
             // 
             // tsLocation
             // 
             this.tsLocation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsPlaces});
             this.tsLocation.Name = "tsLocation";
-            this.tsLocation.Size = new System.Drawing.Size(104, 20);
+            this.tsLocation.Size = new System.Drawing.Size(127, 25);
             this.tsLocation.Text = "Расположение";
             // 
             // tsPlaces
             // 
             this.tsPlaces.Name = "tsPlaces";
-            this.tsPlaces.Size = new System.Drawing.Size(173, 22);
+            this.tsPlaces.Size = new System.Drawing.Size(203, 26);
             this.tsPlaces.Text = "Места и пределы";
-            this.tsPlaces.Click += new System.EventHandler(this.tsPlaces_Click);
+            this.tsPlaces.Click += new System.EventHandler(this.TsPlaces_Click);
             // 
             // tsStaff
             // 
@@ -132,37 +132,37 @@
             this.tsPosts,
             this.tsEmployees});
             this.tsStaff.Name = "tsStaff";
-            this.tsStaff.Size = new System.Drawing.Size(54, 20);
+            this.tsStaff.Size = new System.Drawing.Size(68, 25);
             this.tsStaff.Text = "Кадры";
             // 
             // tsPosts
             // 
             this.tsPosts.Name = "tsPosts";
-            this.tsPosts.Size = new System.Drawing.Size(141, 22);
+            this.tsPosts.Size = new System.Drawing.Size(167, 26);
             this.tsPosts.Text = "Должности";
-            this.tsPosts.Click += new System.EventHandler(this.tsPosts_Click);
+            this.tsPosts.Click += new System.EventHandler(this.TsPosts_Click);
             // 
             // tsEmployees
             // 
             this.tsEmployees.Name = "tsEmployees";
-            this.tsEmployees.Size = new System.Drawing.Size(141, 22);
+            this.tsEmployees.Size = new System.Drawing.Size(167, 26);
             this.tsEmployees.Text = "Сотрудники";
-            this.tsEmployees.Click += new System.EventHandler(this.tsEmployees_Click);
+            this.tsEmployees.Click += new System.EventHandler(this.TsEmployees_Click);
             // 
             // tsDocuments
             // 
             this.tsDocuments.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsInvoices});
             this.tsDocuments.Name = "tsDocuments";
-            this.tsDocuments.Size = new System.Drawing.Size(82, 20);
+            this.tsDocuments.Size = new System.Drawing.Size(104, 25);
             this.tsDocuments.Text = "Документы";
             // 
             // tsInvoices
             // 
             this.tsInvoices.Name = "tsInvoices";
-            this.tsInvoices.Size = new System.Drawing.Size(136, 22);
+            this.tsInvoices.Size = new System.Drawing.Size(160, 26);
             this.tsInvoices.Text = "Накладные";
-            this.tsInvoices.Click += new System.EventHandler(this.tsInvoices_Click);
+            this.tsInvoices.Click += new System.EventHandler(this.TsInvoices_Click);
             // 
             // pictureBox1
             // 

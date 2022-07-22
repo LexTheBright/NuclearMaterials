@@ -58,7 +58,7 @@
             this.txtZBMNum.Name = "txtZBMNum";
             this.txtZBMNum.Size = new System.Drawing.Size(100, 22);
             this.txtZBMNum.TabIndex = 1;
-            this.txtZBMNum.TextChanged += new System.EventHandler(this.txtZBMNum_TextChanged);
+            this.txtZBMNum.TextChanged += new System.EventHandler(this.TxtZBMNum_TextChanged);
             // 
             // lblBuildNum
             // 
@@ -75,7 +75,7 @@
             this.txtBuildNum.Name = "txtBuildNum";
             this.txtBuildNum.Size = new System.Drawing.Size(122, 22);
             this.txtBuildNum.TabIndex = 3;
-            this.txtBuildNum.TextChanged += new System.EventHandler(this.txtBuildNum_TextChanged);
+            this.txtBuildNum.TextChanged += new System.EventHandler(this.TxtBuildNum_TextChanged);
             // 
             // lblRoomNum
             // 
@@ -92,7 +92,7 @@
             this.txtRoomNum.Name = "txtRoomNum";
             this.txtRoomNum.Size = new System.Drawing.Size(100, 22);
             this.txtRoomNum.TabIndex = 5;
-            this.txtRoomNum.TextChanged += new System.EventHandler(this.txtRoomNum_TextChanged);
+            this.txtRoomNum.TextChanged += new System.EventHandler(this.TxtRoomNum_TextChanged);
             // 
             // lblEmployee
             // 
@@ -110,7 +110,6 @@
             this.txtSecName.ReadOnly = true;
             this.txtSecName.Size = new System.Drawing.Size(122, 22);
             this.txtSecName.TabIndex = 7;
-            this.txtSecName.TextChanged += new System.EventHandler(this.txtSecName_TextChanged);
             // 
             // btnChooseEmp
             // 
@@ -120,7 +119,7 @@
             this.btnChooseEmp.TabIndex = 8;
             this.btnChooseEmp.Text = "...";
             this.btnChooseEmp.UseVisualStyleBackColor = true;
-            this.btnChooseEmp.Click += new System.EventHandler(this.btnChooseEmp_Click);
+            this.btnChooseEmp.Click += new System.EventHandler(this.BtnChooseEmp_Click);
             // 
             // btnAdd
             // 
@@ -131,7 +130,7 @@
             this.btnAdd.TabIndex = 9;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -142,7 +141,7 @@
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

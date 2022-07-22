@@ -67,7 +67,7 @@
             this.dgvConteiners.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvConteiners.Size = new System.Drawing.Size(580, 214);
             this.dgvConteiners.TabIndex = 0;
-            this.dgvConteiners.SelectionChanged += new System.EventHandler(this.dgvConteiners_SelectionChanged);
+            this.dgvConteiners.SelectionChanged += new System.EventHandler(this.DgvConteiners_SelectionChanged);
             // 
             // clmNumber
             // 
@@ -132,7 +132,7 @@
             this.txtContType.Name = "txtContType";
             this.txtContType.Size = new System.Drawing.Size(152, 22);
             this.txtContType.TabIndex = 4;
-            this.txtContType.TextChanged += new System.EventHandler(this.txtContType_TextChanged);
+            this.txtContType.TextChanged += new System.EventHandler(this.TxtContType_TextChanged);
             // 
             // btnAdd
             // 
@@ -143,7 +143,7 @@
             this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnEdit
             // 
@@ -154,7 +154,7 @@
             this.btnEdit.TabIndex = 8;
             this.btnEdit.Text = "Редактировать";
             this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnDelete
             // 
@@ -165,7 +165,7 @@
             this.btnDelete.TabIndex = 9;
             this.btnDelete.Text = "Удалить";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // panel1
             // 

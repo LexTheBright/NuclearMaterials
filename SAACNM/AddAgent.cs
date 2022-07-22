@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class AddAgent : Form {
-        private String secondName;
-        private String firstName;
-        private String fatherName;
-        private String agentPass;
-        private String agentID;
-        private String agentNewID;
-        private String entCode;
-        private bool isEdit = false;
-        public AddAgent(String code, String agentid = null, String second = null, 
-                                               String first = null, String father = null, String pass = null) {
+namespace SAACNM
+{
+    public partial class AddAgent : Form
+    {
+        private string secondName;
+        private string firstName;
+        private string fatherName;
+        private string agentPass;
+        private string agentID;
+        private string agentNewID;
+        private string entCode;
+        private readonly bool isEdit = false;
+        public AddAgent(string code, string agentid = null, string second = null,
+                                               string first = null, string father = null, string pass = null)
+        {
             InitializeComponent();
             textPartID.ReadOnly = false;
-            if (second != null || first != null || father != null || pass != null) {
+            if (second != null || first != null || father != null || pass != null)
+            {
                 txtSecondName.Text = second;
                 txtFirstName.Text = first;
                 txtFatherName.Text = father;
@@ -39,24 +36,30 @@ namespace SAACNM {
             txtCode.Text = entCode;
         }
 
-        private void txtSecondName_TextChanged(object sender, EventArgs e) {
+        private void TxtSecondName_TextChanged(object sender, EventArgs e)
+        {
             secondName = txtSecondName.Text.ToString();
         }
 
-        private void txtPhone_TextChanged(object sender, EventArgs e) {
+        private void TxtPhone_TextChanged(object sender, EventArgs e)
+        {
             agentPass = txtPass.Text.ToString();
         }
 
-        private void txtFirstName_TextChanged(object sender, EventArgs e) {
+        private void TxtFirstName_TextChanged(object sender, EventArgs e)
+        {
             firstName = txtFirstName.Text.ToString();
         }
 
-        private void txtFatherName_TextChanged(object sender, EventArgs e) {
+        private void TxtFatherName_TextChanged(object sender, EventArgs e)
+        {
             fatherName = txtFatherName.Text.ToString();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
-            if (secondName == null || firstName == null || fatherName == null || agentPass == null) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            if (secondName == null || firstName == null || fatherName == null || agentPass == null)
+            {
                 MessageBox.Show(this, "Заполните все поля.", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -97,16 +100,23 @@ namespace SAACNM {
             else properties.Add("Паспорт", agentPass);
 
 
-            if (isEdit) {
-                try {
-                    dbr.updateByID("представитель", "ИД_представителя", agentID, properties);
-                } catch (Exception ex) {
+            if (isEdit)
+            {
+                try
+                {
+                    dbr.UpdateByID("представитель", "ИД_представителя", agentID, properties);
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     properties.Add("ИД_организации", entCode);
                     error_message = Program.IsValidValue("VAR10", agentNewID);
                     if (error_message != null)
@@ -116,8 +126,10 @@ namespace SAACNM {
                     }
                     else properties.Add("ИД_представителя", agentNewID);
 
-                    if (dbr.createNewKouple("представитель", properties) == 1) return;
-                } catch (Exception ex) {
+                    if (dbr.CreateNewKouple("представитель", properties) == 1) return;
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -126,27 +138,26 @@ namespace SAACNM {
             Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e) {
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void AddAgent_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
-                btnCancel_Click(sender, null);
+        private void AddAgent_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
+                BtnCancel_Click(sender, null);
             }
-            if (e.KeyChar == 13) {
-                btnAdd_Click(sender, null);
+            if (e.KeyChar == 13)
+            {
+                BtnAdd_Click(sender, null);
             }
         }
 
-        private void textPartID_TextChanged(object sender, EventArgs e)
+        private void TextPartID_TextChanged(object sender, EventArgs e)
         {
             agentNewID = textPartID.Text.ToString();
-        }
-
-        private void AddAgent_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

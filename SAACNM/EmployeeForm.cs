@@ -1,39 +1,38 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class EmployeeForm : Form {
-        private String empID;
-        private String empSecName;
-        private String empFirName;
-        private String empFatName;
-        private String empPost;
-        private String empAddress;
-        private String empPhone;
-        private String empPassport;
-        private String empBirthDate;
-        private ArrayList INNs = new ArrayList();
-        private ArrayList SNILSs = new ArrayList();
-        private ArrayList males = new ArrayList();
+namespace SAACNM
+{
+    public partial class EmployeeForm : Form
+    {
+        private string empID;
+        private string empSecName;
+        private string empFirName;
+        private string empFatName;
+        private string empPost;
+        private string empAddress;
+        private string empPhone;
+        private string empPassport;
+        private string empBirthDate;
+        private readonly ArrayList INNs = new ArrayList();
+        private readonly ArrayList SNILSs = new ArrayList();
+        private readonly ArrayList males = new ArrayList();
         private Dictionary<string, string> EPosts = new Dictionary<string, string>();
         private int index = -1;
-        public EmployeeForm() {
+        public EmployeeForm()
+        {
             InitializeComponent();
             btnChoose.Enabled = false;
         }
 
-        private void EmployeeForm_Load(object sender, EventArgs e) {
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники LEFT JOIN должности on сотрудники.Должность = должности.Код_должности", dbConnection.dbConnect);
-            try {
+        private void EmployeeForm_Load(object sender, EventArgs e)
+        {
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники LEFT JOIN должности on сотрудники.Должность = должности.Код_должности", DbConnection.DbConnect);
+            try
+            {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
                     if (dbReader.HasRows)
@@ -58,11 +57,13 @@ namespace SAACNM {
                         }
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
-            MySqlCommand cmdSelect2 = new MySqlCommand("SELECT * FROM должности", dbConnection.dbConnect);
+            MySqlCommand cmdSelect2 = new MySqlCommand("SELECT * FROM должности", DbConnection.DbConnect);
             try
             {
                 using (MySqlDataReader dbReader = cmdSelect2.ExecuteReader())
@@ -83,10 +84,13 @@ namespace SAACNM {
             }
         }
 
-        private void txtSecondName_TextChanged(object sender, EventArgs e) {
+        private void TxtSecondName_TextChanged(object sender, EventArgs e)
+        {
             dgvEmployee.ClearSelection();
-            for (int i = 0; i < dgvEmployee.RowCount; i++) {
-                if (dgvEmployee.Rows[i].Cells[1].Value.ToString().Contains(txtSecondName.Text)) {
+            for (int i = 0; i < dgvEmployee.RowCount; i++)
+            {
+                if (dgvEmployee.Rows[i].Cells[1].Value.ToString().Contains(txtSecondName.Text))
+                {
                     dgvEmployee.Rows[i].Selected = true;
                     index = i;
                     break;
@@ -94,7 +98,8 @@ namespace SAACNM {
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
             AddEmployee emp = new AddEmployee();
             emp.ShowDialog();
             INNs.Clear();
@@ -105,8 +110,10 @@ namespace SAACNM {
             EmployeeForm_Load(sender, e);
         }
 
-        private void btnEdit_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите сотрудника!", "Сотрудник", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -120,7 +127,7 @@ namespace SAACNM {
             empBirthDate = dgvEmployee.Rows[index].Cells[7].Value.ToString();
             empPassport = dgvEmployee.Rows[index].Cells[8].Value.ToString();
             AddEmployee emp = new AddEmployee(empID, empSecName, empFirName, empFatName, empBirthDate, males[index].ToString(),
-                                                        empPhone, empAddress, empPost, empPassport, 
+                                                        empPhone, empAddress, empPost, empPassport,
                                                         INNs[index].ToString(), SNILSs[index].ToString());
             emp.ShowDialog();
             INNs.Clear();
@@ -131,15 +138,20 @@ namespace SAACNM {
             EmployeeForm_Load(sender, e);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите сотрудника!", "Сотрудник", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try {
+            try
+            {
                 DBRedactor dbr = new DBRedactor();
-                dbr.deleteByID("сотрудники", "ИД_сотрудника", dgvEmployee.Rows[index].Cells[0].Value.ToString());
-            } catch (Exception ex) {
+                dbr.DeleteByID("сотрудники", "ИД_сотрудника", dgvEmployee.Rows[index].Cells[0].Value.ToString());
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -152,15 +164,18 @@ namespace SAACNM {
             EmployeeForm_Load(sender, e);
         }
 
-        private void btnExit_Click(object sender, EventArgs e) {
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void dgvEmployee_SelectionChanged(object sender, EventArgs e) {
+        private void DgvEmployee_SelectionChanged(object sender, EventArgs e)
+        {
             index = dgvEmployee.CurrentRow.Index;
         }
 
-        public String getIDEmployee() {
+        public string GetIDEmployee()
+        {
             btnAdd.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
@@ -169,7 +184,8 @@ namespace SAACNM {
             return dgvEmployee.Rows[index].Cells[0].Value.ToString();
         }
 
-        public String getPostEmployee() {
+        public string GetPostEmployee()
+        {
             btnAdd.Enabled = false;
             btnDelete.Enabled = false;
             btnEdit.Enabled = false;
@@ -178,13 +194,15 @@ namespace SAACNM {
             return dgvEmployee.Rows[index].Cells[9].Value.ToString();
         }
 
-        private void EmployeeForm_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void EmployeeForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
         }
 
-        private void btnChoose_Click(object sender, EventArgs e)
+        private void BtnChoose_Click(object sender, EventArgs e)
         {
             Close();
         }

@@ -76,7 +76,7 @@
             this.dgvEmployee.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEmployee.Size = new System.Drawing.Size(943, 331);
             this.dgvEmployee.TabIndex = 0;
-            this.dgvEmployee.SelectionChanged += new System.EventHandler(this.dgvEmployee_SelectionChanged);
+            this.dgvEmployee.SelectionChanged += new System.EventHandler(this.DgvEmployee_SelectionChanged);
             // 
             // lblSecName
             // 
@@ -93,7 +93,7 @@
             this.txtSecondName.Name = "txtSecondName";
             this.txtSecondName.Size = new System.Drawing.Size(150, 22);
             this.txtSecondName.TabIndex = 2;
-            this.txtSecondName.TextChanged += new System.EventHandler(this.txtSecondName_TextChanged);
+            this.txtSecondName.TextChanged += new System.EventHandler(this.TxtSecondName_TextChanged);
             // 
             // btnAdd
             // 
@@ -104,7 +104,7 @@
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnEdit
             // 
@@ -115,7 +115,7 @@
             this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "Редактировать";
             this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnDelete
             // 
@@ -126,7 +126,7 @@
             this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "Удалить";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // panel2
             // 
@@ -151,7 +151,7 @@
             this.btnChoose.TabIndex = 18;
             this.btnChoose.Text = "Выбрать";
             this.btnChoose.UseVisualStyleBackColor = false;
-            this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
+            this.btnChoose.Click += new System.EventHandler(this.BtnChoose_Click);
             // 
             // clmID
             // 

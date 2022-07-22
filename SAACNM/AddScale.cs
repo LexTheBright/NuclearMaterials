@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class AddScale : Form {
-        private String scaleNum;
-        private String oldNum;
-        private String scaleMark;
-        private String scaleSerial;
-        private String scaleLimit;
-        private String scaleError;
-        private String scaleCalibDate;
+namespace SAACNM
+{
+    public partial class AddScale : Form
+    {
+        private string scaleNum;
+        private readonly string oldNum;
+        private string scaleMark;
+        private string scaleSerial;
+        private string scaleLimit;
+        private string scaleError;
+        private string scaleCalibDate;
         private bool isEdit = false;
-        public AddScale(String num = null, String mark = null, String serial = null, 
-                                               String lim = null, String error = null, String date = null) {
+        public AddScale(string num = null, string mark = null, string serial = null,
+                                               string lim = null, string error = null, string date = null)
+        {
             InitializeComponent();
             dtpScaleDate.Value = DateTime.Now;
-            if (num != null || mark != null || serial != null || lim != null || error != null || date != null) {
+            if (num != null || mark != null || serial != null || lim != null || error != null || date != null)
+            {
                 txtScaleNum.Enabled = false;
                 txtScaleNum.Text = num;
                 oldNum = num;
@@ -37,9 +34,11 @@ namespace SAACNM {
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
             if (scaleNum == null || scaleMark == null || scaleSerial == null ||
-                scaleLimit == null || scaleError == null || scaleCalibDate == null) {
+                scaleLimit == null || scaleError == null || scaleCalibDate == null)
+            {
                 MessageBox.Show(this, "Заполните все поля.", "Весы", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -81,16 +80,23 @@ namespace SAACNM {
 
             properties.Add("Дата_калибровки", Convert.ToDateTime(scaleCalibDate).ToString("yyyy-MM-dd HH:mm:ss"));
 
-            if (isEdit) {
-                try {
-                    dbr.updateByID("весы", "Идентификатор_весов", scaleNum, properties);
-                } catch (Exception ex) {
+            if (isEdit)
+            {
+                try
+                {
+                    dbr.UpdateByID("весы", "Идентификатор_весов", scaleNum, properties);
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Весы", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     error_message = Program.IsValidValue("VAR10", scaleNum);
                     if (error_message != null)
                     {
@@ -99,9 +105,10 @@ namespace SAACNM {
                     }
                     else properties.Add("Идентификатор_весов", scaleNum);
 
-                    if (dbr.createNewKouple("весы", properties) == 1) return;
-                } catch (Exception ex) {
-                    throw;
+                    if (dbr.CreateNewKouple("весы", properties) == 1) return;
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -110,40 +117,50 @@ namespace SAACNM {
             Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e) {
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void txtScaleNum_TextChanged(object sender, EventArgs e) {
+        private void TxtScaleNum_TextChanged(object sender, EventArgs e)
+        {
             scaleNum = txtScaleNum.Text.ToString();
         }
 
-        private void txtScaleMark_TextChanged(object sender, EventArgs e) {
+        private void TxtScaleMark_TextChanged(object sender, EventArgs e)
+        {
             scaleMark = txtScaleMark.Text.ToString();
         }
 
-        private void txtScaleSerial_TextChanged(object sender, EventArgs e) {
+        private void TxtScaleSerial_TextChanged(object sender, EventArgs e)
+        {
             scaleSerial = txtScaleSerial.Text.ToString();
         }
 
-        private void txtScaleLim_TextChanged(object sender, EventArgs e) {
+        private void TxtScaleLim_TextChanged(object sender, EventArgs e)
+        {
             scaleLimit = txtScaleLim.Text.ToString();
         }
 
-        private void txtScaleError_TextChanged(object sender, EventArgs e) {
+        private void TxtScaleError_TextChanged(object sender, EventArgs e)
+        {
             scaleError = txtScaleError.Text.ToString();
         }
 
-        private void dtpScaleDate_ValueChanged(object sender, EventArgs e) {
+        private void DtpScaleDate_ValueChanged(object sender, EventArgs e)
+        {
             scaleCalibDate = dtpScaleDate.Value.ToShortDateString();
         }
 
-        private void AddScale_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void AddScale_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
-            if (e.KeyChar == 13) {
-                btnAdd_Click(sender, null);
+            if (e.KeyChar == 13)
+            {
+                BtnAdd_Click(sender, null);
             }
         }
     }

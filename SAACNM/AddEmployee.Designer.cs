@@ -72,7 +72,7 @@
             this.txtSecName.Name = "txtSecName";
             this.txtSecName.Size = new System.Drawing.Size(150, 22);
             this.txtSecName.TabIndex = 1;
-            this.txtSecName.TextChanged += new System.EventHandler(this.txtSecName_TextChanged);
+            this.txtSecName.TextChanged += new System.EventHandler(this.TxtSecName_TextChanged);
             // 
             // lblFirName
             // 
@@ -89,7 +89,7 @@
             this.txtFirName.Name = "txtFirName";
             this.txtFirName.Size = new System.Drawing.Size(150, 22);
             this.txtFirName.TabIndex = 3;
-            this.txtFirName.TextChanged += new System.EventHandler(this.txtFirName_TextChanged);
+            this.txtFirName.TextChanged += new System.EventHandler(this.TxtFirName_TextChanged);
             // 
             // lblFatName
             // 
@@ -106,7 +106,7 @@
             this.txtFatName.Name = "txtFatName";
             this.txtFatName.Size = new System.Drawing.Size(150, 22);
             this.txtFatName.TabIndex = 5;
-            this.txtFatName.TextChanged += new System.EventHandler(this.txtFatName_TextChanged);
+            this.txtFatName.TextChanged += new System.EventHandler(this.TxtFatName_TextChanged);
             // 
             // lblBirthDate
             // 
@@ -125,7 +125,7 @@
             this.dtpBirthDate.Size = new System.Drawing.Size(150, 22);
             this.dtpBirthDate.TabIndex = 9;
             this.dtpBirthDate.Value = new System.DateTime(2019, 6, 17, 0, 0, 0, 0);
-            this.dtpBirthDate.ValueChanged += new System.EventHandler(this.dtpBirthDate_ValueChanged);
+            this.dtpBirthDate.ValueChanged += new System.EventHandler(this.DtpBirthDate_ValueChanged);
             // 
             // lblAddress
             // 
@@ -142,7 +142,7 @@
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(344, 22);
             this.txtAddress.TabIndex = 12;
-            this.txtAddress.TextChanged += new System.EventHandler(this.txtAddress_TextChanged);
+            this.txtAddress.TextChanged += new System.EventHandler(this.TxtAddress_TextChanged);
             // 
             // lblPost
             // 
@@ -161,7 +161,7 @@
             this.cbPosts.Name = "cbPosts";
             this.cbPosts.Size = new System.Drawing.Size(150, 22);
             this.cbPosts.TabIndex = 13;
-            this.cbPosts.SelectedIndexChanged += new System.EventHandler(this.cbPosts_SelectedIndexChanged);
+            this.cbPosts.SelectedIndexChanged += new System.EventHandler(this.CbPosts_SelectedIndexChanged);
             // 
             // checkWork
             // 
@@ -174,7 +174,7 @@
             this.checkWork.TabIndex = 14;
             this.checkWork.Text = "Работающий";
             this.checkWork.UseVisualStyleBackColor = true;
-            this.checkWork.CheckedChanged += new System.EventHandler(this.checkWork_CheckedChanged);
+            this.checkWork.CheckedChanged += new System.EventHandler(this.CheckWork_CheckedChanged);
             // 
             // lblMale
             // 
@@ -196,7 +196,7 @@
             this.cbMale.Name = "cbMale";
             this.cbMale.Size = new System.Drawing.Size(150, 22);
             this.cbMale.TabIndex = 7;
-            this.cbMale.SelectedIndexChanged += new System.EventHandler(this.cbMale_SelectedIndexChanged);
+            this.cbMale.SelectedIndexChanged += new System.EventHandler(this.CbMale_SelectedIndexChanged);
             // 
             // lblPhone
             // 
@@ -213,7 +213,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(150, 22);
             this.txtPhone.TabIndex = 11;
-            this.txtPhone.TextChanged += new System.EventHandler(this.txtPhone_TextChanged);
+            this.txtPhone.TextChanged += new System.EventHandler(this.TxtPhone_TextChanged);
             // 
             // lblPassport
             // 
@@ -230,7 +230,7 @@
             this.txtPassport.Name = "txtPassport";
             this.txtPassport.Size = new System.Drawing.Size(150, 22);
             this.txtPassport.TabIndex = 16;
-            this.txtPassport.TextChanged += new System.EventHandler(this.txtPassport_TextChanged);
+            this.txtPassport.TextChanged += new System.EventHandler(this.TxtPassport_TextChanged);
             // 
             // lblINN
             // 
@@ -247,7 +247,7 @@
             this.txtINN.Name = "txtINN";
             this.txtINN.Size = new System.Drawing.Size(150, 22);
             this.txtINN.TabIndex = 18;
-            this.txtINN.TextChanged += new System.EventHandler(this.txtINN_TextChanged);
+            this.txtINN.TextChanged += new System.EventHandler(this.TxtINN_TextChanged);
             // 
             // lblSNILS
             // 
@@ -264,7 +264,7 @@
             this.txtSNILS.Name = "txtSNILS";
             this.txtSNILS.Size = new System.Drawing.Size(150, 22);
             this.txtSNILS.TabIndex = 20;
-            this.txtSNILS.TextChanged += new System.EventHandler(this.txtSNILS_TextChanged);
+            this.txtSNILS.TextChanged += new System.EventHandler(this.TxtSNILS_TextChanged);
             // 
             // btnAdd
             // 
@@ -275,7 +275,7 @@
             this.btnAdd.TabIndex = 21;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -286,7 +286,7 @@
             this.btnCancel.TabIndex = 22;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

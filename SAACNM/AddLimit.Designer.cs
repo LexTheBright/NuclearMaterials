@@ -55,7 +55,7 @@
             this.cbMatType.Name = "cbMatType";
             this.cbMatType.Size = new System.Drawing.Size(120, 22);
             this.cbMatType.TabIndex = 1;
-            this.cbMatType.SelectedIndexChanged += new System.EventHandler(this.cbMatType_SelectedIndexChanged);
+            this.cbMatType.SelectedIndexChanged += new System.EventHandler(this.CbMatType_SelectedIndexChanged);
             // 
             // lblLimAmount
             // 
@@ -72,7 +72,7 @@
             this.txtLimValue.Name = "txtLimValue";
             this.txtLimValue.Size = new System.Drawing.Size(140, 22);
             this.txtLimValue.TabIndex = 3;
-            this.txtLimValue.TextChanged += new System.EventHandler(this.txtLimValue_TextChanged);
+            this.txtLimValue.TextChanged += new System.EventHandler(this.TxtLimValue_TextChanged);
             // 
             // btnAdd
             // 
@@ -84,7 +84,7 @@
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -96,7 +96,7 @@
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

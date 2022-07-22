@@ -57,7 +57,7 @@
             this.txtPostNum.Name = "txtPostNum";
             this.txtPostNum.Size = new System.Drawing.Size(150, 22);
             this.txtPostNum.TabIndex = 1;
-            this.txtPostNum.TextChanged += new System.EventHandler(this.txtPostNum_TextChanged);
+            this.txtPostNum.TextChanged += new System.EventHandler(this.TxtPostNum_TextChanged);
             // 
             // lblPostName
             // 
@@ -74,7 +74,7 @@
             this.txtPostName.Name = "txtPostName";
             this.txtPostName.Size = new System.Drawing.Size(265, 22);
             this.txtPostName.TabIndex = 3;
-            this.txtPostName.TextChanged += new System.EventHandler(this.txtPostName_TextChanged);
+            this.txtPostName.TextChanged += new System.EventHandler(this.TxtPostName_TextChanged);
             // 
             // lblPostPower
             // 
@@ -94,7 +94,7 @@
             this.btnAdd.TabIndex = 8;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -105,7 +105,7 @@
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // cbMove
             // 

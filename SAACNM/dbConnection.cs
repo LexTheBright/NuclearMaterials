@@ -1,21 +1,16 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAACNM
 {
     /// <summary>
     ///  Класс для выполнения соединения с БД 
     /// </summary>      
-    public class dbConnection
+    public class DbConnection
     {
         public static string username = "root";
         public static string password = "admin";
         public static string dbName = "nmlocal";
-        //public static MySqlConnection myConnection;
         public static MySqlConnection myConnection;
 
         public static void closeConnect()
@@ -23,7 +18,7 @@ namespace SAACNM
             if (myConnection != null) myConnection.Close();
         }
         // Метод для создания или обращения к уже существующему объекту (соединению)
-        public static MySqlConnection dbConnect
+        public static MySqlConnection DbConnect
         {
             get
             {

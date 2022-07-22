@@ -1,60 +1,55 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class InvoicesForm : Form {
-        private String invoiceNum;
-        //private String invoiceType;
-        private String invoiceDate;
-        private String invoiceTime;
-        //private String empID;
-        private String secondName;
-        private String firstName;
-        private String fatherName;
-        private ArrayList invIDs = new ArrayList();
-        private ArrayList invDates = new ArrayList();
-        private ArrayList invTypes = new ArrayList();
-        private ArrayList agentsIDs = new ArrayList();
-        private ArrayList startsIDs = new ArrayList();
-        private ArrayList endsIDs = new ArrayList();
-        private String agentPass;
-        private String partCode;
-        private String unitNum;
-        private String unitMass;
-        private String matForm;
-        private String matType;
-        private String scaleNum;
-        private String contType;
-        private String zbmNum;
-        private String buildNum;
-        private String roomNum;
+namespace SAACNM
+{
+    public partial class InvoicesForm : Form
+    {
+        private string invoiceNum;
+        private string invoiceDate;
+        private string secondName;
+        private string firstName;
+        private string fatherName;
+        private readonly ArrayList invIDs = new ArrayList();
+        private readonly ArrayList invDates = new ArrayList();
+        private readonly ArrayList invTypes = new ArrayList();
+        private readonly ArrayList agentsIDs = new ArrayList();
+        private readonly ArrayList startsIDs = new ArrayList();
+        private readonly ArrayList endsIDs = new ArrayList();
+        private string agentPass;
+        private string partCode;
+        private string unitNum;
+        private string unitMass;
+        private string matForm;
+        private string matType;
+        private string scaleNum;
+        private string contType;
+        private string zbmNum;
+        private string buildNum;
+        private string roomNum;
 
-        private String invType;
-        private String invNumb;
-        private String fromPersonID;
-        private String toPersonID;
-        private String agentID;
-        private String agentSurname;
-        private String organizationName;
+        private string invType;
+        private string invNumb;
+        private string fromPersonID;
+        private string toPersonID;
+        private string agentID;
+        private string agentSurname;
+        private string organizationName;
 
         private int indexInvoice;
-        public InvoicesForm() {
+        public InvoicesForm()
+        {
             InitializeComponent();
         }
 
-        private void InvoicesForm_Load(object sender, EventArgs e) {
-            this.dgvInvoices.SelectionChanged -= new System.EventHandler(this.dgvInvoices_SelectionChanged);
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM накладные_сводная", dbConnection.dbConnect);
-            try {
+        private void InvoicesForm_Load(object sender, EventArgs e)
+        {
+            this.dgvInvoices.SelectionChanged -= new System.EventHandler(this.DgvInvoices_SelectionChanged);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM накладные_сводная", DbConnection.DbConnect);
+            try
+            {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
                     if (dbReader.HasRows)
@@ -65,7 +60,6 @@ namespace SAACNM {
                             invIDs.Add(Convert.ToString(dbReader["id"]));
                             invNumb = Convert.ToString(dbReader["№_накладной"]);
                             invoiceDate = Convert.ToDateTime(dbReader["Дата"]).ToShortDateString();
-                            //invDates.Add(Convert.ToDateTime(dbReader["ДАТА_ПЕРЕМЕЩЕНИЯ"]).ToShortDateString());
                             invType = Convert.ToString(dbReader["Тип_накладной"]);
                             secondName = Convert.ToString(dbReader["Фамилия"]);
                             firstName = Convert.ToString(dbReader["Имя"]);
@@ -82,82 +76,17 @@ namespace SAACNM {
                         }
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
-            this.dgvInvoices.SelectionChanged += new System.EventHandler(this.dgvInvoices_SelectionChanged);
-            /*for (int i = 0; i < dgvInvoices.RowCount; i++) {
-                cmdSelect = new MySqlCommand("SELECT ID_ПРЕДСТАВИТЕЛЯ_ПРЕД_ОТПРАВ FROM АКТ_ПОСТУПЛЕНИЯ WHERE " +
-                                              "НОМЕР_АКТА_ПОСТУПЛЕНИЯ = " + invNums[i].ToString() +
-                                              " AND ДАТА_ПЕРЕМЕЩЕНИЯ = '" + invDates[i].ToString() + "'", dbConnection.dbConnect);
-                try {
-                    using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
-                    {
-                        if (dbReader.HasRows)
-                        {
-                            invTypes.Add("Получение");
-                            dgvInvoices[clmDocType.Index, i].Value = invTypes[i];
-                            while (dbReader.Read())
-                            {
-                                agentsIDs.Add(dbReader["ID_ПРЕДСТАВИТЕЛЯ_ПРЕД_ОТПРАВ"].ToString());
-                                startsIDs.Add(" ");
-                                endsIDs.Add(" ");
-                            }
-                        }
-                    }
-                } catch (Exception ex) {
-                    MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                } 
-                cmdSelect = new MySqlCommand("SELECT ID_ПРЕДСТАВИТЕЛЯ_ПРЕД_ПОЛУЧ FROM АКТ_ОТПРАВКИ WHERE " +
-                                              "НОМЕР_АКТА_ОТПРАВКИ = " + invNums[i].ToString() +
-                                              " AND ДАТА_ПЕРЕМЕЩЕНИЯ = '" + invDates[i].ToString() + "'", dbConnection.dbConnect);
-                try {
-                    using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
-                    {
-                        if (dbReader.HasRows)
-                        {
-                            invTypes.Add("Отправка");
-                            dgvInvoices[clmDocType.Index, i].Value = invTypes[i];
-                            while (dbReader.Read())
-                            {
-                                agentsIDs.Add(dbReader["ID_ПРЕДСТАВИТЕЛЯ_ПРЕД_ПОЛУЧ"].ToString());
-                                startsIDs.Add(" ");
-                                endsIDs.Add(" ");
-                            }
-                        }
-                    }
-                } catch (Exception ex) {
-                    MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                }
-                cmdSelect = new MySqlCommand("SELECT * FROM АКТ_ПЕРЕМЕЩЕНИЯ WHERE " +
-                                              "НОМЕР_АКТА_ПЕРЕМЕЩЕНИЯ = " + invNums[i].ToString() +
-                                              " AND ДАТА_ПЕРЕМЕЩЕНИЯ = '" + invDates[i].ToString() + "'", dbConnection.dbConnect);
-                try {
-                    using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
-                    {
-                        if (dbReader.HasRows)
-                        {
-                            invTypes.Add("Перемещение");
-                            dgvInvoices[clmDocType.Index, i].Value = invTypes[i];
-                            while (dbReader.Read())
-                            {
-                                agentsIDs.Add(" ");
-                                startsIDs.Add(dbReader["ID_СОТРУДНИКА_ИНИЦИАТОРА"].ToString());
-                                endsIDs.Add(dbReader["ID_СОТРУДНИКА_ЗАВЕРШИТЕЛЯ"].ToString());
-                            }
-                        }
-                    }
-                } catch (Exception ex) {
-                    MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                }
-            }*/
+            this.dgvInvoices.SelectionChanged += new System.EventHandler(this.DgvInvoices_SelectionChanged);
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
             AddInvoice invoice = new AddInvoice();
             invoice.ShowDialog();
             dgvAccountUnits.Rows.Clear();
@@ -171,16 +100,21 @@ namespace SAACNM {
             InvoicesForm_Load(sender, e);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e) {
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
             indexInvoice = dgvInvoices.CurrentRow.Index;
-            if (indexInvoice == -1) {
+            if (indexInvoice == -1)
+            {
                 MessageBox.Show(this, "Укажите накладную!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            try {
+            try
+            {
                 DBRedactor dbr = new DBRedactor();
-                dbr.deleteByID("накладная", "ИД_накладной", dgvInvoices[clmDocNum.Index, indexInvoice].Value.ToString());
-            } catch (Exception ex) {
+                dbr.DeleteByID("накладная", "ИД_накладной", dgvInvoices[clmDocNum.Index, indexInvoice].Value.ToString());
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -196,15 +130,17 @@ namespace SAACNM {
             InvoicesForm_Load(sender, e);
         }
 
-        private void dgvInvoices_SelectionChanged(object sender, EventArgs e) {
+        private void DgvInvoices_SelectionChanged(object sender, EventArgs e)
+        {
             indexInvoice = dgvInvoices.CurrentRow.Index;
             dgvAccountUnits.Rows.Clear();
             MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM список_уе LEFT JOIN учетная_единица ON список_уе.ИД_УЕ = учетная_единица.ИД_УЕ" +
                 " LEFT JOIN тип_материала ON тип_материала.Код_типа_материала = учетная_единица.Серийный_номер_материала" +
                 " LEFT JOIN контейнер ON контейнер.ИД_контейнера = учетная_единица.ИД_контейнера" +
                 " LEFT JOIN весы ON весы.Идентификатор_весов = учетная_единица.Идентификатор_весов" +
-                " LEFT JOIN помещение ON помещение.Номер_помещения = учетная_единица.Номер_помещения AND помещение.Номер_здания = учетная_единица.Номер_здания AND помещение.Номер_ЗБМ = учетная_единица.Номер_ЗБМ WHERE список_уе.ИД_накладной = " + invIDs[indexInvoice].ToString(), dbConnection.dbConnect);
-            try {
+                " LEFT JOIN помещение ON помещение.Номер_помещения = учетная_единица.Номер_помещения AND помещение.Номер_здания = учетная_единица.Номер_здания AND помещение.Номер_ЗБМ = учетная_единица.Номер_ЗБМ WHERE список_уе.ИД_накладной = " + invIDs[indexInvoice].ToString(), DbConnection.DbConnect);
+            try
+            {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
                     if (dbReader.HasRows)
@@ -224,17 +160,21 @@ namespace SAACNM {
                         }
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
-            } 
+            }
             if (dgvInvoices[clmDocType.Index, indexInvoice].Value != null
                 && (dgvInvoices[clmDocType.Index, indexInvoice].Value.ToString() == "Поступление"
-                    || dgvInvoices[clmDocType.Index, indexInvoice].Value.ToString() == "Отправление")) {
+                    || dgvInvoices[clmDocType.Index, indexInvoice].Value.ToString() == "Отправление"))
+            {
                 txtEmpStart.Clear();
                 txtEmpEnd.Clear();
-                cmdSelect = new MySqlCommand("SELECT * FROM представитель WHERE ИД_представителя = " + agentsIDs[indexInvoice].ToString(), dbConnection.dbConnect);
-                try {
+                cmdSelect = new MySqlCommand("SELECT * FROM представитель WHERE ИД_представителя = " + agentsIDs[indexInvoice].ToString(), DbConnection.DbConnect);
+                try
+                {
                     using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                     {
                         if (dbReader.HasRows)
@@ -250,7 +190,9 @@ namespace SAACNM {
                             }
                         }
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
@@ -258,11 +200,13 @@ namespace SAACNM {
             }
             if (dgvInvoices[clmDocType.Index, indexInvoice].Value != null
                 && dgvInvoices[clmDocType.Index, indexInvoice].Value.ToString() == "Перемещение"
-                && startsIDs.Count != 0 && endsIDs.Count != 0) {
+                && startsIDs.Count != 0 && endsIDs.Count != 0)
+            {
                 txtAgent.Clear();
                 txtPartner.Clear();
-                cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + startsIDs[indexInvoice], dbConnection.dbConnect);
-                try {
+                cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + startsIDs[indexInvoice], DbConnection.DbConnect);
+                try
+                {
                     using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                     {
                         if (dbReader.HasRows)
@@ -276,12 +220,15 @@ namespace SAACNM {
                             }
                         }
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
-                } 
-                cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + endsIDs[indexInvoice], dbConnection.dbConnect);
-                try {
+                }
+                cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + endsIDs[indexInvoice], DbConnection.DbConnect);
+                try
+                {
                     using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                     {
                         if (dbReader.HasRows)
@@ -295,15 +242,19 @@ namespace SAACNM {
                             }
                         }
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
             }
         }
 
-        private void InvoicesForm_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void InvoicesForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
         }

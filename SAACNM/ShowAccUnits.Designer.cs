@@ -33,6 +33,7 @@
             this.clmZBM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmBuild = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmRoom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountUnits)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             this.clmZBM,
             this.clmBuild,
             this.clmRoom});
-            this.dgvAccountUnits.Location = new System.Drawing.Point(12, 12);
+            this.dgvAccountUnits.Location = new System.Drawing.Point(12, 34);
             this.dgvAccountUnits.MultiSelect = false;
             this.dgvAccountUnits.Name = "dgvAccountUnits";
             this.dgvAccountUnits.ReadOnly = true;
@@ -131,11 +132,23 @@
             this.clmRoom.ReadOnly = true;
             this.clmRoom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 10);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(175, 18);
+            this.checkBox1.TabIndex = 1;
+            this.checkBox1.Text = "Включить отправленныые";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged_1);
+            // 
             // ShowAccUnits
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(971, 359);
+            this.ClientSize = new System.Drawing.Size(971, 382);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.dgvAccountUnits);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -148,6 +161,7 @@
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ShowAccUnits_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountUnits)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -163,5 +177,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmZBM;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmBuild;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmRoom;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

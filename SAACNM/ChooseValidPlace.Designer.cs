@@ -48,7 +48,7 @@
             this.cbValidPlaces.Name = "cbValidPlaces";
             this.cbValidPlaces.Size = new System.Drawing.Size(322, 22);
             this.cbValidPlaces.TabIndex = 1;
-            this.cbValidPlaces.SelectedIndexChanged += new System.EventHandler(this.cbValidPlaces_SelectedIndexChanged);
+            this.cbValidPlaces.SelectedIndexChanged += new System.EventHandler(this.CbValidPlaces_SelectedIndexChanged);
             // 
             // btnComplete
             // 
@@ -59,7 +59,7 @@
             this.btnComplete.TabIndex = 2;
             this.btnComplete.Text = "Ок";
             this.btnComplete.UseVisualStyleBackColor = false;
-            this.btnComplete.Click += new System.EventHandler(this.btnComplete_Click);
+            this.btnComplete.Click += new System.EventHandler(this.BtnComplete_Click);
             // 
             // btnCancel
             // 
@@ -70,7 +70,7 @@
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

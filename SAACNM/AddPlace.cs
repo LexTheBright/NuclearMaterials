@@ -1,32 +1,30 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class AddPlace : Form {
-        private String zbmNum;
-        private String buildNum;
-        private String roomNum;
-        private String zbmOld;
-        private String buildOld;
-        private String roomOld;
-        private String empID;
-        private String secondName;
+namespace SAACNM
+{
+    public partial class AddPlace : Form
+    {
+        private string zbmNum;
+        private string buildNum;
+        private string roomNum;
+        private readonly string zbmOld;
+        private readonly string buildOld;
+        private readonly string roomOld;
+        private string empID;
+        private string secondName;
         private bool isEdit = false;
-        public AddPlace(String zbm = null, String build = null, String room = null, String sec = null, String id = null) {
+        public AddPlace(string zbm = null, string build = null, string room = null, string sec = null, string id = null)
+        {
             InitializeComponent();
             txtZBMNum.Enabled = true;
             txtBuildNum.Enabled = true;
             txtRoomNum.Enabled = true;
 
-            if (zbm != null || build != null || room != null || sec != null) {
+            if (zbm != null || build != null || room != null || sec != null)
+            {
                 txtZBMNum.Text = zbm;
                 txtZBMNum.Enabled = false;
                 txtBuildNum.Text = build;
@@ -43,14 +41,16 @@ namespace SAACNM {
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e) {
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void btnChooseEmp_Click(object sender, EventArgs e) {
+        private void BtnChooseEmp_Click(object sender, EventArgs e)
+        {
             EmployeeForm emp = new EmployeeForm();
-            empID = emp.getIDEmployee();
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT Фамилия FROM сотрудники WHERE ИД_сотрудника = " + empID, dbConnection.dbConnect);
+            empID = emp.GetIDEmployee();
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT Фамилия FROM сотрудники WHERE ИД_сотрудника = " + empID, DbConnection.DbConnect);
             try
             {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
@@ -72,8 +72,10 @@ namespace SAACNM {
             txtSecName.Text = secondName;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
-            if (zbmNum == null || buildNum == null || roomNum == null || empID == null) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            if (zbmNum == null || buildNum == null || roomNum == null || empID == null)
+            {
                 MessageBox.Show(this, "Заполните все поля!", "Помещение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -102,19 +104,26 @@ namespace SAACNM {
                 return;
             }
 
-            if (isEdit) {
-                try {
+            if (isEdit)
+            {
+                try
+                {
                     properties.Add("ИД_ответственного", empID);
-                    dbr.updateByID("помещение", "Номер_помещения", txtRoomNum.Text, "Номер_здания", txtBuildNum.Text, "Номер_ЗБМ", txtZBMNum.Text, properties);
-                } catch (Exception ex) {
+                    dbr.UpdateByID("помещение", "Номер_помещения", txtRoomNum.Text, "Номер_здания", txtBuildNum.Text, "Номер_ЗБМ", txtZBMNum.Text, properties);
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Местоположение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     properties.Add("Номер_ЗБМ", txtZBMNum.Text);
-                    MySqlCommand cmdSelectaa = new MySqlCommand("SELECT 1 FROM збм WHERE Номер_ЗБМ = " + txtZBMNum.Text, dbConnection.dbConnect);
+                    MySqlCommand cmdSelectaa = new MySqlCommand("SELECT 1 FROM збм WHERE Номер_ЗБМ = " + txtZBMNum.Text, DbConnection.DbConnect);
                     try
                     {
                         using (MySqlDataReader dbReader = cmdSelectaa.ExecuteReader())
@@ -122,18 +131,18 @@ namespace SAACNM {
                             if (!dbReader.HasRows)
                             {
                                 dbReader.Close();
-                                if (dbr.createNewKouple("збм", properties) == 1) return;
+                                if (dbr.CreateNewKouple("збм", properties) == 1) return;
                             }
                         }
                     }
-                    catch (Exception ex) 
-                    { 
+                    catch (Exception ex)
+                    {
                         MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
 
                     properties.Add("Номер_здания", txtBuildNum.Text);
-                    MySqlCommand cmdSelectaa1 = new MySqlCommand("SELECT 1 FROM здание WHERE Номер_здания = " + txtBuildNum.Text + " AND Номер_ЗБМ = " + txtZBMNum.Text, dbConnection.dbConnect);
+                    MySqlCommand cmdSelectaa1 = new MySqlCommand("SELECT 1 FROM здание WHERE Номер_здания = " + txtBuildNum.Text + " AND Номер_ЗБМ = " + txtZBMNum.Text, DbConnection.DbConnect);
                     try
                     {
                         using (MySqlDataReader dbReader = cmdSelectaa1.ExecuteReader())
@@ -141,7 +150,7 @@ namespace SAACNM {
                             if (!dbReader.HasRows)
                             {
                                 dbReader.Close();
-                                if (dbr.createNewKouple("здание", properties) == 1) return;
+                                if (dbr.CreateNewKouple("здание", properties) == 1) return;
                             }
                         }
                     }
@@ -153,9 +162,11 @@ namespace SAACNM {
 
                     properties.Add("Номер_помещения", txtRoomNum.Text);
                     properties.Add("ИД_ответственного", empID);
-                    if (dbr.createNewKouple("помещение", properties) == 1) return;
+                    if (dbr.CreateNewKouple("помещение", properties) == 1) return;
 
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -164,28 +175,29 @@ namespace SAACNM {
             Close();
         }
 
-        private void txtZBMNum_TextChanged(object sender, EventArgs e) {
+        private void TxtZBMNum_TextChanged(object sender, EventArgs e)
+        {
             zbmNum = txtZBMNum.Text.ToString();
         }
 
-        private void txtBuildNum_TextChanged(object sender, EventArgs e) {
+        private void TxtBuildNum_TextChanged(object sender, EventArgs e)
+        {
             buildNum = txtBuildNum.Text.ToString();
         }
 
-        private void txtRoomNum_TextChanged(object sender, EventArgs e) {
+        private void TxtRoomNum_TextChanged(object sender, EventArgs e)
+        {
             roomNum = txtRoomNum.Text.ToString();
         }
-
-        private void txtSecName_TextChanged(object sender, EventArgs e) {
-            //
-        }
-
-        private void AddPlace_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
-                btnCancel_Click(sender, null);
+        private void AddPlace_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
+                BtnCancel_Click(sender, null);
             }
-            if (e.KeyChar == 13) {
-                btnAdd_Click(sender, null);
+            if (e.KeyChar == 13)
+            {
+                BtnAdd_Click(sender, null);
             }
         }
     }

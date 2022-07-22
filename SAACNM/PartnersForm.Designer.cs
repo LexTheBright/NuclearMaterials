@@ -90,7 +90,7 @@
             this.dgvPartners.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPartners.Size = new System.Drawing.Size(650, 173);
             this.dgvPartners.TabIndex = 1;
-            this.dgvPartners.SelectionChanged += new System.EventHandler(this.dgvPartners_SelectionChanged);
+            this.dgvPartners.SelectionChanged += new System.EventHandler(this.DgvPartners_SelectionChanged);
             // 
             // clmEnterpriseCode
             // 
@@ -144,7 +144,7 @@
             this.btnAddPartner.TabIndex = 4;
             this.btnAddPartner.Text = "Добавить";
             this.btnAddPartner.UseVisualStyleBackColor = false;
-            this.btnAddPartner.Click += new System.EventHandler(this.btnAddPartner_Click);
+            this.btnAddPartner.Click += new System.EventHandler(this.BtnAddPartner_Click);
             // 
             // btnEditPartner
             // 
@@ -155,7 +155,7 @@
             this.btnEditPartner.TabIndex = 5;
             this.btnEditPartner.Text = "Редактировать";
             this.btnEditPartner.UseVisualStyleBackColor = false;
-            this.btnEditPartner.Click += new System.EventHandler(this.btnEditPartner_Click);
+            this.btnEditPartner.Click += new System.EventHandler(this.BtnEditPartner_Click);
             // 
             // btnDeletePartner
             // 
@@ -166,7 +166,7 @@
             this.btnDeletePartner.TabIndex = 6;
             this.btnDeletePartner.Text = "Удалить";
             this.btnDeletePartner.UseVisualStyleBackColor = false;
-            this.btnDeletePartner.Click += new System.EventHandler(this.btnDeletePartner_Click);
+            this.btnDeletePartner.Click += new System.EventHandler(this.BtnDeletePartner_Click);
             // 
             // lblAgents
             // 
@@ -197,7 +197,7 @@
             this.dgvAgents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAgents.Size = new System.Drawing.Size(650, 173);
             this.dgvAgents.TabIndex = 8;
-            this.dgvAgents.SelectionChanged += new System.EventHandler(this.dgvAgents_SelectionChanged);
+            this.dgvAgents.SelectionChanged += new System.EventHandler(this.DgvAgents_SelectionChanged);
             // 
             // clmSecondName
             // 
@@ -244,7 +244,7 @@
             this.btnAddAgent.TabIndex = 11;
             this.btnAddAgent.Text = "Добавить";
             this.btnAddAgent.UseVisualStyleBackColor = false;
-            this.btnAddAgent.Click += new System.EventHandler(this.btnAddAgent_Click);
+            this.btnAddAgent.Click += new System.EventHandler(this.BtnAddAgent_Click);
             // 
             // btnEditAgent
             // 
@@ -255,7 +255,7 @@
             this.btnEditAgent.TabIndex = 12;
             this.btnEditAgent.Text = "Редактировать";
             this.btnEditAgent.UseVisualStyleBackColor = false;
-            this.btnEditAgent.Click += new System.EventHandler(this.btnEditAgent_Click);
+            this.btnEditAgent.Click += new System.EventHandler(this.BtnEditAgent_Click);
             // 
             // btnDeleteAgent
             // 
@@ -266,7 +266,7 @@
             this.btnDeleteAgent.TabIndex = 13;
             this.btnDeleteAgent.Text = "Удалить";
             this.btnDeleteAgent.UseVisualStyleBackColor = false;
-            this.btnDeleteAgent.Click += new System.EventHandler(this.btnDeleteAgent_Click);
+            this.btnDeleteAgent.Click += new System.EventHandler(this.BtnDeleteAgent_Click);
             // 
             // lblEmp
             // 

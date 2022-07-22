@@ -1,36 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class ShowAccUnits : Form {
-        private String serialNum;
-        private String IDcont;
-        private String mass;
-        private String form;
-        private String type;
-        private String scalesNum;
-        private String zbmNum;
-        private String buildNum;
-        private String roomNum;
-        public ShowAccUnits() {
+namespace SAACNM
+{
+    public partial class ShowAccUnits : Form
+    {
+        private string serialNum;
+        private string IDcont;
+        private string mass;
+        private string form;
+        private string type;
+        private string scalesNum;
+        private string zbmNum;
+        private string buildNum;
+        private string roomNum;
+        public ShowAccUnits()
+        {
             InitializeComponent();
         }
 
-        private void btnExit_Click(object sender, EventArgs e) {
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void ShowAccUnits_Load(object sender, EventArgs e) {
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM учетная_единица LEFT JOIN тип_материала ON учетная_единица.Серийный_номер_материала = тип_материала.Код_типа_материала", dbConnection.dbConnect);
-            try {
+        private void ShowAccUnits_Load(object sender, EventArgs e)
+        {
+            CheckBox1_CheckedChanged_1(sender, e);
+        }
+
+        private void ShowAccUnits_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
+                Close();
+            }
+        }
+
+        private void CheckBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            dgvAccountUnits.Rows.Clear();
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM учетная_единица LEFT JOIN тип_материала ON учетная_единица.Серийный_номер_материала = тип_материала.Код_типа_материала", DbConnection.DbConnect);
+            if (!checkBox1.Checked)
+            {
+                cmdSelect = new MySqlCommand("SELECT * FROM учетная_единица LEFT JOIN тип_материала ON учетная_единица.Серийный_номер_материала = тип_материала.Код_типа_материала WHERE Is_sent = " + checkBox1.Checked, DbConnection.DbConnect);
+            }
+            try
+            {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
                     if (dbReader.HasRows)
@@ -50,17 +67,13 @@ namespace SAACNM {
                         }
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
             dgvAccountUnits.ClearSelection();
-        }
-
-        private void ShowAccUnits_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
-                Close();
-            }
         }
     }
 }

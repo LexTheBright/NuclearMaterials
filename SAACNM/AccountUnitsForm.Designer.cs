@@ -72,7 +72,7 @@
             this.btnComplete.TabIndex = 1;
             this.btnComplete.Text = "Ок";
             this.btnComplete.UseVisualStyleBackColor = false;
-            this.btnComplete.Click += new System.EventHandler(this.btnComplete_Click);
+            this.btnComplete.Click += new System.EventHandler(this.BtnComplete_Click);
             // 
             // btnCancel
             // 
@@ -83,7 +83,7 @@
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

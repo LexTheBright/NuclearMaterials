@@ -1,14 +1,8 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 // 0 0 1 (1) Перемещение
 // 0 1 0 (2) Отправка
@@ -17,18 +11,19 @@ using MySql.Data.MySqlClient;
 // 1 0 1 (5) Перемещение, Получение
 // 1 1 0 (6) Отправка, Получение
 // 1 1 1 (7) Перемещение, Отправка, Получение
-namespace SAACNM {
-    public partial class PostForm : Form {
-        Dictionary<int, String> powers = new Dictionary<int, string>();
+namespace SAACNM
+{
+    public partial class PostForm : Form
+    {
+        Dictionary<int, string> powers = new Dictionary<int, string>();
         private ArrayList postPowerConst = new ArrayList();
-        private String postNum;
-        private String postName;
-        private String postPowerStr;
-        //private int postPower;
-        private String postPower;
-        private String[] postPowers;
+        private string postNum;
+        private string postName;
+        private string postPower;
+        private string[] postPowers;
         private int index = -1;
-        public PostForm() {
+        public PostForm()
+        {
             InitializeComponent();
             powers.Add(1, "Перемещение");
             powers.Add(2, "Отправка");
@@ -39,7 +34,8 @@ namespace SAACNM {
             powers.Add(7, "Перемещение, Отправка, Получение");
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
             AddPost post = new AddPost();
             post.ShowDialog();
             dgvPosts.Rows.Clear();
@@ -47,7 +43,8 @@ namespace SAACNM {
             PostForm_Load(sender, e);
         }
 
-        private void btnEdit_Click(object sender, EventArgs e) {
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
             if (index == -1)
             {
                 MessageBox.Show(this, "Укажите должность!", "Должность", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -63,15 +60,20 @@ namespace SAACNM {
             PostForm_Load(sender, e);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите должность!", "Должность", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try {
+            try
+            {
                 DBRedactor dbr = new DBRedactor();
-                dbr.deleteByID("должности", "Код_должности", dgvPosts.Rows[index].Cells[0].Value.ToString());
-            } catch (Exception ex) {
+                dbr.DeleteByID("должности", "Код_должности", dgvPosts.Rows[index].Cells[0].Value.ToString());
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -80,10 +82,12 @@ namespace SAACNM {
             postPowerConst.Clear();
             PostForm_Load(sender, e);
         }
-        
-        private void PostForm_Load(object sender, EventArgs e) {
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT полномочия.Код_должности, Название, GROUP_CONCAT(Полномочия) as Полно FROM должности JOIN полномочия ON полномочия.Код_должности = должности.Код_должности group by полномочия.Код_должности", dbConnection.dbConnect);
-            try {
+
+        private void PostForm_Load(object sender, EventArgs e)
+        {
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT полномочия.Код_должности, Название, GROUP_CONCAT(Полномочия) as Полно FROM должности JOIN полномочия ON полномочия.Код_должности = должности.Код_должности group by полномочия.Код_должности", DbConnection.DbConnect);
+            try
+            {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
                     if (dbReader.HasRows)
@@ -97,16 +101,21 @@ namespace SAACNM {
                         }
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
         }
 
-        private void txtPostName_TextChanged(object sender, EventArgs e) {
+        private void TxtPostName_TextChanged(object sender, EventArgs e)
+        {
             dgvPosts.ClearSelection();
-            for (int i = 0; i < dgvPosts.RowCount; i++) {
-                if (dgvPosts.Rows[i].Cells[1].Value.ToString().Contains(txtPostName.Text)) {
+            for (int i = 0; i < dgvPosts.RowCount; i++)
+            {
+                if (dgvPosts.Rows[i].Cells[1].Value.ToString().Contains(txtPostName.Text))
+                {
                     dgvPosts.Rows[i].Selected = true;
                     index = i;
                     break;
@@ -114,12 +123,15 @@ namespace SAACNM {
             }
         }
 
-        private void dgvPosts_SelectionChanged(object sender, EventArgs e) {
+        private void DgvPosts_SelectionChanged(object sender, EventArgs e)
+        {
             index = dgvPosts.CurrentRow.Index;
         }
 
-        private void PostForm_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void PostForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
         }

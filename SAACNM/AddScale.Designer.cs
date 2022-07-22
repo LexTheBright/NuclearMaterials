@@ -61,7 +61,7 @@
             this.txtScaleNum.Name = "txtScaleNum";
             this.txtScaleNum.Size = new System.Drawing.Size(150, 22);
             this.txtScaleNum.TabIndex = 1;
-            this.txtScaleNum.TextChanged += new System.EventHandler(this.txtScaleNum_TextChanged);
+            this.txtScaleNum.TextChanged += new System.EventHandler(this.TxtScaleNum_TextChanged);
             // 
             // lblScaleMark
             // 
@@ -78,7 +78,7 @@
             this.txtScaleMark.Name = "txtScaleMark";
             this.txtScaleMark.Size = new System.Drawing.Size(150, 22);
             this.txtScaleMark.TabIndex = 5;
-            this.txtScaleMark.TextChanged += new System.EventHandler(this.txtScaleMark_TextChanged);
+            this.txtScaleMark.TextChanged += new System.EventHandler(this.TxtScaleMark_TextChanged);
             // 
             // lblScaleSerial
             // 
@@ -95,7 +95,7 @@
             this.txtScaleSerial.Name = "txtScaleSerial";
             this.txtScaleSerial.Size = new System.Drawing.Size(150, 22);
             this.txtScaleSerial.TabIndex = 3;
-            this.txtScaleSerial.TextChanged += new System.EventHandler(this.txtScaleSerial_TextChanged);
+            this.txtScaleSerial.TextChanged += new System.EventHandler(this.TxtScaleSerial_TextChanged);
             // 
             // lblScaleLim
             // 
@@ -112,7 +112,7 @@
             this.txtScaleLim.Name = "txtScaleLim";
             this.txtScaleLim.Size = new System.Drawing.Size(150, 22);
             this.txtScaleLim.TabIndex = 7;
-            this.txtScaleLim.TextChanged += new System.EventHandler(this.txtScaleLim_TextChanged);
+            this.txtScaleLim.TextChanged += new System.EventHandler(this.TxtScaleLim_TextChanged);
             // 
             // lblScaleError
             // 
@@ -129,7 +129,7 @@
             this.txtScaleError.Name = "txtScaleError";
             this.txtScaleError.Size = new System.Drawing.Size(150, 22);
             this.txtScaleError.TabIndex = 9;
-            this.txtScaleError.TextChanged += new System.EventHandler(this.txtScaleError_TextChanged);
+            this.txtScaleError.TextChanged += new System.EventHandler(this.TxtScaleError_TextChanged);
             // 
             // label1
             // 
@@ -148,7 +148,7 @@
             this.dtpScaleDate.Size = new System.Drawing.Size(152, 22);
             this.dtpScaleDate.TabIndex = 11;
             this.dtpScaleDate.Value = new System.DateTime(2019, 6, 1, 12, 57, 52, 0);
-            this.dtpScaleDate.ValueChanged += new System.EventHandler(this.dtpScaleDate_ValueChanged);
+            this.dtpScaleDate.ValueChanged += new System.EventHandler(this.DtpScaleDate_ValueChanged);
             // 
             // btnAdd
             // 
@@ -159,7 +159,7 @@
             this.btnAdd.TabIndex = 12;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -170,7 +170,7 @@
             this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

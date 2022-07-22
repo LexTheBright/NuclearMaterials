@@ -85,7 +85,7 @@
             this.dgvPlaces.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPlaces.Size = new System.Drawing.Size(784, 249);
             this.dgvPlaces.TabIndex = 0;
-            this.dgvPlaces.SelectionChanged += new System.EventHandler(this.dgvPlaces_SelectionChanged);
+            this.dgvPlaces.SelectionChanged += new System.EventHandler(this.DgvPlaces_SelectionChanged);
             // 
             // lblZBMNum
             // 
@@ -102,7 +102,7 @@
             this.txtZBMNum.Name = "txtZBMNum";
             this.txtZBMNum.Size = new System.Drawing.Size(100, 22);
             this.txtZBMNum.TabIndex = 2;
-            this.txtZBMNum.TextChanged += new System.EventHandler(this.txtZBMNum_TextChanged);
+            this.txtZBMNum.TextChanged += new System.EventHandler(this.TxtZBMNum_TextChanged);
             // 
             // lblBuildNum
             // 
@@ -119,7 +119,7 @@
             this.txtBuildNum.Name = "txtBuildNum";
             this.txtBuildNum.Size = new System.Drawing.Size(63, 22);
             this.txtBuildNum.TabIndex = 4;
-            this.txtBuildNum.TextChanged += new System.EventHandler(this.txtBuildNum_TextChanged);
+            this.txtBuildNum.TextChanged += new System.EventHandler(this.TxtBuildNum_TextChanged);
             // 
             // btnAdd
             // 
@@ -130,7 +130,7 @@
             this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnEdit
             // 
@@ -141,7 +141,7 @@
             this.btnEdit.TabIndex = 6;
             this.btnEdit.Text = "Редактировать";
             this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnDelete
             // 
@@ -152,7 +152,7 @@
             this.btnDelete.TabIndex = 7;
             this.btnDelete.Text = "Удалить";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // dgvLimits
             // 
@@ -173,7 +173,7 @@
             this.dgvLimits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLimits.Size = new System.Drawing.Size(451, 196);
             this.dgvLimits.TabIndex = 9;
-            this.dgvLimits.SelectionChanged += new System.EventHandler(this.dgvLimits_SelectionChanged);
+            this.dgvLimits.SelectionChanged += new System.EventHandler(this.DgvLimits_SelectionChanged);
             // 
             // btnAddLim
             // 
@@ -184,7 +184,7 @@
             this.btnAddLim.TabIndex = 12;
             this.btnAddLim.Text = "Добавить";
             this.btnAddLim.UseVisualStyleBackColor = false;
-            this.btnAddLim.Click += new System.EventHandler(this.btnAddLim_Click);
+            this.btnAddLim.Click += new System.EventHandler(this.BtnAddLim_Click);
             // 
             // btnEditLim
             // 
@@ -195,7 +195,7 @@
             this.btnEditLim.TabIndex = 13;
             this.btnEditLim.Text = "Редактировать";
             this.btnEditLim.UseVisualStyleBackColor = false;
-            this.btnEditLim.Click += new System.EventHandler(this.btnEditLim_Click);
+            this.btnEditLim.Click += new System.EventHandler(this.BtnEditLim_Click);
             // 
             // btnDeleteLim
             // 
@@ -206,7 +206,7 @@
             this.btnDeleteLim.TabIndex = 14;
             this.btnDeleteLim.Text = "Удалить";
             this.btnDeleteLim.UseVisualStyleBackColor = false;
-            this.btnDeleteLim.Click += new System.EventHandler(this.btnDeleteLim_Click);
+            this.btnDeleteLim.Click += new System.EventHandler(this.BtnDeleteLim_Click);
             // 
             // lblMatType
             // 
@@ -223,7 +223,7 @@
             this.txtMatType.Name = "txtMatType";
             this.txtMatType.Size = new System.Drawing.Size(177, 22);
             this.txtMatType.TabIndex = 11;
-            this.txtMatType.TextChanged += new System.EventHandler(this.txtMatType_TextChanged);
+            this.txtMatType.TextChanged += new System.EventHandler(this.TxtMatType_TextChanged);
             // 
             // btnChoose
             // 
@@ -235,7 +235,7 @@
             this.btnChoose.TabIndex = 16;
             this.btnChoose.Text = "Выбрать";
             this.btnChoose.UseVisualStyleBackColor = false;
-            this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
+            this.btnChoose.Click += new System.EventHandler(this.BtnChoose_Click);
             // 
             // panel1
             // 

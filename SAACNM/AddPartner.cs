@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class AddPartner : Form {
-        private String partName;
-        private String partAddress;
-        private String partPhone;
-        private String partCode;
-        private String partINN;
-        private String oldCode;
-        private bool isEdit = false;
-        public AddPartner(String name = null, String address = null, 
-                                                        String phone = null, String INN = null, String code = null ) {
+namespace SAACNM
+{
+    public partial class AddPartner : Form
+    {
+        private string partName;
+        private string partAddress;
+        private string partPhone;
+        private string partCode;
+        private string partINN;
+        private readonly string oldCode;
+        private readonly bool isEdit = false;
+        public AddPartner(string name = null, string address = null,
+                                                        string phone = null, string INN = null, string code = null)
+        {
             InitializeComponent();
-            if (name != null || address != null || phone != null || code != null|| INN != null) {
+            if (name != null || address != null || phone != null || code != null || INN != null)
+            {
                 txtCode.Enabled = false;
                 txtName.Text = name;
                 txtAddress.Text = address;
@@ -36,33 +32,40 @@ namespace SAACNM {
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e) {
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
 
-        private void txtName_TextChanged(object sender, EventArgs e) {
+        private void TxtName_TextChanged(object sender, EventArgs e)
+        {
             partName = txtName.Text.ToString();
         }
 
-        private void txtAddress_TextChanged(object sender, EventArgs e) {
+        private void TxtAddress_TextChanged(object sender, EventArgs e)
+        {
             partAddress = txtAddress.Text.ToString();
         }
 
-        private void txtPhone_TextChanged(object sender, EventArgs e) {
+        private void TxtPhone_TextChanged(object sender, EventArgs e)
+        {
             partPhone = txtPhone.Text.ToString();
         }
 
-        private void txtCode_TextChanged(object sender, EventArgs e) {
+        private void TxtCode_TextChanged(object sender, EventArgs e)
+        {
             partCode = txtCode.Text.ToString();
         }
 
-        private void txtINN_TextChanged(object sender, EventArgs e)
+        private void TxtINN_TextChanged(object sender, EventArgs e)
         {
             partINN = txtINN.Text.ToString();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
-            if (partName == null || partAddress == null || partPhone == null || partCode == null || partINN == null) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            if (partName == null || partAddress == null || partPhone == null || partCode == null || partINN == null)
+            {
                 MessageBox.Show(this, "Заполните все поля.", "Организации-партнеры", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -102,16 +105,23 @@ namespace SAACNM {
             }
             else properties.Add("ИНН", partINN);
 
-            if (isEdit) {
-                try {
-                    dbr.updateByID("организация", "ИД_организации", oldCode, properties);
-                } catch (Exception ex) {
+            if (isEdit)
+            {
+                try
+                {
+                    dbr.UpdateByID("организация", "ИД_организации", oldCode, properties);
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Организации-партнеры", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     error_message = Program.IsValidValue("DECIMAL100", partCode);
                     if (error_message != null)
                     {
@@ -120,8 +130,10 @@ namespace SAACNM {
                     }
                     else properties.Add("ИД_организации", partCode);
 
-                    if (dbr.createNewKouple("организация", properties) == 1) return;
-                } catch (Exception ex) {
+                    if (dbr.CreateNewKouple("организация", properties) == 1) return;
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -130,15 +142,18 @@ namespace SAACNM {
             this.Close();
         }
 
-        private void AddPartner_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
-                btnCancel_Click(sender, null);
+        private void AddPartner_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
+                BtnCancel_Click(sender, null);
             }
-            if (e.KeyChar == 13) {
-                btnAdd_Click(sender, null);
+            if (e.KeyChar == 13)
+            {
+                BtnAdd_Click(sender, null);
             }
         }
 
-        
+
     }
 }

@@ -61,7 +61,7 @@
             this.txtContNum.Name = "txtContNum";
             this.txtContNum.Size = new System.Drawing.Size(150, 22);
             this.txtContNum.TabIndex = 1;
-            this.txtContNum.TextChanged += new System.EventHandler(this.txtContNum_TextChanged);
+            this.txtContNum.TextChanged += new System.EventHandler(this.TxtContNum_TextChanged);
             // 
             // lblLength
             // 
@@ -78,7 +78,7 @@
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(150, 22);
             this.txtLength.TabIndex = 5;
-            this.txtLength.TextChanged += new System.EventHandler(this.txtLength_TextChanged);
+            this.txtLength.TextChanged += new System.EventHandler(this.TxtLength_TextChanged);
             // 
             // lblWidth
             // 
@@ -95,7 +95,7 @@
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(150, 22);
             this.txtWidth.TabIndex = 7;
-            this.txtWidth.TextChanged += new System.EventHandler(this.txtWidth_TextChanged);
+            this.txtWidth.TextChanged += new System.EventHandler(this.TxtWidth_TextChanged);
             // 
             // lblHeight
             // 
@@ -112,7 +112,7 @@
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(150, 22);
             this.txtHeight.TabIndex = 9;
-            this.txtHeight.TextChanged += new System.EventHandler(this.txtHeight_TextChanged);
+            this.txtHeight.TextChanged += new System.EventHandler(this.TxtHeight_TextChanged);
             // 
             // lblMass
             // 
@@ -129,7 +129,7 @@
             this.txtMass.Name = "txtMass";
             this.txtMass.Size = new System.Drawing.Size(150, 22);
             this.txtMass.TabIndex = 11;
-            this.txtMass.TextChanged += new System.EventHandler(this.txtMass_TextChanged);
+            this.txtMass.TextChanged += new System.EventHandler(this.TxtMass_TextChanged);
             // 
             // btnAdd
             // 
@@ -140,7 +140,7 @@
             this.btnAdd.TabIndex = 12;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnClose
             // 
@@ -151,7 +151,7 @@
             this.btnClose.TabIndex = 13;
             this.btnClose.Text = "Отмена";
             this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // lblContType
             // 
@@ -168,7 +168,7 @@
             this.txtContType.Name = "txtContType";
             this.txtContType.Size = new System.Drawing.Size(150, 22);
             this.txtContType.TabIndex = 3;
-            this.txtContType.TextChanged += new System.EventHandler(this.txtContType_TextChanged);
+            this.txtContType.TextChanged += new System.EventHandler(this.TxtContType_TextChanged);
             // 
             // panel1
             // 

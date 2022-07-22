@@ -71,7 +71,7 @@
             this.cbInvType.Name = "cbInvType";
             this.cbInvType.Size = new System.Drawing.Size(208, 22);
             this.cbInvType.TabIndex = 1;
-            this.cbInvType.SelectedIndexChanged += new System.EventHandler(this.cbInvType_SelectedIndexChanged);
+            this.cbInvType.SelectedIndexChanged += new System.EventHandler(this.CbInvType_SelectedIndexChanged);
             // 
             // lblPartner
             // 
@@ -90,7 +90,7 @@
             this.cbPartner.Name = "cbPartner";
             this.cbPartner.Size = new System.Drawing.Size(208, 22);
             this.cbPartner.TabIndex = 9;
-            this.cbPartner.SelectedIndexChanged += new System.EventHandler(this.cbPartner_SelectedIndexChanged);
+            this.cbPartner.SelectedIndexChanged += new System.EventHandler(this.CbPartner_SelectedIndexChanged);
             // 
             // lblRespEmp
             // 
@@ -118,7 +118,7 @@
             this.btnChooseResp.TabIndex = 7;
             this.btnChooseResp.Text = "...";
             this.btnChooseResp.UseVisualStyleBackColor = true;
-            this.btnChooseResp.Click += new System.EventHandler(this.btnChooseResp_Click);
+            this.btnChooseResp.Click += new System.EventHandler(this.BtnChooseResp_Click);
             // 
             // lblStartEmp
             // 
@@ -148,7 +148,7 @@
             this.btnChooseSt.TabIndex = 13;
             this.btnChooseSt.Text = "...";
             this.btnChooseSt.UseVisualStyleBackColor = true;
-            this.btnChooseSt.Click += new System.EventHandler(this.btnChooseSt_Click);
+            this.btnChooseSt.Click += new System.EventHandler(this.BtnChooseSt_Click);
             // 
             // lblEndEmp
             // 
@@ -178,7 +178,7 @@
             this.btnChooseEnd.TabIndex = 15;
             this.btnChooseEnd.Text = "...";
             this.btnChooseEnd.UseVisualStyleBackColor = true;
-            this.btnChooseEnd.Click += new System.EventHandler(this.btnChooseEnd_Click);
+            this.btnChooseEnd.Click += new System.EventHandler(this.BtnChooseEnd_Click);
             // 
             // lblAgent
             // 
@@ -197,7 +197,7 @@
             this.cbAgent.Name = "cbAgent";
             this.cbAgent.Size = new System.Drawing.Size(208, 22);
             this.cbAgent.TabIndex = 11;
-            this.cbAgent.SelectedIndexChanged += new System.EventHandler(this.cbAgent_SelectedIndexChanged);
+            this.cbAgent.SelectedIndexChanged += new System.EventHandler(this.CbAgent_SelectedIndexChanged);
             // 
             // lblDate
             // 
@@ -216,7 +216,7 @@
             this.dtpDate.Size = new System.Drawing.Size(207, 22);
             this.dtpDate.TabIndex = 5;
             this.dtpDate.Value = new System.DateTime(2019, 6, 23, 17, 58, 51, 0);
-            this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
+            this.dtpDate.ValueChanged += new System.EventHandler(this.DtpDate_ValueChanged);
             // 
             // lblTime
             // 
@@ -227,7 +227,6 @@
             this.lblTime.TabIndex = 10;
             this.lblTime.Text = "Время:";
             this.lblTime.Visible = false;
-            this.lblTime.Click += new System.EventHandler(this.lblTime_Click);
             // 
             // txtTime
             // 
@@ -237,8 +236,8 @@
             this.txtTime.Size = new System.Drawing.Size(100, 22);
             this.txtTime.TabIndex = 11;
             this.txtTime.Visible = false;
-            this.txtTime.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.txtTime_MaskInputRejected);
-            this.txtTime.TextChanged += new System.EventHandler(this.txtTime_TextChanged);
+            this.txtTime.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.TxtTime_MaskInputRejected);
+            this.txtTime.TextChanged += new System.EventHandler(this.TxtTime_TextChanged);
             // 
             // btnAdd
             // 
@@ -249,7 +248,7 @@
             this.btnAdd.TabIndex = 21;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -260,7 +259,7 @@
             this.btnCancel.TabIndex = 22;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // lblInvNum
             // 
@@ -277,7 +276,7 @@
             this.txtInvNum.Name = "txtInvNum";
             this.txtInvNum.Size = new System.Drawing.Size(208, 22);
             this.txtInvNum.TabIndex = 3;
-            this.txtInvNum.TextChanged += new System.EventHandler(this.txtInvNum_TextChanged);
+            this.txtInvNum.TextChanged += new System.EventHandler(this.TxtInvNum_TextChanged);
             // 
             // panel1
             // 

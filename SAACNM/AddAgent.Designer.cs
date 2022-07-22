@@ -61,7 +61,7 @@
             this.txtSecondName.Name = "txtSecondName";
             this.txtSecondName.Size = new System.Drawing.Size(145, 22);
             this.txtSecondName.TabIndex = 1;
-            this.txtSecondName.TextChanged += new System.EventHandler(this.txtSecondName_TextChanged);
+            this.txtSecondName.TextChanged += new System.EventHandler(this.TxtSecondName_TextChanged);
             // 
             // lblFirstName
             // 
@@ -78,7 +78,7 @@
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(145, 22);
             this.txtFirstName.TabIndex = 3;
-            this.txtFirstName.TextChanged += new System.EventHandler(this.txtFirstName_TextChanged);
+            this.txtFirstName.TextChanged += new System.EventHandler(this.TxtFirstName_TextChanged);
             // 
             // lblFatherName
             // 
@@ -95,7 +95,7 @@
             this.txtFatherName.Name = "txtFatherName";
             this.txtFatherName.Size = new System.Drawing.Size(155, 22);
             this.txtFatherName.TabIndex = 5;
-            this.txtFatherName.TextChanged += new System.EventHandler(this.txtFatherName_TextChanged);
+            this.txtFatherName.TextChanged += new System.EventHandler(this.TxtFatherName_TextChanged);
             // 
             // lblPhone
             // 
@@ -112,7 +112,7 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(155, 22);
             this.txtPass.TabIndex = 7;
-            this.txtPass.TextChanged += new System.EventHandler(this.txtPhone_TextChanged);
+            this.txtPass.TextChanged += new System.EventHandler(this.TxtPhone_TextChanged);
             // 
             // btnAdd
             // 
@@ -123,7 +123,7 @@
             this.btnAdd.TabIndex = 9;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -134,7 +134,7 @@
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 
@@ -169,7 +169,7 @@
             this.textPartID.Name = "textPartID";
             this.textPartID.Size = new System.Drawing.Size(145, 22);
             this.textPartID.TabIndex = 8;
-            this.textPartID.TextChanged += new System.EventHandler(this.textPartID_TextChanged);
+            this.textPartID.TextChanged += new System.EventHandler(this.TextPartID_TextChanged);
             // 
             // label2
             // 
@@ -205,7 +205,6 @@
             this.Name = "AddAgent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Добавить представителя";
-            this.Load += new System.EventHandler(this.AddAgent_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AddAgent_KeyPress);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

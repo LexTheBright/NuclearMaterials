@@ -93,7 +93,7 @@
             this.dgvInvoices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvInvoices.Size = new System.Drawing.Size(827, 234);
             this.dgvInvoices.TabIndex = 0;
-            this.dgvInvoices.SelectionChanged += new System.EventHandler(this.dgvInvoices_SelectionChanged);
+            this.dgvInvoices.SelectionChanged += new System.EventHandler(this.DgvInvoices_SelectionChanged);
             // 
             // clmDocNum
             // 
@@ -230,7 +230,7 @@
             this.btnAdd.TabIndex = 11;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnDelete
             // 
@@ -241,7 +241,7 @@
             this.btnDelete.TabIndex = 13;
             this.btnDelete.Text = "Удалить";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // lblEmpStart
             // 

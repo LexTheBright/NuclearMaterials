@@ -1,16 +1,13 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 
 namespace SAACNM
 {
     class DBRedactor
     {
-        private string getErrorMessage(int ErrorNumber)
+        private string GetErrorMessage(int ErrorNumber)
         {
             switch (ErrorNumber)
             {
@@ -21,7 +18,7 @@ namespace SAACNM
             }
         }
 
-        public int createNewKouple(string table, Dictionary<string, string> props)
+        public int CreateNewKouple(string table, Dictionary<string, string> props)
         {
             string querry = "";
             string addingKeys = "";
@@ -39,42 +36,40 @@ namespace SAACNM
             querry = $"USE nmlocal; INSERT INTO {table}({addingKeys})" +
                 $" VALUES ({addingValues})";
 
-            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, DbConnection.DbConnect);
             try
             {
                 comm.ExecuteNonQuery();
-                //MessageBox.Show("Записалося!!!!!!");
                 return 0;
             }
             catch (MySqlException e)
             {
-                string ErrMessageText = getErrorMessage(e.Number);
+                string ErrMessageText = GetErrorMessage(e.Number);
                 if (ErrMessageText == "") throw;
                 else MessageBox.Show(ErrMessageText);
                 return 1;
             }
         }
 
-        public void deleteByID(string table, string id_title, string id, string id_title2 = null, string id2 = null, string id_title3 = null, string id3 = null, string id_title4 = null, string id4 = null)
+        public void DeleteByID(string table, string id_title, string id, string id_title2 = null, string id2 = null, string id_title3 = null, string id3 = null, string id_title4 = null, string id4 = null)
         {
             string querry = "";
             querry = $"USE nmlocal; DELETE FROM {table} WHERE {id_title} = '{id}'";
             if (id_title2 != null && id2 != null) querry += $" AND {id_title2} = '{id2}'";
             if (id_title3 != null && id3 != null) querry += $" AND {id_title3} = '{id3}'";
             if (id_title4 != null && id4 != null) querry += $" AND {id_title4} = '{id4}'";
-            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, DbConnection.DbConnect);
             try
             {
                 comm.ExecuteNonQuery();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        public void updateByID(string table, string id_title, string id, Dictionary<string, string> props)
+        public void UpdateByID(string table, string id_title, string id, Dictionary<string, string> props)
         {
             string querry = "";
             string adding = "";
@@ -89,19 +84,17 @@ namespace SAACNM
             querry = $"USE nmlocal; UPDATE {table} SET " + adding +
                 $" WHERE {id_title} = '{id}'";
 
-            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, DbConnection.DbConnect);
             try
             {
                 comm.ExecuteNonQuery();
-                //MessageBox.Show("ОБНОВИЛОСЯ!!!!!!");
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-        public void updateByID(string table, string id_title, string id, string id_title2, string id2, string id_title3, string id3, Dictionary<string, string> props)
+        public void UpdateByID(string table, string id_title, string id, string id_title2, string id2, string id_title3, string id3, Dictionary<string, string> props)
         {
             string querry = "";
             string adding = "";
@@ -119,20 +112,18 @@ namespace SAACNM
             querry += $" AND {id_title3} = '{id3}'";
 
 
-            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, DbConnection.DbConnect);
             try
             {
                 comm.ExecuteNonQuery();
-                //MessageBox.Show("ОБНОВИЛОСЯ!!!!!!");
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        public void updateByID(string table, string id_title, string id, string id_title2, string id2, string id_title3, string id3, string id_title4, string id4, Dictionary<string, string> props)
+        public void UpdateByID(string table, string id_title, string id, string id_title2, string id2, string id_title3, string id3, string id_title4, string id4, Dictionary<string, string> props)
         {
             string querry = "";
             string adding = "";
@@ -151,15 +142,13 @@ namespace SAACNM
             querry += $" AND {id_title4} = '{id4}'";
 
 
-            MySqlCommand comm = new MySqlCommand(querry, dbConnection.dbConnect);
+            MySqlCommand comm = new MySqlCommand(querry, DbConnection.DbConnect);
             try
             {
                 comm.ExecuteNonQuery();
-                //MessageBox.Show("ОБНОВИЛОСЯ!!!!!!");
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

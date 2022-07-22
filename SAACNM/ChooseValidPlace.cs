@@ -1,33 +1,31 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class ChooseValidPlace : Form {
-        private String endID;
-        private String zbmNum;
-        private String buildNum;
-        private String roomNum;
-        private ArrayList zbmNums = new ArrayList();
-        private ArrayList buildNums = new ArrayList();
-        private ArrayList roomNums = new ArrayList();
-        private String[] place = new String[3];
-        public ChooseValidPlace(String end) {
+namespace SAACNM
+{
+    public partial class ChooseValidPlace : Form
+    {
+        private readonly string endID;
+        private string zbmNum;
+        private string buildNum;
+        private string roomNum;
+        private readonly ArrayList zbmNums = new ArrayList();
+        private readonly ArrayList buildNums = new ArrayList();
+        private readonly ArrayList roomNums = new ArrayList();
+        private readonly string[] place = new string[3];
+        public ChooseValidPlace(string end)
+        {
             InitializeComponent();
             endID = end;
         }
 
-        private void ChooseValidPlace_Load(object sender, EventArgs e) {
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM помещение WHERE ИД_ответственного = " + endID, dbConnection.dbConnect);
-            try {
+        private void ChooseValidPlace_Load(object sender, EventArgs e)
+        {
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM помещение WHERE ИД_ответственного = " + endID, DbConnection.DbConnect);
+            try
+            {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
                     if (dbReader.HasRows)
@@ -49,40 +47,50 @@ namespace SAACNM {
                         Close();
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
         }
 
-        private void btnComplete_Click(object sender, EventArgs e) {
-            if (place[0] == null || place[1] == null || place[2] == null) {
+        private void BtnComplete_Click(object sender, EventArgs e)
+        {
+            if (place[0] == null || place[1] == null || place[2] == null)
+            {
                 MessageBox.Show(this, "Укажите местоположение.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e) {
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void cbValidPlaces_SelectedIndexChanged(object sender, EventArgs e) {
+        private void CbValidPlaces_SelectedIndexChanged(object sender, EventArgs e)
+        {
             place[0] = zbmNums[cbValidPlaces.SelectedIndex].ToString();
             place[1] = buildNums[cbValidPlaces.SelectedIndex].ToString();
             place[2] = roomNums[cbValidPlaces.SelectedIndex].ToString();
         }
-        public String[] getPlaceToMove() {
+        public string[] getPlaceToMove()
+        {
             ShowDialog();
             return place;
         }
 
-        private void ChooseValidPlace_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
-                btnCancel_Click(sender, null);
+        private void ChooseValidPlace_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
+                BtnCancel_Click(sender, null);
             }
-            if (e.KeyChar == 13) {
-                btnComplete_Click(sender, null);
+            if (e.KeyChar == 13)
+            {
+                BtnComplete_Click(sender, null);
             }
         }
     }

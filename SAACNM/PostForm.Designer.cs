@@ -61,7 +61,7 @@
             this.dgvPosts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPosts.Size = new System.Drawing.Size(592, 244);
             this.dgvPosts.TabIndex = 0;
-            this.dgvPosts.SelectionChanged += new System.EventHandler(this.dgvPosts_SelectionChanged);
+            this.dgvPosts.SelectionChanged += new System.EventHandler(this.DgvPosts_SelectionChanged);
             // 
             // clmPostNum
             // 
@@ -103,7 +103,7 @@
             this.txtPostName.Name = "txtPostName";
             this.txtPostName.Size = new System.Drawing.Size(150, 22);
             this.txtPostName.TabIndex = 2;
-            this.txtPostName.TextChanged += new System.EventHandler(this.txtPostName_TextChanged);
+            this.txtPostName.TextChanged += new System.EventHandler(this.TxtPostName_TextChanged);
             // 
             // btnAdd
             // 
@@ -114,7 +114,7 @@
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnEdit
             // 
@@ -125,7 +125,7 @@
             this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "Редактировать";
             this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnDelete
             // 
@@ -136,7 +136,7 @@
             this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "Удалить";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // panel1
             // 

@@ -36,7 +36,7 @@ namespace SAACNM {
         private void AddInvoice_Load(object sender, EventArgs e) {
             if (invoiceType == "Поступление" || invoiceType == "Отправление") {
                 cbPartner.Enabled = true;
-                MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM организация", dbConnection.dbConnect);
+                MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM организация", DbConnection.DbConnect);
                 try {
                     using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                     {
@@ -71,7 +71,7 @@ namespace SAACNM {
             dtpDate.Value = DateTime.Now;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
+        private void BtnAdd_Click(object sender, EventArgs e) {
             if (invoiceNum == null || invoiceDate == null || invoiceType == null || empID == null) {
                 MessageBox.Show(this, "Заполните все доступные поля!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -92,10 +92,10 @@ namespace SAACNM {
             try {
                 properties.Add("Дата", Convert.ToDateTime(invoiceDate).ToString("yyyy-MM-dd HH:mm:ss"));
                 properties.Add("ИД_сотрудника", empID);
-                if (dbr.createNewKouple("накладная", properties) == 1) return;
+                if (dbr.CreateNewKouple("накладная", properties) == 1) return;
                 properties.Clear();
 
-                MySqlCommand cmdSelectaa1 = new MySqlCommand("SELECT ИД_накладной FROM накладная WHERE №_накладной = '" + invoiceNum + "' AND Дата = '" + Convert.ToDateTime(invoiceDate).ToString("yyyy-MM-dd") + "'", dbConnection.dbConnect);
+                MySqlCommand cmdSelectaa1 = new MySqlCommand("SELECT ИД_накладной FROM накладная WHERE №_накладной = '" + invoiceNum + "' AND Дата = '" + Convert.ToDateTime(invoiceDate).ToString("yyyy-MM-dd") + "'", DbConnection.DbConnect);
                 try
                 {
                     using (MySqlDataReader dbReader = cmdSelectaa1.ExecuteReader())
@@ -121,13 +121,13 @@ namespace SAACNM {
                 AddAccountUnit acc = new AddAccountUnit(empID, curID, invoiceDate);
                 if (acc.ShowDialog() != DialogResult.OK)
                 {
-                    dbr.deleteByID("накладная", "ИД_накладной", curID);
+                    dbr.DeleteByID("накладная", "ИД_накладной", curID);
                     return;
                 }
                 try {
                     properties.Add("ИД_накладной", curID);
                     properties.Add("ИД_представителя", agentID);
-                    if (dbr.createNewKouple("накладная_на_поступление", properties) == 1) return;
+                    if (dbr.CreateNewKouple("накладная_на_поступление", properties) == 1) return;
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -142,14 +142,14 @@ namespace SAACNM {
                 AccountUnitsForm units = new AccountUnitsForm(curID, invoiceDate, true, startID, endID);
                 if (units.ShowDialog() != DialogResult.OK) 
                 {
-                    dbr.deleteByID("накладная", "ИД_накладной", curID);
+                    dbr.DeleteByID("накладная", "ИД_накладной", curID);
                     return; 
                 }
                 try {
                     properties.Add("ИД_накладной", curID);
                     properties.Add("Хранитель", startID);
                     properties.Add("ИД_принимающего", endID);
-                    if (dbr.createNewKouple("накладная_на_перемещение", properties) == 1) return;
+                    if (dbr.CreateNewKouple("накладная_на_перемещение", properties) == 1) return;
                 } catch (Exception ex) {
                     throw;
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -165,13 +165,13 @@ namespace SAACNM {
                 AccountUnitsForm units = new AccountUnitsForm(curID, invoiceDate);
                 if (units.ShowDialog() != DialogResult.OK)
                 {
-                    dbr.deleteByID("накладная", "ИД_накладной", curID);
+                    dbr.DeleteByID("накладная", "ИД_накладной", curID);
                     return;
                 }
                 try {
                     properties.Add("ИД_накладной", curID);
                     properties.Add("ИД_представителя", agentID);
-                    if (dbr.createNewKouple("накладная_на_отправление", properties) == 1) return;
+                    if (dbr.CreateNewKouple("накладная_на_отправление", properties) == 1) return;
                 } catch (Exception ex) {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -180,11 +180,11 @@ namespace SAACNM {
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e) {
+        private void BtnCancel_Click(object sender, EventArgs e) {
             Close();
         }
 
-        private void cbInvType_SelectedIndexChanged(object sender, EventArgs e) {
+        private void CbInvType_SelectedIndexChanged(object sender, EventArgs e) {
             invoiceType = cbInvType.SelectedItem.ToString();
             Codes.Clear();
             cbAgent.Items.Clear();
@@ -214,13 +214,13 @@ namespace SAACNM {
             AddInvoice_Load(sender, e);
         }
 
-        private void cbPartner_SelectedIndexChanged(object sender, EventArgs e) {
+        private void CbPartner_SelectedIndexChanged(object sender, EventArgs e) {
             cbAgent.Enabled = true;
             cbAgent.Items.Clear();
             partnerIndex = cbPartner.SelectedIndex;
             partnerName = cbPartner.SelectedItem.ToString();
             MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM представитель" +
-                                                        " WHERE ИД_организации = " + Codes[cbPartner.SelectedIndex], dbConnection.dbConnect);
+                                                        " WHERE ИД_организации = " + Codes[cbPartner.SelectedIndex], DbConnection.DbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
@@ -240,15 +240,15 @@ namespace SAACNM {
             } 
         }
 
-        private void cbAgent_SelectedIndexChanged(object sender, EventArgs e) {
+        private void CbAgent_SelectedIndexChanged(object sender, EventArgs e) {
             agentID = IDs[cbAgent.SelectedIndex].ToString();
         }
 
-        private void dtpDate_ValueChanged(object sender, EventArgs e) {
+        private void DtpDate_ValueChanged(object sender, EventArgs e) {
             invoiceDate = dtpDate.Value.ToShortDateString();
         }
 
-        private void txtTime_TextChanged(object sender, EventArgs e) {
+        private void TxtTime_TextChanged(object sender, EventArgs e) {
             if (txtTime.Text.ElementAt(0).ToString().CompareTo("2") == 1) {
                 MessageBox.Show(this, "Неверный формат времени" , this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txtTime.Clear();
@@ -268,29 +268,29 @@ namespace SAACNM {
             invoiceTime = txtTime.Text.ToString();
         }
 
-        private void txtTime_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {
+        private void TxtTime_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {
             txtTime.Clear();
             invoiceTime = null;
         }
 
-        private void txtInvNum_TextChanged(object sender, EventArgs e) {
+        private void TxtInvNum_TextChanged(object sender, EventArgs e) {
             invoiceNum = txtInvNum.Text.ToString();
         }
 
-        private void btnChooseResp_Click(object sender, EventArgs e) {
+        private void BtnChooseResp_Click(object sender, EventArgs e) {
             if (invoiceType == null)
             {
                 MessageBox.Show("Сначала выберите тип накладной!");
                 return;
             }
             EmployeeForm resp = new EmployeeForm();
-            empID = resp.getIDEmployee();
+            empID = resp.GetIDEmployee();
             // проверить полномочия
             string tempCue = "SELECT 1 FROM сотрудники LEFT JOIN должности ON сотрудники.Должность = должности.Код_должности" +
                     " JOIN полномочия ON полномочия.Код_должности = должности.Код_должности" +
                                                         " WHERE ИД_сотрудника = " + empID +
                                                         " AND Полномочия =  '" + cbInvType.SelectedItem.ToString() + "'";
-            MySqlCommand cmdSel = new MySqlCommand(tempCue, dbConnection.dbConnect);
+            MySqlCommand cmdSel = new MySqlCommand(tempCue, DbConnection.DbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSel.ExecuteReader())
                 {
@@ -306,7 +306,7 @@ namespace SAACNM {
                 txtRespEmp.Clear();
                 return;
             }
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + empID, dbConnection.dbConnect);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + empID, DbConnection.DbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader()) {
                     if (dbReader.HasRows) {
@@ -322,10 +322,10 @@ namespace SAACNM {
             txtRespEmp.Text = empFullName;
         }
 
-        private void btnChooseSt_Click(object sender, EventArgs e) {
+        private void BtnChooseSt_Click(object sender, EventArgs e) {
             EmployeeForm start = new EmployeeForm();
-            startID = start.getIDEmployee();
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + startID, dbConnection.dbConnect);
+            startID = start.GetIDEmployee();
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + startID, DbConnection.DbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
@@ -344,10 +344,10 @@ namespace SAACNM {
             txtStartEmp.Text = startFullName;
         }
 
-        private void btnChooseEnd_Click(object sender, EventArgs e) {
+        private void BtnChooseEnd_Click(object sender, EventArgs e) {
             EmployeeForm end = new EmployeeForm();
-            endID = end.getIDEmployee();
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + endID, dbConnection.dbConnect);
+            endID = end.GetIDEmployee();
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM сотрудники WHERE ИД_сотрудника = " + endID, DbConnection.DbConnect);
             try {
                 using (MySqlDataReader dbReader = cmdSelect.ExecuteReader())
                 {
@@ -368,22 +368,11 @@ namespace SAACNM {
 
         private void AddInvoice_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 27) {
-                btnCancel_Click(sender, null);
+                BtnCancel_Click(sender, null);
             }
             if (e.KeyChar == 13) {
-                btnAdd_Click(sender, null);
+                BtnAdd_Click(sender, null);
             }
-        }
-
-        private void lblTime_Click(object sender, EventArgs e)
-        {
-            /*EmployeeForm resp = new EmployeeForm();
-            empID = resp.getIDEmployee();
-            invoiceNum = "3382";
-            invoiceDate = "2021-12-19";
-
-            AddAccountUnit acc = new AddAccountUnit(empID, invoiceNum, invoiceDate);
-            acc.ShowDialog();*/
         }
     }
 }

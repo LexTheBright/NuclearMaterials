@@ -59,7 +59,7 @@
             this.txtTypeName.Name = "txtTypeName";
             this.txtTypeName.Size = new System.Drawing.Size(213, 22);
             this.txtTypeName.TabIndex = 1;
-            this.txtTypeName.TextChanged += new System.EventHandler(this.txtTypeName_TextChanged);
+            this.txtTypeName.TextChanged += new System.EventHandler(this.TxtTypeName_TextChanged);
             // 
             // lblCompose
             // 
@@ -76,7 +76,7 @@
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(213, 22);
             this.txtCode.TabIndex = 3;
-            this.txtCode.TextChanged += new System.EventHandler(this.txtCompose_TextChanged);
+            this.txtCode.TextChanged += new System.EventHandler(this.TxtCompose_TextChanged);
             // 
             // lblMass
             // 
@@ -97,7 +97,7 @@
             this.txtMass.Name = "txtMass";
             this.txtMass.Size = new System.Drawing.Size(213, 22);
             this.txtMass.TabIndex = 5;
-            this.txtMass.TextChanged += new System.EventHandler(this.txtMass_TextChanged);
+            this.txtMass.TextChanged += new System.EventHandler(this.TxtMass_TextChanged);
             // 
             // btnAdd
             // 
@@ -109,7 +109,7 @@
             this.btnAdd.TabIndex = 6;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnCancel
             // 
@@ -121,7 +121,7 @@
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

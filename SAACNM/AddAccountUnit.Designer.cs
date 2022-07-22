@@ -58,8 +58,8 @@
             this.dgvAccountUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAccountUnits.Size = new System.Drawing.Size(994, 330);
             this.dgvAccountUnits.TabIndex = 0;
-            this.dgvAccountUnits.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAccountUnits_CellValueChanged);
-            this.dgvAccountUnits.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAccountUnits_DataError);
+            this.dgvAccountUnits.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAccountUnits_CellValueChanged);
+            this.dgvAccountUnits.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DgvAccountUnits_DataError);
             // 
             // btnComplete
             // 
@@ -70,7 +70,7 @@
             this.btnComplete.TabIndex = 1;
             this.btnComplete.Text = "Ок";
             this.btnComplete.UseVisualStyleBackColor = false;
-            this.btnComplete.Click += new System.EventHandler(this.btnComplete_Click);
+            this.btnComplete.Click += new System.EventHandler(this.BtnComplete_Click);
             // 
             // btnCancel
             // 
@@ -81,7 +81,7 @@
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // panel1
             // 

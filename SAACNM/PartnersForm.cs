@@ -1,39 +1,37 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class PartnersForm : Form {
-        private ArrayList partnerCodes = new ArrayList();
-        private String partnerCode;
-        private String partnerName;
-        private String partnerAddress;
-        private String partnerPhone;
-        private String partnerINN;
+namespace SAACNM
+{
+    public partial class PartnersForm : Form
+    {
+        private readonly ArrayList partnerCodes = new ArrayList();
+        private string partnerCode;
+        private string partnerName;
+        private string partnerAddress;
+        private string partnerPhone;
+        private string partnerINN;
         private int index = -1;
         private int indexAgent = -1;
-        private ArrayList agentsID = new ArrayList();
-        private String secondName;
-        private String firstName;
-        private String fatherName;
-        private String pass;
+        private readonly ArrayList agentsID = new ArrayList();
+        private string secondName;
+        private string firstName;
+        private string fatherName;
+        private string pass;
 
-        public PartnersForm() {
-            InitializeComponent();    
+        public PartnersForm()
+        {
+            InitializeComponent();
         }
 
-        private void PartnersForm_Load(object sender, EventArgs e) {
-            this.dgvPartners.SelectionChanged -= new System.EventHandler(this.dgvPartners_SelectionChanged);
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM организация", dbConnection.dbConnect);
-            try {
+        private void PartnersForm_Load(object sender, EventArgs e)
+        {
+            this.dgvPartners.SelectionChanged -= new System.EventHandler(this.DgvPartners_SelectionChanged);
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM организация", DbConnection.DbConnect);
+            try
+            {
                 using (MySqlDataReader Reader = cmdSelect.ExecuteReader())
                 {
                     while (Reader.Read())
@@ -47,24 +45,29 @@ namespace SAACNM {
                         dgvPartners.Rows.Add(partnerCode, partnerName, partnerAddress, partnerPhone, partnerINN);
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
-            this.dgvPartners.SelectionChanged += new System.EventHandler(this.dgvPartners_SelectionChanged);
+            this.dgvPartners.SelectionChanged += new System.EventHandler(this.DgvPartners_SelectionChanged);
         }
 
-        private void dgvPartners_SelectionChanged(object sender, EventArgs e) {
+        private void DgvPartners_SelectionChanged(object sender, EventArgs e)
+        {
             dgvAgents.Rows.Clear();
             agentsID.Clear();
             index = dgvPartners.CurrentRow.Index;
-            if (index == -1) {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите организацию!", "Организации", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            MySqlCommand cmdSelect2 = new MySqlCommand("SELECT * FROM представитель WHERE ИД_организации = " + partnerCodes[index].ToString(), dbConnection.dbConnect);
-            try {
-                
+            MySqlCommand cmdSelect2 = new MySqlCommand("SELECT * FROM представитель WHERE ИД_организации = " + partnerCodes[index].ToString(), DbConnection.DbConnect);
+            try
+            {
+
                 using (MySqlDataReader Reader = cmdSelect2.ExecuteReader())
                 {
                     while (Reader.Read())
@@ -77,41 +80,17 @@ namespace SAACNM {
                         dgvAgents.Rows.Add(secondName, firstName, fatherName, pass);
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
             txtEnt.Text = dgvPartners.Rows[index].Cells[1].Value.ToString();
             txtEmp.Clear();
         }
-
-        /*private void txtEnt_TextChanged(object sender, EventArgs e) {
-            dgvPartners.ClearSelection();
-            for (int i = 0; i < dgvPartners.RowCount; i++) {
-                if (dgvPartners.Rows[i].Cells[1].Value.ToString().Contains(txtEnt.Text)) {
-                    dgvPartners.Rows[i].Selected = true;
-                    index = i;
-                    break;
-                }
-            }
-        }
-
-        private void txtEmp_TextChanged(object sender, EventArgs e) {
-            dgvAgents.ClearSelection();
-            for (int i = 0; i < dgvAgents.RowCount; i++) {
-                if (dgvAgents.Rows[i].Cells[0].Value.ToString().Contains(txtEmp.Text)) {
-                    dgvAgents.Rows[i].Selected = true;
-                    indexAgent = i;
-                    break;
-                }
-            }
-        }
-
-        private void btnExit_Click(object sender, EventArgs e) {
-            this.Close();
-        }*/
-
-        private void btnAddPartner_Click(object sender, EventArgs e) {
+        private void BtnAddPartner_Click(object sender, EventArgs e)
+        {
             AddPartner part = new AddPartner();
             part.ShowDialog();
             dgvPartners.Rows.Clear();
@@ -119,18 +98,22 @@ namespace SAACNM {
             PartnersForm_Load(sender, e);
         }
 
-        private void btnAddAgent_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnAddAgent_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите представителя!", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             AddAgent agent = new AddAgent(partnerCodes[index].ToString());
             agent.ShowDialog();
-            dgvPartners_SelectionChanged(sender, e);
+            DgvPartners_SelectionChanged(sender, e);
         }
 
-        private void btnEditPartner_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnEditPartner_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите организацию!", "Организации", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -138,7 +121,7 @@ namespace SAACNM {
             partnerAddress = dgvPartners.Rows[index].Cells[2].Value.ToString();
             partnerPhone = dgvPartners.Rows[index].Cells[3].Value.ToString();
             partnerINN = dgvPartners.Rows[index].Cells[4].Value.ToString();
-            AddPartner part = new AddPartner(partnerName, partnerAddress, 
+            AddPartner part = new AddPartner(partnerName, partnerAddress,
                                               partnerPhone, partnerINN, partnerCodes[index].ToString());
             part.ShowDialog();
             dgvPartners.Rows.Clear();
@@ -147,13 +130,16 @@ namespace SAACNM {
             dgvPartners.Rows[index].Selected = true;
         }
 
-        private void dgvAgents_SelectionChanged(object sender, EventArgs e) {
+        private void DgvAgents_SelectionChanged(object sender, EventArgs e)
+        {
             indexAgent = dgvAgents.CurrentRow.Index;
             txtEmp.Text = agentsID[indexAgent].ToString();
         }
 
-        private void btnEditAgent_Click(object sender, EventArgs e) {
-            if (indexAgent == -1) {
+        private void BtnEditAgent_Click(object sender, EventArgs e)
+        {
+            if (indexAgent == -1)
+            {
                 MessageBox.Show(this, "Укажите представителя!", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -164,18 +150,23 @@ namespace SAACNM {
             AddAgent agent = new AddAgent(partnerCodes[index].ToString(), agentsID[indexAgent].ToString(),
                                             secondName, firstName, fatherName, pass);
             agent.ShowDialog();
-            dgvPartners_SelectionChanged(sender, e);
+            DgvPartners_SelectionChanged(sender, e);
         }
 
-        private void btnDeletePartner_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnDeletePartner_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите организацию!", "Организации", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try {
+            try
+            {
                 DBRedactor dbr = new DBRedactor();
-                dbr.deleteByID("организация", "ИД_организации", partnerCodes[index].ToString());
-            } catch (Exception ex) {
+                dbr.DeleteByID("организация", "ИД_организации", partnerCodes[index].ToString());
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -185,24 +176,31 @@ namespace SAACNM {
             PartnersForm_Load(sender, e);
         }
 
-        private void btnDeleteAgent_Click(object sender, EventArgs e) {
-            if (indexAgent == -1) {
+        private void BtnDeleteAgent_Click(object sender, EventArgs e)
+        {
+            if (indexAgent == -1)
+            {
                 MessageBox.Show(this, "Укажите представителя!", "Представители", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try {
+            try
+            {
                 DBRedactor dbr = new DBRedactor();
-                dbr.deleteByID("представитель", "ИД_представителя", agentsID[index].ToString());
-            } catch (Exception ex) {
+                dbr.DeleteByID("представитель", "ИД_представителя", agentsID[index].ToString());
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             MessageBox.Show(this, "Представитель удален.", "Предприятия-партнеры", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            dgvPartners_SelectionChanged(sender, e);
+            DgvPartners_SelectionChanged(sender, e);
         }
 
-        private void PartnersForm_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void PartnersForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
         }

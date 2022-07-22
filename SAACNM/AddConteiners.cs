@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 
-namespace SAACNM {
-    public partial class AddConteiners : Form {
-        private String contNum;
-        private String oldNum;
-        private String contType;
-        private String contMass;
-        private String contMat;
-        private String contWidth;
-        private String contHeight;
+namespace SAACNM
+{
+    public partial class AddConteiners : Form
+    {
+        private string contNum;
+        private readonly string oldNum;
+        private string contType;
+        private string contMass;
+        private string contMat;
+        private string contWidth;
+        private string contHeight;
         private bool isEdit = false;
-        public AddConteiners(String num = null, String mat = null, String width = null,
-                                                    String high = null, String mass = null, String type = null) {
+        public AddConteiners(string num = null, string mat = null, string width = null,
+                                                    string high = null, string mass = null, string type = null)
+        {
             InitializeComponent();
-            if (num != null || mat != null || width != null || high != null || mass != null || type != null) {
+            if (num != null || mat != null || width != null || high != null || mass != null || type != null)
+            {
                 txtContNum.Enabled = false;
                 txtContNum.Text = num;
                 oldNum = num;
@@ -37,9 +34,11 @@ namespace SAACNM {
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
             if (contNum == null || contType == null || contMass == null ||
-                contMat == null || contWidth == null || contHeight == null) {
+                contMat == null || contWidth == null || contHeight == null)
+            {
                 MessageBox.Show(this, "Заполните все поля.", "Контейнер", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -87,16 +86,23 @@ namespace SAACNM {
             }
             else properties.Add("Тип_контейнера", contType);
 
-            if (isEdit) {
-                try {
-                    dbr.updateByID("контейнер", "ИД_контейнера", contNum, properties);
-                } catch (Exception ex) {
+            if (isEdit)
+            {
+                try
+                {
+                    dbr.UpdateByID("контейнер", "ИД_контейнера", contNum, properties);
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 MessageBox.Show(this, "Информация успешно отредактирована.", "Контейнер", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     error_message = Program.IsValidValue("DECIMAL100", contNum);
                     if (error_message != null)
                     {
@@ -105,9 +111,11 @@ namespace SAACNM {
                     }
                     else properties.Add("ИД_контейнера", contNum);
 
-                    if (dbr.createNewKouple("контейнер", properties) == 1) return;
+                    if (dbr.CreateNewKouple("контейнер", properties) == 1) return;
 
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -116,40 +124,50 @@ namespace SAACNM {
             Close();
         }
 
-        private void btnClose_Click(object sender, EventArgs e) {
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void txtContNum_TextChanged(object sender, EventArgs e) {
+        private void TxtContNum_TextChanged(object sender, EventArgs e)
+        {
             contNum = txtContNum.Text.ToString();
         }
 
-        private void txtLength_TextChanged(object sender, EventArgs e) {
+        private void TxtLength_TextChanged(object sender, EventArgs e)
+        {
             contMat = txtLength.Text.ToString();
         }
 
-        private void txtContType_TextChanged(object sender, EventArgs e) {
+        private void TxtContType_TextChanged(object sender, EventArgs e)
+        {
             contType = txtContType.Text.ToString();
         }
 
-        private void txtMass_TextChanged(object sender, EventArgs e) {
+        private void TxtMass_TextChanged(object sender, EventArgs e)
+        {
             contMass = txtMass.Text.ToString();
         }
 
-        private void txtWidth_TextChanged(object sender, EventArgs e) {
+        private void TxtWidth_TextChanged(object sender, EventArgs e)
+        {
             contWidth = txtWidth.Text.ToString();
         }
 
-        private void txtHeight_TextChanged(object sender, EventArgs e) {
+        private void TxtHeight_TextChanged(object sender, EventArgs e)
+        {
             contHeight = txtHeight.Text.ToString();
         }
 
-        private void AddConteiners_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void AddConteiners_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
-            if (e.KeyChar == 13) {
-                btnAdd_Click(sender, null);
+            if (e.KeyChar == 13)
+            {
+                BtnAdd_Click(sender, null);
             }
         }
     }

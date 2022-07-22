@@ -1,35 +1,33 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class ScalesForm : Form {
-        private String scalesNum;
-        private String scalesMark;
-        private String scalesSerial;
-        private String scalesDate;
-        private String scalesLim;
-        private String scalesError;
+namespace SAACNM
+{
+    public partial class ScalesForm : Form
+    {
+        private string scalesNum;
+        private string scalesMark;
+        private string scalesSerial;
+        private string scalesDate;
+        private string scalesLim;
+        private string scalesError;
         private ArrayList scalesNums = new ArrayList();
         private int index = -1;
-        public ScalesForm() {
+        public ScalesForm()
+        {
             InitializeComponent();
         }
 
-        private void ScalesForm_Load(object sender, EventArgs e) {
+        private void ScalesForm_Load(object sender, EventArgs e)
+        {
             //строчка для корректного отображения дробной части десячитных чисел
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
-            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM весы", dbConnection.dbConnect);
-            try {
+            MySqlCommand cmdSelect = new MySqlCommand("SELECT * FROM весы", DbConnection.DbConnect);
+            try
+            {
                 using (MySqlDataReader Reader = cmdSelect.ExecuteReader())
                 {
                     if (Reader.HasRows)
@@ -47,20 +45,26 @@ namespace SAACNM {
                         }
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка получения данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
-            } 
+            }
         }
 
-        private void dgvScales_SelectionChanged(object sender, EventArgs e) {
+        private void DgvScales_SelectionChanged(object sender, EventArgs e)
+        {
             index = dgvScales.CurrentRow.Index;
         }
 
-        private void txtScaleNum_TextChanged(object sender, EventArgs e) {
+        private void txtScaleNum_TextChanged(object sender, EventArgs e)
+        {
             dgvScales.ClearSelection();
-            for (int i = 0; i < dgvScales.RowCount; i++) {
-                if (dgvScales.Rows[i].Cells[0].Value.ToString().Contains(txtScaleNum.Text)) {
+            for (int i = 0; i < dgvScales.RowCount; i++)
+            {
+                if (dgvScales.Rows[i].Cells[0].Value.ToString().Contains(txtScaleNum.Text))
+                {
                     dgvScales.Rows[i].Selected = true;
                     index = i;
                     break;
@@ -68,11 +72,13 @@ namespace SAACNM {
             }
         }
 
-        private void btnExit_Click(object sender, EventArgs e) {
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
             Close();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e) {
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
             AddScale scale = new AddScale();
             scale.ShowDialog();
             dgvScales.Rows.Clear();
@@ -80,8 +86,10 @@ namespace SAACNM {
             ScalesForm_Load(sender, e);
         }
 
-        private void btnEdit_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите весы!", "Весы", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -98,15 +106,20 @@ namespace SAACNM {
             ScalesForm_Load(sender, e);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e) {
-            if (index == -1) {
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (index == -1)
+            {
                 MessageBox.Show(this, "Укажите весы!", "Весы", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try {
+            try
+            {
                 DBRedactor dbr = new DBRedactor();
-                dbr.deleteByID("весы", "Идентификатор_весов", dgvScales.Rows[index].Cells[0].Value.ToString());
-            } catch (Exception ex) {
+                dbr.DeleteByID("весы", "Идентификатор_весов", dgvScales.Rows[index].Cells[0].Value.ToString());
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -116,8 +129,10 @@ namespace SAACNM {
             ScalesForm_Load(sender, e);
         }
 
-        private void ScalesForm_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void ScalesForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
         }

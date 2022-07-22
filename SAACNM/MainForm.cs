@@ -1,76 +1,83 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
-using MySql.Data.MySqlClient;
 
-namespace SAACNM {
-    public partial class MainForm : Form {
-        public MainForm() {
+namespace SAACNM
+{
+    public partial class MainForm : Form
+    {
+        public MainForm()
+        {
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e) {
+        private void MainForm_Load(object sender, EventArgs e)
+        {
         }
 
-        private void tsPartners_Click(object sender, EventArgs e) {
+        private void TsPartners_Click(object sender, EventArgs e)
+        {
             PartnersForm partner = new PartnersForm();
             partner.ShowDialog();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
             // отключение соединения с БД
-            dbConnection.closeConnect();
+            DbConnection.closeConnect();
         }
 
-        private void tsMaterialsType_Click(object sender, EventArgs e) {
+        private void TsMaterialsType_Click(object sender, EventArgs e)
+        {
             MatTypeForm types = new MatTypeForm();
             types.ShowDialog();
         }
 
-        private void tsContainers_Click(object sender, EventArgs e) {
+        private void TsContainers_Click(object sender, EventArgs e)
+        {
             ConteinersForm cont = new ConteinersForm();
             cont.ShowDialog();
         }
 
-        private void tsScales_Click(object sender, EventArgs e) {
+        private void TsScales_Click(object sender, EventArgs e)
+        {
             ScalesForm scale = new ScalesForm();
             scale.ShowDialog();
         }
 
-        private void tsPosts_Click(object sender, EventArgs e) {
+        private void TsPosts_Click(object sender, EventArgs e)
+        {
             PostForm posts = new PostForm();
             posts.ShowDialog();
         }
 
-        private void tsEmployees_Click(object sender, EventArgs e) {
+        private void TsEmployees_Click(object sender, EventArgs e)
+        {
             EmployeeForm emp = new EmployeeForm();
             emp.ShowDialog();
         }
 
-        private void tsPlaces_Click(object sender, EventArgs e) {
+        private void TsPlaces_Click(object sender, EventArgs e)
+        {
             PlacesForm place = new PlacesForm();
             place.ShowDialog();
         }
 
-        private void tsInvoices_Click(object sender, EventArgs e) {
-            InvoicesForm invoice = new InvoicesForm ();
+        private void TsInvoices_Click(object sender, EventArgs e)
+        {
+            InvoicesForm invoice = new InvoicesForm();
             invoice.ShowDialog();
         }
 
-        private void tsMaterials_Click(object sender, EventArgs e) {
+        private void TsMaterials_Click(object sender, EventArgs e)
+        {
             ShowAccUnits units = new ShowAccUnits();
             units.ShowDialog();
         }
 
-        private void MainForm_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 27) {
+        private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+            {
                 Close();
             }
         }
